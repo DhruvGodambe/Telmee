@@ -1,0 +1,214 @@
+.cover-image-container {
+	width: 100%;
+	margin: 10px auto;
+	text-align: center;
+}
+
+.event-content {
+	padding: 0 10px;
+	text-align: left;
+}
+
+.event-register {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.event-nav {
+	width: 20%;
+	display: flex;
+}
+
+.registered-user {
+	background: #f03;
+	color: white;
+	width: 30%;
+}
+
+pre a {
+	color: blue;
+}
+
+.event-register-button {
+	width: 40%;
+	background: #f03;
+	padding: 10px;
+	color: white;
+	font-size: 25px;
+	border-radius: 30px;
+	margin: 20px 30%;
+	text-align: center;
+}
+
+.event-content pre {
+	word-spacing: 3px;
+	line-height: 22px;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;
+}
+
+.update-event-input {
+	width: 100%;
+	padding: 10px;
+	font-size: 18px;
+	margin: 0;
+	margin-bottom: 20px;
+	color: black;
+	border: 2px solid grey;
+	background: white;
+	border-radius: 20px;
+	outline: none;
+}
+
+.update-event-box {
+	width: 50%;
+	margin: 20px auto;
+	text-align: left;
+}
+
+.update-event-label {
+	margin: 0;
+	padding-left: 5px;
+	font-size: 20px;
+}
+
+.update-event-box textarea {
+	resize: none;
+	font-family: Times New Roman, Sans-serif;
+}
+
+.update-event-submit {
+	width: 50%;
+	margin-left: 25%;
+	font-size: 20px;
+	padding: 5px;
+	border-radius: 20px;
+}
+
+.register-form-div {
+	background: lightgrey;
+	width: 80%;
+	margin: 20px auto;
+	padding: 20px 0;
+	border-radius: 30px;
+}
+
+.register-form-sub-div {
+	width: 80%;
+	margin: 20px auto;
+	font-size: 20px;
+}
+
+.register-form-button {
+	padding: 5px 10px;
+	font-size: 20px;
+	border-radius: 20px;
+	margin-left: 90%;
+}
+
+.register-form-input {
+	width: 90%;
+	font-size: 15px;
+	border-radius: 20px;
+	padding: 10px;
+	outline: none;
+	border: none;
+}
+
+.register-form-label {
+	text-align: left;
+	margin: 0;
+	padding-left: 5px;
+}
+
+.register-form-submit {
+	width: 50%;
+	margin: 20px auto;
+	font-size: 20px;
+	padding: 5px;
+	border-radius: 20px;
+}
+
+.registered-user-box {
+	text-align: left;
+	margin: 10px auto;
+	width: 90%;
+	box-shadow: 0 0 5px black;
+	display: flex;
+	background: white;
+}
+
+.registered-user-box li {
+	list-style-type: none;
+	width: 100%;
+}
+
+.registered-user-details {
+	padding: 10px;
+	width: 70%;
+	word-wrap: break-word;
+	flex-wrap: wrap;
+}
+
+.registered-user-image-box {
+	width: 30%;
+	padding: 10px;
+}
+
+.excel-button {
+	width: 50%;
+	font-size: 20px;
+	border-radius: 25px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.popup-scroll-box {
+	width: 90%;
+	height: 90%;
+	overflow: scroll;
+}
+
+@media only screen and (max-width: 720px) {
+	.cover-image-container {
+		width: 100%;
+		margin: 0 auto;
+		color: white;
+	}
+
+	.registered-user-title {
+		color: white;
+	}
+
+	.event-content {
+		color: white;
+	}
+
+	.event-nav {
+		width: 35%;
+	}
+
+	.registered-user {
+		width: 50%;
+	}
+
+	.update-event-box {
+		width: 90%;
+		margin: 20px auto;
+	}
+
+	pre a {
+		color: skyblue;
+	}
+
+	.update-event-input {
+		width: 90%;
+	}
+
+	.update-event-label {
+		color: white;
+	}
+}

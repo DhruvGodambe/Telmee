@@ -1,0 +1,49 @@
+.sidebar {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	text-align: left;
+	color: white;
+	width: 100%;
+	overflow: scroll;
+}
+
+.buttons {
+	word-wrap: break-word;
+	text-align: center;
+	border-radius: 10px;
+	background: grey;
+	width: 80%;
+	font-size: 25px;
+	margin: 10px auto;
+	padding: 5px;
+	background: #ff0033;
+	cursor: pointer;
+}
+
+.sidebar-popup {
+	width: 35%;
+	position: fixed;
+	top: 25%;
+	left: 25%;
+	background: #ff0033;
+	box-shadow: 1px 1px 10px black;
+	padding: 10px;
+	background: #ff003f;
+	color: white;
+	border-radius: 20px;
+	opacity: 1;
+}
+
+@media only screen and (max-width: 720px) {
+	.buttons {
+		background: white;
+		color: black;
+		border: none;
+	}
+
+	.sidebar-popup {
+		width: 80%;
+		left: 10%;
+	}
+}

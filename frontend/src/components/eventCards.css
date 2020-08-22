@@ -1,0 +1,30 @@
+.event-card {
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 40px;
+	margin-top: 10px;
+	box-shadow: 1px 1px 8px black;
+  	background: white;
+}
+
+.event-card-image {
+	width: 100%;
+}
+
+.event-card-image img {
+	width: 100%;
+}
+
+.event-card-content {
+	text-align: left;
+	padding: 10px;
+	word-wrap: break-word;
+}
+
+@media only screen and (max-width: 720px) {
+  .event-card {
+  	width: 100%;
+  	background: white;
+	box-shadow: 1px 1px 10px black;
+  }
+}

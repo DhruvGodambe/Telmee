@@ -1,0 +1,32 @@
+.edit-user {
+	width: 70%;
+	margin: 0 auto;
+	font-size: 20px;
+}
+
+.edit-user-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.edit-user-form tr button {
+	width: 100%;
+	font-size: 20px;
+}
+
+.edit-user-form td {
+	width: 50%;
+	text-align: left;
+}
+
+.edit-user-form tr {
+	width: 100%;
+}
+
+@media only screen and (max-width: 720px){
+	.edit-user {
+		width: 90%;
+		color: white;
+		font-size: 15px;
+	}
+}

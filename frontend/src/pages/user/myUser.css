@@ -1,0 +1,120 @@
+.user {
+	padding: 2% 5%;
+}
+
+.image-box {
+	padding: 0;
+	width: 25%;
+	margin: 0 auto;
+}
+
+.image-box img {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border-radius: 20px;
+}
+
+.main-user {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.committee-member-child {
+	display: flex;
+	flex-direction: row;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.user-details {
+	text-align: left;
+	font-size: 18px;
+}
+
+.link-tag {
+	color: blue;
+}
+
+.committee-member-child p:nth-child(odd) {
+	text-align: center;
+	width: 40%;
+	padding-top: 1%;
+}
+
+.committee-member-child p:nth-child(even) {
+	text-align: center;
+	width: 10%;
+	padding-top: 1%;
+}
+
+.intro {
+	text-align: left;
+}
+
+.intro button {
+	width: 20%;
+	margin: 5px auto;
+}
+
+.post-container {
+	width: 80%;
+	margin: 20px auto;
+	box-shadow: 1px 1px 10px black;
+}
+
+.image-container {
+	width: 100%;
+}
+
+.image-container img {
+	width: 100%;
+	object-fit: cover;
+}
+
+.main-popup {
+	width: 35%;
+	position: fixed;
+	top: 25%;
+	left: 25%;
+	background: #ff0033;
+	box-shadow: 1px 1px 10px black;
+	padding: 10px;
+	background: #ff003f;
+	color: white;
+	border-radius: 20px;
+}
+
+.main-popup button {
+	padding: 3%;
+	margin: 1%;
+}
+
+.event-post-option {
+	font-size: 20px;
+	padding: 20px;
+}
+
+@media only screen and (max-width: 720px) {
+	.user {
+		color: white;
+	}
+
+	.link-tag {
+		color: skyblue;
+	}
+
+	.post-container {
+		width: 100%;
+	}
+
+	.main-popup {
+		width: 80%;
+		left: 10%;
+	}
+
+	.intro button {
+		width: 30%;
+		margin: 5px auto;
+	}
+}

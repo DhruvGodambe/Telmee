@@ -1,0 +1,19 @@
+.edit-main-popup {
+	width: 35%;
+	position: fixed;
+	top: 20%;
+	left: 25%;
+	background: inherit;
+	box-shadow: 1px 1px 10px black;
+	padding: 10px;
+	background: #ff003f;
+	color: white;
+	border-radius: 20px;
+}
+
+@media only screen and (max-width: 720px){
+	.edit-main-popup {
+		width: 80%;
+		left: 8%;
+	}
+}

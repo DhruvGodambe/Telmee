@@ -1,0 +1,76 @@
+.App {
+  text-align: center;
+}
+
+button {
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  background: #f0f0f0;
+  font-size: 15px;
+  box-shadow: 1px 1px 5px black;
+  cursor: pointer;
+}
+
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.page {
+  width: 75%;
+  margin-top: 40px;
+}
+
+.side {
+  margin-top: 40px;
+  width: 25%;
+  font-size: 3vh;
+  height: 100vh;
+  position: sticky;
+  top: 170px;
+  height: 500px;
+}
+
+a {
+  list-style-type: none;
+  color: inherit;
+  list-style: none;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 720px) {
+  .App {
+    min-height: 800px;
+    background: #333333;
+  }
+
+  .main-container{
+    width: 100%;
+  }
+
+  .page {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .side {
+    display: none;
+    transition: 0.3s;
+  }
+
+  .side-active {
+    margin-top: 0;
+    position: fixed;
+    width: 50%;
+    left: 50%;
+    background: linear-gradient(#a6102b, #ff0066);
+    box-shadow: 1px 1px solid red;
+    height: 100%;
+    transition: 1s;
+    overflow: scroll;
+  }
+}

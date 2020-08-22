@@ -1,0 +1,76 @@
+.google {
+	display: flex;
+	width: 40%;
+	background: white;
+	color: black;
+	padding: 2%;
+	margin: 10px auto;
+	border-radius: 40px;
+	box-shadow: 1px 1px 5px black;
+	cursor: pointer;
+}
+
+.google-2 {
+	display: flex;
+	width: 40%;
+	background: white;
+	color: black;
+	padding: 2%;
+	margin: 10px auto;
+	border-radius: 40px;
+	box-shadow: 1px 1px 5px black;	
+	background: #333333;
+	cursor: pointer;
+	color: white;
+}
+
+.google .logo {
+	align-items: left;
+	width: 20%;
+	margin: auto 2%;
+}
+
+.google-2 .logo {
+	align-items: left;
+	width: 20%;
+	margin: auto 2%;
+}
+
+.logo img {
+	width: 100%;
+}
+
+.google .text {
+	width: 80%;
+	margin: auto 5%;
+	font-size: 20px;
+}
+
+.google-2 .text {
+	width: 80%;
+	margin: auto 5%;
+	font-size: 20px;
+}
+
+@media only screen and (max-width: 720px) {
+	.google {
+		width: 50%;
+		box-shadow: 1px 1px 10px black;
+	}
+
+	.google-2 {
+		width: 80%;
+		box-shadow: 1px 1px 10px black;
+		background: #333333;
+		color: white;
+	}
+
+	.google .logo {
+		width: 20%;
+	}
+
+	.login-container {
+		color: white;
+		font-size: 12px;
+	}
+}

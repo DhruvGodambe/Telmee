@@ -1,0 +1,17 @@
+.committee-title {
+	color: black;
+}
+
+.committee-content {
+	color: black;
+}
+
+@media only screen and (max-width: 720px) {
+	.committee-title {
+		color: white;
+	}
+
+	.committee-content {
+		color: white;
+	}
+}

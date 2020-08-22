@@ -1,0 +1,50 @@
+.navbar {
+	display: flex;
+	flex-wrap: wrap;
+	background: #ff003f;
+	flex-direction: column;
+	box-shadow: 1px 1px 10px red;
+	height: 150px;
+	color: white;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+.navbar h1 {
+	width: 100%;
+	margin: auto 0;
+}
+
+.navbar p {
+	font-weight: bold;
+}
+
+.nav-icons {
+	display: flex;
+	flex-direction: row;
+	width: 60%;
+	margin: 10px auto;
+}
+
+.icons {
+	width: 33%;
+}
+
+.icons:nth-child(4){
+	display: none;
+}
+
+@media only screen and (max-width: 720px){
+	.nav-icons {
+		width: 100%;
+	}
+
+	.icons {
+		width: 25%;
+	}
+
+	.icons:nth-child(4) {
+		display: block;
+	}
+}

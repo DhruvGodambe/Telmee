@@ -33,7 +33,14 @@ import Cookies from 'js-cookie';
 import {AuthEditUser, AuthMyUser, AuthLogin} from './authRoutes';
 
 
-import { BrowserRouter as Router, Switch, Route, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [search, setSearch] = useState(false);
@@ -63,6 +70,26 @@ function App() {
       }}>
         <Router>
           <Navbar/>
+          <div className="nav-icons">
+            <div className='icons'>
+              <Link to='/'>
+                <FontAwesomeIcon icon={faHome}/>
+              </Link>
+            </div>
+            <div className='icons'>
+              <Link to={loggedIn ? `/user/${currentUser.id}` : '/user-login'}>
+                <FontAwesomeIcon icon={faUser}/>
+              </Link>
+            </div>
+            <div className='icons'>
+              <Link to='/search'>
+                <FontAwesomeIcon icon={faSearch}/>
+              </Link>
+            </div>
+            <div className='icons' onClick={() => {setSidebar(!sidebar)}}>
+              <FontAwesomeIcon icon={faBars}/>
+            </div>
+          </div>
           <div className="main-container">
             <div className="page">
               <Switch>
@@ -93,7 +120,8 @@ function App() {
               </Switch>
             </div>
             <div className={sidebar ? 'side-active' : 'side'}>
-              <Sidebar/>
+              <div style={{display: window.innerWidth > 720 ? "none" : "block"}}><FontAwesomeIcon className="navbar-x" onClick={() => {setSidebar(false)}} icon={faTimes} /></div>
+              <Sidebar sidebar={sidebar} />
             </div>
           </div>
         </Router>

@@ -43,27 +43,26 @@ export default function PastEvent(props) {
 			</div>
 			{event.name ?
 				<div className='event-content'>
-					<h3>Organized by
+					<h3 style={{margin: '5px 0'}}>Organized by
 						<Link
-							className='link-tag'
-							style={{textDecoration: 'underline'}}
+							style={{ marginLeft: '5px', color: '#ff003f', opacity: '0.5'}}
 							to={`/committee/${event.organizingCommittee.id}`}
 						>
-							{event.organizingCommittee.name}
+						{event.organizingCommittee.name}
 						</Link>
 					</h3>
 					{event.oneDay ?
 						<div>
-							<p>held on {getStdDate(event.timeStamp.heldOn)}</p>
+							<p style={{margin: '0', color: 'grey'}}>held on {getStdDate(event.timeStamp.heldOn)}</p>
 						</div>
 						:
 						<div>
-							<p>from {getStdDate(event.timeStamp.heldOn)}</p>
-							<p>to {event.timeStamp.finishedOn}</p>
+							<p style={{margin: '0', color: 'grey'}}>from {getStdDate(event.timeStamp.heldOn)}</p>
+							<p style={{margin: '0', color: 'grey'}}>to {event.timeStamp.finishedOn}</p>
 						</div>
 					}
 					{event.venue ?
-						<p>venue: {event.venue}</p>
+						<p style={{margin: '5px 0 30px', color: 'grey'}}>venue: {event.venue}</p>
 						:
 						null
 					}

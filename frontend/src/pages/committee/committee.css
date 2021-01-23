@@ -6,12 +6,32 @@
 	color: black;
 }
 
+.registered-user .svg-inline--fa {
+	font-size: 30px;
+}
+
 @media only screen and (max-width: 720px) {
 	.committee-title {
-		color: white;
+		/* color: white; */
+		font-size: 18px;
+		letter-spacing: 1px;
+	}
+
+	.registered-user .svg-inline--fa {
+		margin: auto;
+		font-size: 25px;
+	}
+
+	.registered-user p {
+		margin: 7px auto;
+		font-size: 14px;
+	}
+
+	.member-button {
+		width: 40%;
 	}
 
 	.committee-content {
-		color: white;
+		/* color: white; */
 	}
 }

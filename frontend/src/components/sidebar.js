@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-export default function Sidebar() {
+export default function Sidebar(props) {
 	const [popup, setPopup] = useState(false);
 	const {setSidebar, setLoggedIn, loggedIn, currentUser} = useContext(globalContext);
 
@@ -21,7 +21,7 @@ export default function Sidebar() {
 	}
 
 	return(
-		<div className="sidebar">
+		<div className="sidebar" style={{display: window.innerWidth > 720 ? 'flex' : props.sidebar ? 'flex' : 'none'}}>
 			<Popup popup={popup} setPopup={setPopup} setSidebar={setSidebar}/>
 			{loggedIn ? 
 				<div className="buttons">

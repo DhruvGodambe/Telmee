@@ -26,8 +26,8 @@ export default function MyUser(props) {
 					return(
 						<div className='committee-member-child' key={ind}>
 							<p>{val['position']}</p>
-							<p>of</p>
-							<p style={{textDecoration: 'underline'}}>
+							<p style={{lineHeight: '20px'}}>of</p>
+							<p>
 								<Link to={`/committee/${val.id}`} className='link-tag' >{val.name}</Link>
 							</p>
 						</div>
@@ -51,6 +51,14 @@ export default function MyUser(props) {
 			<Popup {...props} popup={popup} setPopup={setPopup} />
 			{ currentUser.data ? 
 				<div className='user'>
+					<hr style={{
+						position: "absolute",
+						width: "99%",
+						top: "195px",
+						zIndex: "-1",
+						left: "0",
+						boxShadow: '0 10px 20px #ff003f'
+					}} />
 					<div className='image-box'>
 						<img alt='' src={currentUser.data.profilePicture}/>
 					</div>
@@ -77,8 +85,6 @@ export default function MyUser(props) {
 								:
 								<p>been to <span>0</span> events</p>
 							}
-							<p style={{color: 'grey', lineHeight: '12px', fontSize: '15px'}}>contact: {currentUser.data.contact}</p>
-							<p style={{color: 'grey', lineHeight: '12px', fontSize: '15px'}}>email: {currentUser.data.email}</p>
 							<button alt='you' onClick={handleUpload}>upload a moment +</button>
 							{currentUser.data.posts.length > 0 ?
 								currentUser.data.posts.map((val, ind) => {

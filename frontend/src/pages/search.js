@@ -21,10 +21,13 @@ export default function Search(props) {
 		.then(res => {
 			var temp = []
 			res.docs.forEach(doc => {
+				console.log(doc.data())
 				temp.push({
 					name: doc.data().name,
 					id: doc.id,
-					coverImageName: doc.data().coverImageName
+					coverImageName: doc.data().coverImageName,
+					timeStamp: doc.data().timeStamp,
+					organizingCommittee: doc.data().organizingCommittee
 				})
 			})
 			setEvents(temp)
@@ -35,7 +38,7 @@ export default function Search(props) {
 					temp2.push({
 						id: doc.id,
 						name: doc.data().name,
-						coverImageName: doc.data().coverImageName
+						coverImageName: doc.data().coverImageName,
 					})
 				})
 				setCommittees(temp2)
@@ -195,6 +198,11 @@ const SuggestionCard = (props) => {
 		}
 	}, [data])
 
+	const getStdDate = (dateStr) => {
+		const d = new Date(dateStr);
+		return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+	}
+
 	return(
 		<div 
 			style={{
@@ -202,8 +210,7 @@ const SuggestionCard = (props) => {
 				flexDirection: 'row',
 				margin: '10px auto',
 				width: '90%',
-				boxShadow: '0 0 5px black',
-
+				border: '1px solid grey 0.1'
 			}}
 			onClick={() => {
 				switch(activeTab){
@@ -226,8 +233,10 @@ const SuggestionCard = (props) => {
 					<img style={{width: '100%'}} src={logo} />
 				}
 			</div>
-			<div style={{textAlign: 'center'}}>
-				<h3 style={{margin: '10px'}}>{data.name}</h3>
+			<div style={{textAlign: 'left'}}>
+				<p style={{margin: '0 5px 1px', fontSize: '16px'}}>{data.name}</p>
+				{ data.organizingCommittee ? <p style={{margin: '5px', fontSize: '14px', color: 'grey'}}>{data.organizingCommittee.name}</p> : null }
+				{ data.timeStamp ?  <p style={{margin: '5px', fontSize: '12px', color: 'grey'}}>{getStdDate(data.timeStamp.heldOn)}</p> : null }
 			</div>
 		</div>
 	)

@@ -62,42 +62,43 @@ export default function OtherEvent(props) {
 		}
 	}, [currentUser])
 
-	useEffect(() => {
-		var str = ''
-		if(event.description){
-			event.description.split(' ').forEach(val => {
-			    if(val.includes('.')){
-			        if(val.indexOf('.') < val.length -1){
-			        	if(val.includes('https')){
-				            var temp = `<a href='${val}'>`
-				        	console.log('temp: ', temp)
-				            var temp2 = temp.concat(val)
-				            temp2 = temp2.concat('</a> ')
-				            str = str.concat(temp2)
-				        } else {
-				        	var temp = `<a href='https://${val}'>`
-				        	console.log('temp: ', temp)
-				            var temp2 = temp.concat(val)
-				            temp2 = temp2.concat('</a> ')
-				            str = str.concat(temp2)
-				        }
-			        } else {
-			            str = str.concat(`${val} `)
-			        }
-			    } else {
-			        str = str.concat(`${val} `)
-			    }
-			})
-		}
-		setDescription(str)
-	}, [event.description])
+	// useEffect(() => {
+	// 	var str = ''
+	// 	if(event.description){
+	// 		event.description.split(' ').forEach(val => {
+	// 		    if(val.includes('.')){
+	// 		        if(val.indexOf('.') < val.length -1){
+	// 		        	if(val.includes('https')){
+	// 			            var temp = `<a href='${val}'>`
+	// 			        	console.log('temp: ', temp)
+	// 			            var temp2 = temp.concat(val)
+	// 			            temp2 = temp2.concat('</a> ')
+	// 			            str = str.concat(temp2)
+	// 			        } else {
+	// 			        	var temp = `<a href='https://${val}'>`
+	// 			        	console.log('temp: ', temp)
+	// 			            var temp2 = temp.concat(val)
+	// 			            temp2 = temp2.concat('</a> ')
+	// 			            str = str.concat(temp2)
+	// 			        }
+	// 		        } else {
+	// 		            str = str.concat(`${val} `)
+	// 		        }
+	// 		    } else {
+	// 		        str = str.concat(`${val} `)
+	// 		    }
+	// 		})
+	// 	}
+	// 	setDescription(str)
+	// }, [event.description])
 
 	const getStdDate = (dateStr) => {
 		const d = new Date(dateStr);
 		return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
 	}
 
-	const FONT = 'Palatino, serif';
+	// const FONT = 'Palatino, serif';
+	const FONT = "Arial, Helvetica, sans-serif";
 
 	return(
 		<div className='root-event' style={{fontFamily: FONT}}>
@@ -126,10 +127,9 @@ export default function OtherEvent(props) {
 				</div>
 				{event.name ?
 					<div className='event-content'>
-						<h3>Organized by
+						<h3 style={{margin: '5px 0'}}>Organized by
 							<Link
-								className='link-tag'
-								style={{textDecoration: 'underline'}}
+								style={{ marginLeft: '5px', color: '#ff003f', opacity: '0.5'}}
 								to={`/committee/${event.organizingCommittee.id}`}
 							>
 							{event.organizingCommittee.name}
@@ -137,16 +137,16 @@ export default function OtherEvent(props) {
 						</h3>
 						{event.oneDay ?
 							<div>
-								<p>will be held on {getStdDate(event.timeStamp.heldOn)}</p>
+								<p style={{margin: '0', color: 'grey'}}>will be held on {getStdDate(event.timeStamp.heldOn)}</p>
 							</div>
 							:
 							<div>
-								<p>from {getStdDate(event.timeStamp.heldOn)}</p>
-								<p>to {event.timeStamp.finishedOn}</p>
+								<p style={{margin: '0', color: 'grey'}}>from {getStdDate(event.timeStamp.heldOn)}</p>
+								<p style={{margin: '0', color: 'grey'}}>to {event.timeStamp.finishedOn}</p>
 							</div>
 						}
 						{event.venue ?
-							<p>venue: {event.venue}</p>
+							<p style={{margin: '5px 0 30px', color: 'grey'}}>venue: {event.venue}</p>
 							:
 							null
 						}

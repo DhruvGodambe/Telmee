@@ -14,28 +14,8 @@ export default function Navbar() {
 	const {search , currentUser, setSearch, sidebar, setSidebar, loggedIn} = useContext(globalContext);
 	return(
 		<div className='navbar' >
-			<h1>Telmee</h1>
-			<p>an event sharing social networking app</p>
-			<div className="nav-icons">
-				<div className='icons'>
-					<Link to='/'>
-						<FontAwesomeIcon icon={faHome} size='2x'/>
-					</Link>
-				</div>
-				<div className='icons'>
-					<Link to={loggedIn ? `/user/${currentUser.id}` : '/user-login'}>
-						<FontAwesomeIcon icon={faUser} size='2x'/>
-					</Link>
-				</div>
-				<div className='icons'>
-					<Link to='/search'>
-						<FontAwesomeIcon icon={faSearch} size='2x'/>
-					</Link>
-				</div>
-				<div className='icons' onClick={() => {setSidebar(!sidebar)}}>
-					<FontAwesomeIcon icon={faBars} size='2x'/>
-				</div>
-			</div>
+			<h1 style={{letterSpacing: '3px'}}>Telmee</h1>
+			<p>event sharing social network</p>
 		</div>
 	)
 }

@@ -25,8 +25,9 @@ export default function EventCards(props) {
 			</div>
 			<div className="event-card-content">
 				<h3>{event.name}</h3>
-				<p>organized by {event.organizingCommittee.name}</p>
-				<p>{new Date(event.timeStamp.heldOn) < Date.now() ? null : 'will be'} held on {getStdDate(event.timeStamp.heldOn)}</p>
+				<p className="organized">{event.organizingCommittee.name}</p>
+				{/* <p>{new Date(event.timeStamp.heldOn) < Date.now() ? null : 'will be'} held on {getStdDate(event.timeStamp.heldOn)}</p> */}
+				<hr />
 				<p>{event.description ? event.description.substring(0, 200) + '...' : null}</p>
 			</div>
 		</div>

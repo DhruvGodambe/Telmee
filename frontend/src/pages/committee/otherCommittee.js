@@ -96,12 +96,14 @@ export default function OtherCommittee(props){
 			<h1 className='committee-title'>{committee.name}</h1>
 			<div style={{margin: '10px'}}>
 				<button
-					className='event-nav registered-user'
+					className='event-nav registered-user member-button'
 					onClick={() => {
 						setPopup(true)
 					}}
 				>
-					<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faUsers}/></div>
+					<div style={{margin: '5px', width: '20%'}}>
+						<FontAwesomeIcon icon={faUsers}/>
+					</div>
 					<p style={{width: '80%', fontWeight: 'bold'}}> members </p>
 				</button>
 			</div>
@@ -167,7 +169,6 @@ export default function OtherCommittee(props){
 				{committee && committee.description ?
 					<div className='event-content'>
 						<pre style={{
-							margin: '10px',
 							color: 'inherit',
 							fontSize: '15px',
 							wordWrap: 'break-word',
@@ -178,7 +179,6 @@ export default function OtherCommittee(props){
 							whiteSpace: '-moz-pre-wrap',  /* Mozilla, since 1999 */
 							whiteSpace: '-pre-wrap',     /* Opera 4-6 */
 							whiteSpace: '-o-pre-wrap',   /* Opera 7 */
-							paddingRight: '10px'
 						}}>
 							{committee.description}
 						</pre>

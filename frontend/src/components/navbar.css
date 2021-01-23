@@ -3,32 +3,43 @@
 	flex-wrap: wrap;
 	background: #ff003f;
 	flex-direction: column;
-	box-shadow: 1px 1px 10px red;
-	height: 150px;
+	/* box-shadow: 1px 1px 10px #aaa; */
+	/* height: 150px; */
 	color: white;
-	position: sticky;
+	position: relative;
 	top: 0;
 	z-index: 1;
 }
 
 .navbar h1 {
 	width: 100%;
-	margin: auto 0;
+	margin: 5px 0;
 }
 
 .navbar p {
-	font-weight: bold;
+	font-weight: 450;
+	margin-top: 10px;
+	font-size: 14px;
+	width: 100%;
+	letter-spacing: 1px;
+	font-style: italic;
 }
 
 .nav-icons {
 	display: flex;
 	flex-direction: row;
-	width: 60%;
-	margin: 10px auto;
+	width: 100%;
+	margin: 0 auto;
+	position: sticky;
+	top: 0;
+	background: #ff003f;
+	color: aliceblue;
 }
 
 .icons {
 	width: 33%;
+	padding: 10px 0;
+	font-size: 24px;
 }
 
 .icons:nth-child(4){
@@ -46,5 +57,9 @@
 
 	.icons:nth-child(4) {
 		display: block;
+	}
+
+	.navbar p {
+		margin: 2px auto;
 	}
 }

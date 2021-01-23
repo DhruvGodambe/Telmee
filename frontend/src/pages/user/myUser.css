@@ -1,5 +1,5 @@
 .user {
-	padding: 2% 5%;
+	padding: 10% 2% 5%;
 }
 
 .image-box {
@@ -33,7 +33,8 @@
 }
 
 .link-tag {
-	color: blue;
+	color: #ff003f;
+	opacity: 0.5;
 }
 
 .committee-member-child p:nth-child(odd) {
@@ -52,15 +53,29 @@
 	text-align: left;
 }
 
-.intro button {
-	width: 20%;
-	margin: 5px auto;
+.intro a button {
+	width: 40%;
+	margin: 5px 0 5% 60%;
+	box-shadow: none;
+	padding: 10px;
+	font-size: 18px;
+	background: #ccc;
+}
+
+.intro a button:hover {
+	transition: .3s;
+	background: #ddd;
 }
 
 .post-container {
 	width: 80%;
 	margin: 20px auto;
+	border-radius: 10px;
 	box-shadow: 1px 1px 10px black;
+}
+
+.post-container img {
+	border-radius: 10px 10px 0 0;
 }
 
 .image-container {
@@ -72,22 +87,33 @@
 	object-fit: cover;
 }
 
+.user-details button {
+	padding: 10px;
+	box-shadow: none;
+	background: #ddd;
+}
+
 .main-popup {
 	width: 35%;
 	position: fixed;
 	top: 25%;
 	left: 25%;
 	background: #ff0033;
-	box-shadow: 1px 1px 10px black;
+	box-shadow: 1px 1px 10px gray;
 	padding: 10px;
 	background: #ff003f;
 	color: white;
-	border-radius: 20px;
+	border-radius: 10px;
+}
+
+.popup-title {
+	font-size: 18px;
 }
 
 .main-popup button {
-	padding: 3%;
+	padding: 2%;
 	margin: 1%;
+	min-width: 100px;
 }
 
 .event-post-option {
@@ -97,11 +123,13 @@
 
 @media only screen and (max-width: 720px) {
 	.user {
-		color: white;
+		/* color: white; */
 	}
 
 	.link-tag {
-		color: skyblue;
+		color: #ff003f;
+		opacity: 0.7;
+		text-decoration: none;
 	}
 
 	.post-container {
@@ -109,8 +137,8 @@
 	}
 
 	.main-popup {
-		width: 80%;
-		left: 10%;
+		width: 90%;
+		left: 3%;
 	}
 
 	.intro button {

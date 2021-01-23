@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
@@ -45,7 +46,7 @@ a {
 @media only screen and (max-width: 720px) {
   .App {
     min-height: 800px;
-    background: #333333;
+    /* background: #333333; */
   }
 
   .main-container{
@@ -58,19 +59,28 @@ a {
   }
 
   .side {
-    display: none;
-    transition: 0.3s;
+    height: 0;
+    right: 0;
+    /* transition: .5s; */
+  }
+
+  .navbar-x {
+    font-size: 30px;
+    margin: 10px 1% 10px 80%;
+    color: white;
   }
 
   .side-active {
     margin-top: 0;
     position: fixed;
-    width: 50%;
-    left: 50%;
+    width: 100%;
+    top: 0;
+    right: 0;
     background: linear-gradient(#a6102b, #ff0066);
     box-shadow: 1px 1px solid red;
     height: 100%;
-    transition: 1s;
+    transition: .3s;
     overflow: scroll;
+    z-index: 2;
   }
 }

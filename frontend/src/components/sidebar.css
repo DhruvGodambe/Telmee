@@ -14,6 +14,7 @@
 	border-radius: 10px;
 	background: grey;
 	width: 80%;
+	background-image: url('../images/png_background.png');
 	font-size: 25px;
 	margin: 10px auto;
 	padding: 5px;
@@ -40,6 +41,9 @@
 		background: white;
 		color: black;
 		border: none;
+		/* background-image: url('../images/png_background.png'); */
+		/* background-position: center; */
+		/* background-attachment: top; */
 	}
 
 	.sidebar-popup {

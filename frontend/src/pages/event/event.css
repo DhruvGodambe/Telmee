@@ -5,7 +5,7 @@
 }
 
 .event-content {
-	padding: 0 10px;
+	padding: 5px 10px;
 	text-align: left;
 }
 
@@ -30,14 +30,16 @@ pre a {
 }
 
 .event-register-button {
-	width: 40%;
+	width: 90%;
 	background: #f03;
 	padding: 10px;
 	color: white;
 	font-size: 25px;
 	border-radius: 30px;
-	margin: 20px 30%;
+	margin: 20px 5%;
 	text-align: center;
+	box-shadow: none;
+	opacity: 0.9;
 }
 
 .event-content pre {
@@ -176,15 +178,15 @@ pre a {
 	.cover-image-container {
 		width: 100%;
 		margin: 0 auto;
-		color: white;
+		/* color: white; */
 	}
 
 	.registered-user-title {
-		color: white;
+		/* color: white; */
 	}
 
 	.event-content {
-		color: white;
+		/* color: white; */
 	}
 
 	.event-nav {
@@ -209,6 +211,6 @@ pre a {
 	}
 
 	.update-event-label {
-		color: white;
+		/* color: white; */
 	}
 }

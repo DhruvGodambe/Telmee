@@ -41,28 +41,30 @@ export function PostCard(props) {
 				<h3>
 					<Link
 						to={`/event/past/${post.eventid}`}
-						style={{textDecoration: 'underline'}}
+						style={{color: '#ff003f'}}
 					>{post.eventName}
 					</Link>
 				</h3>
-				<p>{post.description}</p>
+				<p style={{margin: '0'}}>{post.description}</p>
 				<p 
 					style={{
 						color: 'grey',
 						fontSize: '15px',
-						lineHeight: '12px'
+						lineHeight: '12px',
+						margin: '5px 0'
 					}}
 				>posted by
 					<Link
 						to={`/user/${post.userid}`}
-						style={{textDecoration: 'underline'}}
+						style={{marginLeft: '5px', color: '#333'}}
 					>{post.user}</Link>
 				</p>
 				<p 
 					style={{
 						color: 'grey',
 						fontSize: '15px',
-						lineHeight: '12px'
+						lineHeight: '12px',
+						margin: '5px 0'
 					}}
 				>on {getStdDate(post.postedOn)} at {getStdTime(post.postedOn)}</p>
 				<div style={{textAlign: 'right'}}>
@@ -222,7 +224,7 @@ const DeletePopup = (props) => {
 		<div>
 			{popup ?
 				<div style={{textAlign: 'center'}} className='main-popup'>
-					<h2>confirm delete this post?</h2>
+					<p className="popup-title">confirm delete this post?</p>
 					<button onClick={handleDelete}>yes</button>
 					<button onClick={() => setPopup(false)}>no</button>
 				</div>

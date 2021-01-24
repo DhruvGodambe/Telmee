@@ -117,6 +117,7 @@ export const OrganizationEvent = (props) => {
 								...event.organizingCommittee,
 								id: comm.id
 							},
+							description: description,
 							coverImage: {},
 							attendedUsers: [],
 							registeredUsers: [],
@@ -146,6 +147,7 @@ export const OrganizationEvent = (props) => {
 							...event.organizingCommittee,
 							id: comm.id
 						},
+						description: description,
 						coverImage: {},
 						attendedUsers: [],
 						registeredUsers: [],

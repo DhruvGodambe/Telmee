@@ -6,7 +6,9 @@ import './event.css';
 import logo from '../../images/logo5.png';
 import {Link} from 'react-router-dom';
 import InnerHTML from 'dangerously-set-html-content'
+import 'draft-js/dist/Draft.css';
 
+import {Editor, EditorState, convertFromRaw} from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -151,14 +153,16 @@ export default function OtherEvent(props) {
 							null
 						}
 						{event.description ?
-							description !== '' ?
-								<div>
-									<pre style={{fontFamily: FONT}}>
-										<InnerHTML html={description} />
-									</pre>
-								</div>
-								:
-								<pre style={{fontFamily: FONT}}>{event.description}</pre>
+							<div>
+								{typeof(event.description) == "object" ?
+									<Editor
+										editorState={EditorState.createWithContent(convertFromRaw(event.description))}
+										readOnly={true}
+									/>
+									:
+									<pre style={{fontFamily: FONT}}>{event.description}</pre>
+								}
+							</div>
 							:
 							null
 						}

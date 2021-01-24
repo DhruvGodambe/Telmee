@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import firebase from '../../firebase/index';
 import logo from '../../images/logo5.png';
 import EventCard from '../../components/eventCards';
+import 'draft-js/dist/Draft.css';
 
+import {Editor, EditorState, convertFromRaw} from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -166,27 +168,20 @@ export default function OtherCommittee(props){
 				}
 			</div>
 			<div className='committee-content'>
-				{committee && committee.description ?
-					<div className='event-content'>
-						<pre style={{
-							color: 'inherit',
-							fontSize: '15px',
-							wordWrap: 'break-word',
-							wordSpacing: '3px',
-							lineHeight: '22px',
-							width: '100%',
-							whiteSpace: 'pre-wrap',
-							whiteSpace: '-moz-pre-wrap',  /* Mozilla, since 1999 */
-							whiteSpace: '-pre-wrap',     /* Opera 4-6 */
-							whiteSpace: '-o-pre-wrap',   /* Opera 7 */
-						}}>
-							{committee.description}
-						</pre>
-						<hr/>
-					</div>
-					:
-					null
-				}
+			{committee.description ?
+				<div>
+					{typeof(committee.description) == "object" ?
+						<Editor
+							editorState={EditorState.createWithContent(convertFromRaw(committee.description))}
+							readOnly={true}
+						/>
+						:
+						<pre className="pre-description">{committee.description}</pre>
+					}
+				</div>
+				:
+				null
+			}
 			</div>
 			{events.length > 0 ?
 				<div className='home'>

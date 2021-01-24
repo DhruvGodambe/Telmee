@@ -67,14 +67,6 @@ export default function User(props) {
 					<div className='main-user'>
 						<div className='intro'>
 							<p>{user.description}</p>
-							{showDetails ?
-								<div>
-									<p>email: {user.email}</p>
-									<p>contact: {user.contact}</p>
-								</div>
-								:
-								null
-							}
 							<hr/>
 							{ user.committee ?
 								<div className='committee-member'>

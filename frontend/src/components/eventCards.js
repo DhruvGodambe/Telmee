@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../firebase/index';
 import './eventCards.css';
+import 'draft-js/dist/Draft.css';
+import {Editor, EditorState, convertFromRaw} from 'draft-js';
 
 export default function EventCards(props) {
 	var {event} = props;
 	const [img, setImg] = useState('')
+	const [editorState, setEditorState] = useState(EditorState.createEmpty())
+	const [description, setDescription] = useState('');
 
 	useEffect(() => {
+		if(typeof(event.description) == "object"){
+			console.log(event.description)
+			var currentContent = EditorState.createWithContent(convertFromRaw(event.description))
+			setDescription(currentContent.getCurrentContent().getPlainText())
+		} else {
+			setDescription(event.description)
+		}
 		firebase.storage.ref(`/events/${event.coverImageName}`).getDownloadURL()
 		.then(url => {
 			setImg(url)
@@ -28,7 +39,7 @@ export default function EventCards(props) {
 				<p className="organized">{event.organizingCommittee.name}</p>
 				{/* <p>{new Date(event.timeStamp.heldOn) < Date.now() ? null : 'will be'} held on {getStdDate(event.timeStamp.heldOn)}</p> */}
 				<hr />
-				<p>{event.description ? event.description.substring(0, 200) + '...' : null}</p>
+				<p>{description !== "" ? description.substring(0, 200) + '...' : null}</p>
 			</div>
 		</div>
 	)

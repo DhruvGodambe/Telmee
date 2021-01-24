@@ -84,6 +84,6 @@ a {
     height: 100%;
     transition: .3s;
     overflow: scroll;
-    z-index: 2;
+    z-index: 12;
   }
 }

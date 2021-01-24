@@ -34,6 +34,7 @@
 	top: 0;
 	background: #ff003f;
 	color: aliceblue;
+	z-index: 5;
 }
 
 .icons {

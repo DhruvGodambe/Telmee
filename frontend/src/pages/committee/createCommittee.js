@@ -4,6 +4,7 @@ import firebase from '../../firebase/index'
 import {globalContext} from '../../globalContext';
 import Loader from 'react-loader-spinner';
 import Cookies from 'js-cookie';
+import Editors from '../../components/DraftjsEditor';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +16,7 @@ export default function CreateCommittee(props){
 	const [base64, setBase64] = useState('')
 	const {currentUser, setCurrentUser} = useContext(globalContext)
 	const [loading, setLoading] = useState(false)
+	const [description, setDescription] = useState({})
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
@@ -32,6 +34,7 @@ export default function CreateCommittee(props){
 					coverImage: {},
 					members: [{id: currentUser.id, position: 'leader'}],
 					moreImages: {},
+					description: description,
 					events: []
 				})
 				firebase.db.collection('committees').add({
@@ -39,6 +42,7 @@ export default function CreateCommittee(props){
 					coverImage: {},
 					members: [{id: currentUser.id, position: 'leader'}],
 					moreImages: {},
+					description: description,
 					events: []
 				}).then(result => {
 					firebase.db.collection('users').doc(currentUser.id).update({
@@ -61,14 +65,16 @@ export default function CreateCommittee(props){
 				coverImage: {},
 				members: [{id: currentUser.id, position: 'leader'}],
 				moreImages: {},
-				events: []
+				events: [],
+				description: description
 			})
 			firebase.db.collection('committees').add({
 				...committee,
 				coverImage: {},
 				members: [{id: currentUser.id, position: 'leader'}],
 				moreImages: {},
-				events: []
+				events: [],
+				description: description
 			}).then(result => {
 				firebase.db.collection('users').doc(currentUser.id).update({
 					committee: firebase.firebase.firestore.FieldValue.arrayUnion({
@@ -147,19 +153,9 @@ export default function CreateCommittee(props){
 							}}
 							className='create-event-file'
 						/>
-						<textarea
-							name='description'
-							placeholder='description'
-							type='text'
-							rows='10'
-							onChange={(e) => {
-								setCommittee({
-									...committee,
-									description: e.target.value
-								})
-							}}
-							className='create-event-input'
-						/>
+						<div style={{width: "85%", margin: "10px auto"}}>
+							<Editors description={description} setDescription={setDescription} />
+						</div>
 						<button
 							type='button'
 							style={{

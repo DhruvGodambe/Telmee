@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react';
 import firebase from '../../firebase/index';
+import Editors from '../../components/DraftjsEditor';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +12,7 @@ export default function EditEvent(props) {
 	const [base64, setBase64] = useState('')
 	const [loading, setLoading] = useState(false)
 	const [upload, setUpload] = useState(false)
+	const [description, setDescription] = useState({})
 
 	useEffect(() => {
 		if(!props.location.query){
@@ -29,6 +31,7 @@ export default function EditEvent(props) {
 				console.log('image updated successfully')
 				firebase.db.collection('events').doc(eventid).set({
 					...event,
+					description: description,
 					coverImage: {}
 				}).then(resp => {
 					props.history.push(`/event/${eventid}`)
@@ -39,6 +42,7 @@ export default function EditEvent(props) {
 		} else {
 			firebase.db.collection('events').doc(eventid).set({
 				...event,
+				description: description,
 				coverImage: {}
 			}).then(resp => {
 				props.history.push(`/event/${eventid}`)
@@ -176,19 +180,13 @@ export default function EditEvent(props) {
 					})
 				}}
 			/>
-			<div><label className='update-event-label'>description</label></div>
-			<textarea
-				rows='10'
-				className='update-event-input'
-				name='description'
-				value={event.description}
-				onChange={(e) => {
-					setEvent({
-						...event,
-						description: e.target.value
-					})
-				}}
-			/>
+			{event.description ?
+				<div style={{width: '90%', margin: '0 auto'}}>
+					<Editors raw={event.description} description={description} setDescription={setDescription} />
+				</div>
+				:
+				null
+			}
 				<button
 					className='update-event-submit'
 					onClick={handleSubmit}

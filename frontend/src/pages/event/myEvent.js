@@ -5,7 +5,9 @@ import firebase from '../../firebase/index';
 import './event.css';
 import logo from '../../images/logo5.png';
 import {Link} from 'react-router-dom';
+import 'draft-js/dist/Draft.css';
 
+import {Editor, EditorState, convertFromRaw} from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -209,8 +211,7 @@ export default function MyEvent(props) {
 								</div>
 								:
 								<div>
-									<p style={{margin: '0', color: 'grey'}}>from {getStdDate(event.timeStamp.heldOn)}</p>
-									<p style={{margin: '0', color: 'grey'}}>to {event.timeStamp.finishedOn}</p>
+									<p style={{margin: '0', color: 'grey'}}>from {getStdDate(event.timeStamp.heldOn)} to {getStdDate(event.timeStamp.finishedOn)}</p>
 								</div>
 							}
 							{event.venue ?
@@ -220,7 +221,14 @@ export default function MyEvent(props) {
 							}
 							{event.description ?
 								<div>
-									<pre style={{fontFamily: FONT}}>{event.description}</pre>
+									{typeof(event.description) == "object" ?
+										<Editor
+											editorState={EditorState.createWithContent(convertFromRaw(event.description))}
+											readOnly={true}
+										/>
+										:
+										<pre style={{fontFamily: FONT}}>{event.description}</pre>
+									}
 								</div>
 								:
 								null

@@ -4,10 +4,22 @@
 
 .committee-content {
 	color: black;
+	width: 95%;
+	margin: 10px auto;
 }
 
 .registered-user .svg-inline--fa {
 	font-size: 30px;
+}
+
+.pre-description {
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: left;
+	word-wrap: break-word;
+	white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;
 }
 
 @media only screen and (max-width: 720px) {

@@ -10,11 +10,8 @@ import { faList, faListOl, faBold, faItalic, faUnderline } from '@fortawesome/fr
 class Editors extends Component{
   constructor(props) {
     super(props);
-    if(this.props.raw && Object.keys(this.props.raw).length > 0){
-      this.state = {editorState: EditorState.createWithContent(convertFromRaw({...this.props.raw, entityMap: {}})), characters: 0};
-    } else {
-      this.state = {editorState: EditorState.createEmpty()};
-    }
+    console.log(this.props)
+    this.state = {editorState: EditorState.createEmpty()};
     this.onChange = editorState => {
     //   let contentState = editorState.getCurrentContent();
       this.setState({editorState: editorState});
@@ -22,6 +19,14 @@ class Editors extends Component{
     };
   }
 
+  componentDidMount() {
+    if(this.props.raw){
+      console.log(true);
+      this.setState({
+        editorState: EditorState.createWithContent(convertFromRaw(this.props.raw))
+      })
+    }
+  }
 
   handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
@@ -56,7 +61,7 @@ class Editors extends Component{
     return (
       <div className='editor'>
         <Editor 
-            editorState={this.state?.editorState ? this.state.editorState : EditorState.createEmpty()} 
+            editorState={this.state.editorState} 
             placeholder="Give a brief description" 
             onChange={this.onChange} 
             handleKeyCommand={this.handleKeyCommand}

@@ -57,7 +57,6 @@ export default function MyUser(props) {
 						top: "195px",
 						zIndex: "-1",
 						left: "0",
-						boxShadow: '0 10px 20px #ff003f'
 					}} />
 					<div className='image-box'>
 						<img alt='' src={currentUser.data.profilePicture}/>

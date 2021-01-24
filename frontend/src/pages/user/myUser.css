@@ -136,6 +136,10 @@
 		width: 100%;
 	}
 
+	.post-container h3 {
+		margin: 0 0 5px;
+	}
+
 	.main-popup {
 		width: 90%;
 		left: 3%;

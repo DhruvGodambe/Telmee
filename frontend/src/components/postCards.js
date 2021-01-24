@@ -72,7 +72,8 @@ export function PostCard(props) {
 						cursor: 'pointer',
 						background: 'inherit',
 						color: 'inherit',
-						boxShadow: 'none'
+						boxShadow: 'none',
+						padding: '5px'
 					}}
 						onClick={() => {setPopup(true)}}
 					><FontAwesomeIcon icon={faTimes}/></button>

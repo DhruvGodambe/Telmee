@@ -1,0 +1,76 @@
+.editor > .DraftEditor-root {
+    margin-top: 2px !important;
+    height: 253px !important;
+    width: 94.5% !important;
+    font-size: .9rem !important;
+    resize: none !important;
+    caret-color: #e2312b;
+    border: 1px solid #ddd;
+    outline: none !important;
+    border-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    padding: 0 .875rem .1em;
+    padding-top: 10px;
+    transition: border 0.2s ease-in;
+    overflow-y: auto;
+}
+
+.editor > .DraftEditor-root:hover {
+    border: 1px solid #e2312b !important;
+}
+
+.editor__buttons {
+    width: 100%;
+    background: #d39f9d;
+    border: 1px solid #d6e0e1;
+    border-radius: 0 0 .3125rem .3125rem;
+    border-top: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.editor__buttons > div > .MuiSvgIcon-root  {
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-right: .5rem;
+    color: #e2312b !important;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease-in;
+}
+
+.editor__buttons > div > .MuiSvgIcon-root:hover {
+    background-color: #ddd;
+    border-radius: 50px;
+}
+
+.editor-icons {
+    width: 1.4rem;
+    height: 1.4rem;
+    color: white !important;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease-in;
+}
+
+.editor-icons:hover {
+    background-color: #ddd;
+}
+
+@media(max-width: 414px) {
+    .editor > .DraftEditor-root {
+        width: 92.5% !important;
+    }
+
+    .editor__buttons {
+        width: 100%;
+    }
+}
+
+@media(max-width: 360px) {
+    .editor > .DraftEditor-root {
+        width: 91% !important;
+        height: 220px !important;
+    }
+}

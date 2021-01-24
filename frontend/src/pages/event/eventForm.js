@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import {globalContext} from '../../globalContext';
 import Cookies from 'js-cookie';
 import firebase from '../../firebase/index';
+import Editors from '../../components/DraftjsEditor';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +10,8 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Switch from "react-switch";
 import Loader from 'react-loader-spinner';
+import {Editor, EditorState} from 'draft-js';
+import 'draft-js/dist/Draft.css';
 
 export const PersonalEvent = (props) => {
 	const [event, setEvent] = useState({})
@@ -62,12 +65,13 @@ export const PersonalEvent = (props) => {
 
 export const OrganizationEvent = (props) => {
 	const [event, setEvent] = useState({eventForm: false})
+	const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
 	const [popup, setPopup] = useState(false)
 	const [loading, setLoading] = useState(false);
 	const [submit, setSubmit] = useState(false)
 	const [uploaded, setUpload] = useState(false);
 	const [base64, setBase64] = useState('')
-	const [instructors, setInstructors] = useState([])
+	const [description, setDescription] = useState({})
 	const [oneDay, setOneDay] = useState('')
 	const {currentUser, setCurrentUser} = useContext(globalContext);
 	const userID = Cookies.get('userID');
@@ -90,6 +94,10 @@ export const OrganizationEvent = (props) => {
 
 	const handleSubmit = (e) => {
 		setLoading(true);
+		setEvent({
+			...event,
+			description: description
+		})
 		setCurrentUser({
 			...currentUser,
 			data: {
@@ -254,30 +262,34 @@ export const OrganizationEvent = (props) => {
 				}}
 				className='create-event-file'
 			/>
-			<div style={{margin: '10px auto', width: '60%', display: 'flex'}}>
+			<div className="event-box-oneday">
 				<label style={{width: '50%'}}>one day event? </label>
-				<div style={{width: '50%'}}>
-					<input
-						type='radio'
-						name='oneDay'
-						required
-						onChange={(e) => {
-							if(e.target.value == 'on'){
-								setOneDay('true');
-							}
-						}}
-						name='oneDay'/>yes
+				<div style={{width: '50%', display: 'flex'}}>
+					<div className="event-box-binary">
+						<input
+							type='radio'
+							name='oneDay'
+							required
+							onChange={(e) => {
+								if(e.target.value == 'on'){
+									setOneDay('true');
+								}
+							}}
+							name='oneDay'/>yes
+					</div>
 					<br/>
-					<input
-						type='radio'
-						name='oneDay'
-						required
-						onChange={(e) => {
-							if(e.target.value == 'on'){
-								setOneDay('false')
-							}
-						}}
-						name='oneDay' />no
+					<div className="event-box-binary">
+						<input
+							type='radio'
+							name='oneDay'
+							required
+							onChange={(e) => {
+								if(e.target.value == 'on'){
+									setOneDay('false')
+								}
+							}}
+							name='oneDay' />no
+					</div>
 				</div>
 			</div>
 			{oneDay !== '' ? 
@@ -360,24 +372,12 @@ export const OrganizationEvent = (props) => {
 					})
 				}}
 			/>
-			<textarea
-				name='description'
-				required
-				placeholder='event description'
-				style={{resize: 'none', fontFamily: 'Arial, Monospaced', fontSize: '14px'}}
-				type='text'
-				rows='8'
-				onChange={(e) => {
-					setEvent({
-						...event,
-						description: e.target.value
-					})
-				}}
-				className='create-event-input'
-			/>
+			<div style={{width: '90%', margin: '0 auto'}}>
+				<Editors description={description} setDescription={setDescription} />
+			</div>
 			<div style={{
 				margin: '10px auto',
-				width: '60%',
+				maxWidth: '80%',
 				display: 'flex',
 			}}>
 				<Switch 
@@ -390,7 +390,6 @@ export const OrganizationEvent = (props) => {
 					checked={event.eventForm} 
 				/>
 				<div style={{
-					width: '90%'
 				}}>  create a form for this event</div>
 			</div>
 			<button

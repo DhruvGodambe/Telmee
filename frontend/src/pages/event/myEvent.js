@@ -64,44 +64,45 @@ export default function MyEvent(props) {
 		}
 	}, [currentUser])
 
-	useEffect(() => {
-		var str = ''
-		if(event.description){
-			console.log('description', event)
-			event.description.split(' ').forEach(val => {
-			    if(val.includes('.')){
-			        if(val.indexOf('.') < val.length -1){
-			        	console.log('val:', val)
-			        	if(val.includes('https')){
-				            var temp = `<a href='${val}'>`
-				        	console.log('temp: ', temp)
-				            var temp2 = temp.concat(val)
-				            temp2 = temp2.concat('</a> ')
-				            str = str.concat(temp2)
-				        } else {
-				        	var temp = `<a href='https://${val}'>`
-				        	console.log('temp: ', temp)
-				            var temp2 = temp.concat(val)
-				            temp2 = temp2.concat('</a> ')
-				            str = str.concat(temp2)
-				        }
-			        } else {
-			            str = str.concat(`${val} `)
-			        }
-			    } else {
-			        str = str.concat(`${val} `)
-			    }
-			})
-		}
-		setDescription(str)
-	}, [event.description])
+	// useEffect(() => {
+	// 	var str = ''
+	// 	if(event.description){
+	// 		console.log('description', event)
+	// 		event.description.split(' ').forEach(val => {
+	// 		    if(val.includes('.')){
+	// 		        if(val.indexOf('.') < val.length -1){
+	// 		        	console.log('val:', val)
+	// 		        	if(val.includes('https')){
+	// 			            var temp = `<a href='${val}'>`
+	// 			        	console.log('temp: ', temp)
+	// 			            var temp2 = temp.concat(val)
+	// 			            temp2 = temp2.concat('</a> ')
+	// 			            str = str.concat(temp2)
+	// 			        } else {
+	// 			        	var temp = `<a href='https://${val}'>`
+	// 			        	console.log('temp: ', temp)
+	// 			            var temp2 = temp.concat(val)
+	// 			            temp2 = temp2.concat('</a> ')
+	// 			            str = str.concat(temp2)
+	// 			        }
+	// 		        } else {
+	// 		            str = str.concat(`${val} `)
+	// 		        }
+	// 		    } else {
+	// 		        str = str.concat(`${val} `)
+	// 		    }
+	// 		})
+	// 	}
+	// 	setDescription(str)
+	// }, [event.description])
 
 	const getStdDate = (dateStr) => {
 		const d = new Date(dateStr);
 		return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
 	}
 
-	const FONT = 'Palatino, serif';
+	// const FONT = 'Palatino, serif';
+	const FONT = 'Helvetica, Arial, sans-serif';
 
 	return(
 		<div className='root-event' style={{fontFamily: FONT}}>
@@ -126,7 +127,7 @@ export default function MyEvent(props) {
 							:
 							<img width='100%' src={logo} />
 						}
-						<h2>{event.name}</h2>
+						<h2 style={{margin: '5px'}}>{event.name}</h2>
 					</div>
 					{event.name ?
 						<div className='event-content'>
@@ -140,8 +141,8 @@ export default function MyEvent(props) {
 										})
 									}}
 								>
-									<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faUsers}/></div>
-									<p style={{width: '80%', fontWeight: 'bold'}}> registered users </p>
+									<div style={{margin: 'auto 5px', width: 'auto'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faUsers}/></div>
+									<p style={{width: 'auto', fontWeight: 'bold'}}> registered users </p>
 								</button>
 							</div>
 							<div style={{margin: '10px 0'}}>
@@ -158,72 +159,69 @@ export default function MyEvent(props) {
 										})
 									}}
 								>
-									<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faUsers}/></div>
-									<p style={{width: '80%', fontWeight: 'bold'}}> attended users </p>
+									<div style={{margin: 'auto 5px', width: 'auto'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faUsers}/></div>
+									<p style={{width: 'auto', fontWeight: 'bold'}}> attended users </p>
 								</button>
 							</div>
-							<div style={{margin: '10px 0'}}>
-								<button
-									className='event-nav'
-									onClick={() => {
-										props.history.push({
-											pathname: `/event/edit/${eventid}`,
-											query: event
-										})
-									}}
-								>
-									<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faEdit}/></div>
-									<p style={{width: '80%'}}>edit</p>
-								</button>
+							<div style={{width: '100%'}}>
+								<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 0'}}>
+									<button
+										className='event-nav'
+										onClick={() => {
+											props.history.push({
+												pathname: `/event/edit/${eventid}`,
+												query: event
+											})
+										}}
+									>
+										<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faEdit}/></div>
+										<p style={{width: '80%'}}>edit</p>
+									</button>
+								</div>
+								<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 2.5%'}}>
+									<button
+										className='event-nav'
+										onClick={() => {
+											props.history.push({
+												pathname: event.eventForm ? `/event/view_form/${eventid}` : `/create/eventForm/${eventid}`,
+												query: {
+													inputs: event.formTemplate
+												}
+											})
+										}}
+									>
+										<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faEdit}/></div>
+										<p style={{width: '80%'}}>{event.eventForm ? 'view form' : 'create a form'}</p>
+									</button>
+								</div>
 							</div>
-							<div style={{margin: '10px 0'}}>
-								<button
-									className='event-nav'
-									onClick={() => {
-										props.history.push({
-											pathname: event.eventForm ? `/event/view_form/${eventid}` : `/create/eventForm/${eventid}`,
-											query: {
-												inputs: event.formTemplate
-											}
-										})
-									}}
-								>
-									<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faEdit}/></div>
-									<p style={{width: '80%'}}>{event.eventForm ? 'view form' : 'create a form'}</p>
-								</button>
-							</div>
-							<h3>
-								Organized by 
+							<h3 style={{margin: '20px 0 5px'}}>Organized by
 								<Link
-									className='link-tag'
-									style={{textDecoration: 'underline'}}
+									style={{ marginLeft: '5px', color: '#ff003f', opacity: '0.5'}}
 									to={`/committee/${event.organizingCommittee.id}`}
 								>
-									{event.organizingCommittee.name}
+								{event.organizingCommittee.name}
 								</Link>
 							</h3>
 							{event.oneDay ?
 								<div>
-									<p>will be held on {getStdDate(event.timeStamp.heldOn)}</p>
+									<p style={{margin: '0', color: 'grey'}}>will be held on {getStdDate(event.timeStamp.heldOn)}</p>
 								</div>
 								:
 								<div>
-									<p>from {getStdDate(event.timeStamp.heldOn)}</p>
-									<p>to {getStdDate(event.timeStamp.finishedOn)}</p>
+									<p style={{margin: '0', color: 'grey'}}>from {getStdDate(event.timeStamp.heldOn)}</p>
+									<p style={{margin: '0', color: 'grey'}}>to {event.timeStamp.finishedOn}</p>
 								</div>
 							}
 							{event.venue ?
-								<p>venue: {event.venue}</p>
+								<p style={{margin: '5px 0 30px', color: 'grey'}}>venue: {event.venue}</p>
 								:
 								null
 							}
 							{event.description ?
-								description !== '' ?
-									<div>
-										<pre style={{fontFamily: FONT}} dangerouslySetInnerHTML={{__html: description}}></pre>
-									</div>
-									:
+								<div>
 									<pre style={{fontFamily: FONT}}>{event.description}</pre>
+								</div>
 								:
 								null
 							}

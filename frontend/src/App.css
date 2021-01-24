@@ -61,6 +61,8 @@ a {
   .side {
     height: 0;
     right: 0;
+    top: 50px;
+    opacity: 0;
     /* transition: .5s; */
   }
 
@@ -76,6 +78,7 @@ a {
     width: 100%;
     top: 0;
     right: 0;
+    opacity: 1;
     background: linear-gradient(#a6102b, #ff0066);
     box-shadow: 1px 1px solid red;
     height: 100%;

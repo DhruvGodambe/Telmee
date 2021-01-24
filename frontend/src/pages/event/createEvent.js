@@ -13,9 +13,9 @@ export default function CreateEvent(props) {
 	const userID = Cookies.get('userID')
 
 	useEffect(() => {
-		if(!userID){
-			props.history.push('/login')
-		}
+		// if(!userID){
+		// 	props.history.push('/login')
+		// }
 	}, [])
 
 	return(
@@ -23,7 +23,8 @@ export default function CreateEvent(props) {
 			<div style={{width: '100%', margin: '0', backgroundImage: `url(${bg})`, height: '180px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} >
 				<br/>
 				<br/>
-				<h1 style={{fontSize: '40px'}}>Host an Event</h1>
+				<br/>
+				<h1>Host an Event</h1>
 			</div>
 			{eventType == 'organization_event' ?
 				<OrganizationEvent {...props}/>

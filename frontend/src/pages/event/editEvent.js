@@ -130,19 +130,6 @@ export default function EditEvent(props) {
 					/>
 				</div>
 			}
-			<div><label className='update-event-label'>description</label></div>
-			<textarea
-				rows='10'
-				className='update-event-input'
-				name='description'
-				value={event.description}
-				onChange={(e) => {
-					setEvent({
-						...event,
-						description: e.target.value
-					})
-				}}
-			/>
 			{!upload ?
 				<div className='update-event-input' style={{textAlign: 'center'}}>
 					<label htmlFor='coverImage'><FontAwesomeIcon icon={faUpload}/> change cover image</label>
@@ -186,6 +173,19 @@ export default function EditEvent(props) {
 					setEvent({
 						...event,
 						venue: e.target.value
+					})
+				}}
+			/>
+			<div><label className='update-event-label'>description</label></div>
+			<textarea
+				rows='10'
+				className='update-event-input'
+				name='description'
+				value={event.description}
+				onChange={(e) => {
+					setEvent({
+						...event,
+						description: e.target.value
 					})
 				}}
 			/>

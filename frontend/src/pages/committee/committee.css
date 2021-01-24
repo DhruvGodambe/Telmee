@@ -23,8 +23,8 @@
 	}
 
 	.registered-user p {
-		margin: 7px auto;
-		font-size: 14px;
+		/* margin: 7px auto; */
+		font-size: 12px;
 	}
 
 	.member-button {

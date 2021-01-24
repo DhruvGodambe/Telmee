@@ -36,7 +36,7 @@ export default function Event(props) {
 			{admin ?
 				<MyEvent {...props} />
 				:
-				<OtherEvent {...props} />
+				<MyEvent {...props} />
 			}
 		</div>
 	)

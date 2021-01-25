@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import firebase from '../../firebase/index'
+import Editors from '../../components/DraftjsEditor';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -13,10 +14,12 @@ export default function EditCommittee(props) {
 	const [members, setMembers] = useState([])
 	const [mem, setMem] = useState()
 	const [loading, setLoading] = useState(false)
+	const [description, setDescription] = useState({})
 
 	useEffect(() => {
 		if(props.location.query && Object.keys(props.location.query).length > 0){
 			setCommittee(props.location.query)
+			setDescription(props.location.query.description)
 		} else {
 			props.history.goBack()
 		}
@@ -29,14 +32,15 @@ export default function EditCommittee(props) {
 			.then(res => {
 				firebase.db.collection('committees').doc(committeeid).update({
 					...committee,
-					coverImage: {}
+					coverImage: {},
+					description: description
 				})
 				.then(resp => {
 					props.history.push(`/committee/${committeeid}`)
 				})
 			})
 		} else {
-			firebase.db.collection('committees').doc(committeeid).update(committee)
+			firebase.db.collection('committees').doc(committeeid).update({...committee, description: description})
 			.then(resp => {
 				props.history.push(`/committee/${committeeid}`)
 			})
@@ -78,21 +82,15 @@ export default function EditCommittee(props) {
 		{!loading ?
 			<div>
 				<div><label className='update-event-label'>description</label></div>
-				<textarea
-					type='text'
-					className='update-event-input'
-					name='event title'
-					rows='10'
-					value={committee && committee.description ? committee.description : ''}
-					onChange={(e) => {
-						setCommittee({
-							...committee,
-							description: e.target.value
-						})
-					}}
-				/>
+				{committee.description ?
+					<div style={{width: '100%', margin: '0 auto'}}>
+						<Editors raw={committee.description} description={description} setDescription={setDescription} />
+					</div>
+					:
+					null
+				}
 				{!upload ?
-					<div className='update-event-input' style={{textAlign: 'center'}}>
+					<div className='update-event-input' style={{textAlign: 'center', marginTop: '20px'}}>
 						<label htmlFor='coverImage'><FontAwesomeIcon icon={faUpload}/> change cover image</label>
 						<input
 							style={{display: 'none'}}
@@ -127,10 +125,11 @@ export default function EditCommittee(props) {
 				}
 				<button
 					className='update-event-submit'
+					style={{background: '#eee', color: 'black'}}
 					onClick={handleSubmit}>update changes</button>
 				<button
 					className='update-event-submit'
-					style={{background: '#f03', color: 'white', margin: '20px'}}
+					style={{background: '#f03', color: 'white'}}
 					onClick={handleDelete}>delete organization</button>
 			</div>
 			:

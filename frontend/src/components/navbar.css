@@ -40,7 +40,7 @@
 .icons {
 	width: 33%;
 	padding: 10px 0;
-	font-size: 24px;
+	font-size: 20px;
 }
 
 .icons:nth-child(4){
@@ -48,6 +48,11 @@
 }
 
 @media only screen and (max-width: 720px){
+	.navbar h1 {
+		font-size: 25px;
+		letter-spacing: 2px;
+	}
+
 	.nav-icons {
 		width: 100%;
 	}

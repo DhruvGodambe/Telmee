@@ -81,7 +81,7 @@ export default function DynamicEventForm(props) {
 	return(
 		<div className='create-form-root'>
 			<h1>Create A Registeration Form</h1>
-			<p style={{color: 'grey', margin: '10px auto', width: '60%'}} >PS: basic information like name, email id and contact number will be directly added when the person registers for the event</p>
+			<p style={{color: 'grey', margin: '10px auto', width: '90%'}} >Note: basic information like name, email id and contact number will be directly recorded when the person registers for the event. You don't need to ask for these details in the custom form.</p>
 			<div>
 				<div className='form-box'>
 					{inputs.map((val, ind) => (

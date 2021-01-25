@@ -19,6 +19,7 @@ export default function EditEvent(props) {
 			props.history.goBack();
 		} else {
 			setEvent(props.location.query)
+			setDescription(props.location.query.description)
 			console.log(props.location.query)
 		}
 	}, [])

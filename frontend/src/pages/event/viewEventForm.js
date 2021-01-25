@@ -2,8 +2,7 @@ import React , { useState, useEffect} from 'react'
 import firebase from '../../firebase/index'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 export default function ViewEventForm(props) {
 	const eventid = props.history.location.pathname.split('/view_form/')[1]
@@ -25,14 +24,26 @@ export default function ViewEventForm(props) {
 	}, [])
 
 	const handleSubmit = () => {
-		firebase.db.collection('events').doc(eventid).update({
-			formTemplate: inputs
-		}).then(res => {
-			props.history.goBack()
-		})
-		.catch(err => {
-			console.log(err)
-		})
+		if(inputs.length > 0){
+			firebase.db.collection('events').doc(eventid).update({
+				formTemplate: inputs
+			}).then(res => {
+				props.history.goBack()
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		} else {
+			firebase.db.collection('events').doc(eventid).update({
+				formTemplate: [],
+				eventForm: false
+			}).then(res => {
+				props.history.goBack()
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		}
 	}
 
 	return(
@@ -46,7 +57,7 @@ export default function ViewEventForm(props) {
 				setInputs={setInputs}
 				fieldIndex={fieldIndex}
 			/>
-			<h2 className='committee-title'>Event Form</h2>
+			<h2 className='committee-title'>Event Form Preview</h2>
 			<div style={{textAlign: 'left'}}>
 			<button
 			onClick={() => {
@@ -68,7 +79,7 @@ export default function ViewEventForm(props) {
 									setPopup(true)
 									setField(val)
 									setFieldIndex(ind)
-								}} icon={faBars} />
+								}} icon={faEllipsisV} />
 								</div>
 							<p className='register-form-label'>{val.name}</p>
 							<select
@@ -92,7 +103,7 @@ export default function ViewEventForm(props) {
 									setPopup(true)
 									setField(val)
 									setFieldIndex(ind)
-								}} icon={faBars} />
+								}} icon={faEllipsisV} />
 							</div>
 							<p className='register-form-label'>{val.name}</p>
 							<input
@@ -125,9 +136,9 @@ export default function ViewEventForm(props) {
 			}}>	
 				<button
 					style={{
-						padding: '20px',
+						padding: '10px',
 						margin: '0 auto',
-						fontSize: '20px',
+						fontSize: '18px',
 						borderRadius: '15px'
 					}}
 					onClick={handleSubmit}
@@ -148,6 +159,14 @@ const Popup = (props) => {
 		setPopup(false)
 		var temp = inputs;
 		temp[fieldIndex] = field
+		setInputs(temp)
+		console.log('inputs: ', inputs)
+	}
+
+	const handleDelete = () => {
+		setPopup(false)
+		var temp = inputs;
+		temp = temp.filter((val, ind) => ind !== fieldIndex);
 		setInputs(temp)
 		console.log('inputs: ', inputs)
 	}
@@ -183,17 +202,23 @@ const Popup = (props) => {
 											type: e.target.value,
 											options: []
 										})
+									} else {
+										setField({
+											...field,
+											type: e.target.value
+										})
 									}
 									console.log(e)
 								}}
+								value={field.type}
 								className='create-event-input'>
 								<option value='options'>list of options</option>
-								<option>text</option>
-								<option>number</option>
+								<option value="text">text</option>
+								<option value="number">number</option>
 							</select>
 							<p className='register-form-label'>options</p>
 							<div style={{
-								height: '270px',
+								height: '230px',
 								overflow: 'scroll'
 							}}>
 								{field.options ? field.options.map((opt, index) => (
@@ -257,6 +282,9 @@ const Popup = (props) => {
 					}
 					<div>
 						<button onClick={handleSubmit}>change</button>
+					</div>
+					<div>
+						<button onClick={handleDelete}>delete question</button>
 					</div>
 				</div>
 				:

@@ -38,15 +38,14 @@ export function PostCard(props) {
 				<img alt='' src={image} />
 			</div>
 			<div style={{padding: '2%'}}>
-				<h3>
+				<p style={{margin: '5px 0'}}>{post.description}</p>
+				<p style={{margin: '10px 0 5px'}}>
 					<Link
 						to={`/event/past/${post.eventid}`}
-						style={{color: '#ff003f'}}
 					>{post.eventName}
 					</Link>
-				</h3>
-				<p style={{margin: '0'}}>{post.description}</p>
-				<p 
+				</p>
+				{/* <p 
 					style={{
 						color: 'grey',
 						fontSize: '15px',
@@ -58,7 +57,7 @@ export function PostCard(props) {
 						to={`/user/${post.userid}`}
 						style={{marginLeft: '5px', color: '#333'}}
 					>{post.user}</Link>
-				</p>
+				</p> */}
 				<p 
 					style={{
 						color: 'grey',
@@ -66,7 +65,7 @@ export function PostCard(props) {
 						lineHeight: '12px',
 						margin: '5px 0'
 					}}
-				>on {getStdDate(post.postedOn)} at {getStdTime(post.postedOn)}</p>
+				>{getStdDate(post.postedOn)} at {getStdTime(post.postedOn)}</p>
 				<div style={{textAlign: 'right'}}>
 					<button style={{
 						cursor: 'pointer',

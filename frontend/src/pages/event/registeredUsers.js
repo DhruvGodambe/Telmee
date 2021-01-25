@@ -126,7 +126,7 @@ const UserCard = (props) => {
 	return(
 		<div className='registered-user-box'>
 			<div className='registered-user-image-box'>
-				<img width='100%' src={user.profilePicture} />
+				<img width='100%' style={{borderRadius: '10px'}} src={user.profilePicture} />
 				<p style={{wordWrap: 'break-word'}}><b>{user.name}</b></p>
 			</div>
 			<div className='registered-user-details'>

@@ -14,7 +14,7 @@ export default function Navbar() {
 	const {search , currentUser, setSearch, sidebar, setSidebar, loggedIn} = useContext(globalContext);
 	return(
 		<div className='navbar' >
-			<h1 style={{letterSpacing: '3px'}}>Telmee</h1>
+			<h1>Telmee</h1>
 			<p>event sharing social network</p>
 		</div>
 	)

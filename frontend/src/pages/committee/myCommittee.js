@@ -102,14 +102,14 @@ export default function MyCommittee(props){
 						})
 					}}
 				>
-					<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faUsers}/></div>
-					<p style={{width: '80%', fontWeight: 'bold'}}> members </p>
+					<div style={{margin: '5px'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faUsers}/></div>
+					<p style={{fontWeight: 'bold'}}> members </p>
 				</button>
 			</div>
-			<div style={{margin: '10px'}}>
+			<div style={{margin: '10px', display: 'flex'}}>
 				<button
-					style={{minWidth: '40%'}}
 					className='event-nav'
+					style={{margin: '5px 5px 0 0'}}
 					onClick={() => {
 						props.history.push({
 							pathname: `/committee/add_images/${committeeid}`,
@@ -119,14 +119,12 @@ export default function MyCommittee(props){
 						})
 					}}
 				>
-					<div style={{margin: '5px 10px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faCameraRetro}/></div>
-					<p style={{width: '80%', fontWeight: 'bold'}}> add images </p>
+					<div style={{margin: '5px 10px'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faCameraRetro}/></div>
+					<p style={{fontWeight: 'bold'}}> add images </p>
 				</button>
-			</div>
-			<div style={{margin: '10px'}}>
 				<button
-					style={{minWidth: '40%'}}
 					className='event-nav'
+					style={{margin: '5px 5px 0 0'}}
 					onClick={() => {
 						props.history.push({
 							pathname: `/committee/edit/${committeeid}`,
@@ -134,8 +132,8 @@ export default function MyCommittee(props){
 						})
 					}}
 				>
-					<div style={{margin: '5px 10px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faEdit}/></div>
-					<p style={{width: '80%', fontWeight: 'bold'}}> edit </p>
+					<div style={{margin: '5px 10px'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faEdit}/></div>
+					<p style={{fontWeight: 'bold'}}> edit </p>
 				</button>
 			</div>
 			<div style={{
@@ -193,7 +191,7 @@ export default function MyCommittee(props){
 							readOnly={true}
 						/>
 						:
-						<pre style={{fontFamily: "Helvetica"}}>{committee.description}</pre>
+						<pre className="pre-description">{committee.description}</pre>
 					}
 				</div>
 				:

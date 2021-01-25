@@ -7,7 +7,7 @@ import MyCommittee from './myCommittee';
 
 export default function Committee(props) {
 	const committeeid = props.history.location.pathname.split('/committee/')[1]
-	const [name, setName] = useState('')
+	const [Id, setId] = useState('')
 	const {currentUser} = useContext(globalContext)
 	const [myComm, setMyComm] = useState(false)
 
@@ -15,24 +15,21 @@ export default function Committee(props) {
 		firebase.db.collection('committees').doc(committeeid).get()
 		.then(res => {
 			if(res.exists){
-				setName(res.data().name)
+				setId(res.id)
 			}
 		})
 	}, [])
 
 	useEffect(() => {
-		console.log(currentUser)
-		if(currentUser.data && currentUser.data.committee && name !== ''){
+		if(currentUser.data?.committee && Id !== ''){
+			console.log(currentUser.data.committee)
 			currentUser.data.committee.forEach(comm => {
-				if(name == comm.name) {
+				if(Id == comm.id) {
 					setMyComm(true) 
-				} else {
-					setMyComm(false)
 				}
 			})
 		}
-
-	}, [currentUser, name])
+	}, [currentUser, Id])
 
 	return(
 		<div>

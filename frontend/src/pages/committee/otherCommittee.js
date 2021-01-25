@@ -100,7 +100,9 @@ export default function OtherCommittee(props){
 				<button
 					className='event-nav registered-user member-button'
 					onClick={() => {
-						setPopup(true)
+						props.history.push({
+							pathname: `/committee/members/${committeeid}`,
+						})
 					}}
 				>
 					<div style={{margin: '5px', width: '20%'}}>

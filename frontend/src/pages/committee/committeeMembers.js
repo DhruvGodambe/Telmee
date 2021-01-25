@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import firebase from '../../firebase/index'
 import './committee.css'
+import {globalContext} from '../../globalContext'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -10,12 +11,15 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function CommitteeMembers(props) {
 	const committeeid = props.history.location.pathname.split('/members/')[1]
+	const {currentUser} = useContext(globalContext)
 	const [committee, setCommittee] = useState({})
+	const [Id, setId] = useState('');
 	const [members, setMembers] = useState([])
 	const [user, setUser] = useState({})
 	const [popup, setPopup] = useState(false)
 	const [optionPopup, setOptionPopup] = useState(false)
 	const [optionUser, setOptionUser] = useState({})
+	const [myComm, setMyComm] = useState(false);
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
@@ -23,6 +27,7 @@ export default function CommitteeMembers(props) {
 		.then(res => {
 			if(res.exists){
 				setCommittee(res.data())
+				setId(res.id)
 				console.log(res.data())
 				res.data().members.forEach(member => {
 					firebase.db.collection('users').doc(member.id).get()
@@ -41,6 +46,17 @@ export default function CommitteeMembers(props) {
 			}
 		})
 	}, [])
+
+	useEffect(() => {
+		if(currentUser.data?.committee && Id !== ''){
+			console.log(currentUser.data.committee)
+			currentUser.data.committee.forEach(comm => {
+				if(Id == comm.id) {
+					setMyComm(true) 
+				}
+			})
+		}
+	}, [currentUser, Id])
 
 	useEffect(() => {
 		if(Object.keys(user).length > 0){
@@ -65,19 +81,24 @@ export default function CommitteeMembers(props) {
 				committeeid={committeeid}
 				members={committee.members}
 				committeeName={committee.name}
+				currentUser={currentUser}
 			/>
 			<h2 className='committee-title'>Members of {committee.name}</h2>
-			<div style={{margin: '20px'}}>
-				<button
-					className='event-nav registered-user'
-					onClick={() => {
-						setPopup(true)
-					}}
-				>
-					<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faUser}/></div>
-					<p style={{width: '80%', fontWeight: 'bold'}}> add member <b>+</b> </p>
-				</button>
-			</div>
+			{myComm ?
+				<div style={{margin: '20px'}}>
+					<button
+						className='event-nav registered-user'
+						onClick={() => {
+							setPopup(true)
+						}}
+					>
+						<div style={{margin: '5px', width: '20%'}}><FontAwesomeIcon style={{ fontSize: '30px'}} icon={faUser}/></div>
+						<p style={{width: '80%', fontWeight: 'bold'}}> add member <b>+</b> </p>
+					</button>
+				</div>
+				:
+				null
+			}
 			{members.map((val, ind) => {
 				return (
 					<MemberCard
@@ -99,21 +120,18 @@ const MemberCard = (props) => {
 	return(
 		<div className='registered-user-box'>
 			<div className='registered-user-image-box'>
-				<img width='100%' src={user.profilePicture} />
+				<img width='100%' style={{borderRadius: '10px'}} src={user.profilePicture} />
 			</div>
 			<div className='registered-user-details'>
-				<div style={{textAlign: 'right'}}>
-					<FontAwesomeIcon
-						onClick={() => {
-							setOptionPopup(true)
-							setOptionUser(user)
-						}}
-						style={{cursor: 'pointer', fontSize: '18px'}}
-						icon={faBars}
-					/>
-				</div>
+				<FontAwesomeIcon
+					onClick={() => {
+						setOptionPopup(true)
+						setOptionUser(user)
+					}}
+					style={{cursor: 'pointer', fontSize: '18px', position: 'absolute', left: '88%'}}
+					icon={faBars}
+				/>
 				<p style={{wordWrap: 'break-word'}}><b>{user.name}</b></p>
-				<p style={{wordWrap: 'break-word', color: 'grey'}}>{user.email}</p>
 				<p style={{wordWrap: 'break-word', color: 'grey'}}>position: {user.position}</p>
 			</div>
 			
@@ -263,13 +281,14 @@ const Popup = (props) => {
 }
 
 const OptionPopup = (props) => {
-	const {optionUser, setOptionUser, optionPopup, setOptionPopup, committeeName, committeeid, members} = props;
+	const {optionUser, setOptionUser, optionPopup, setOptionPopup, committeeName, committeeid, members, currentUser} = props;
 
 	useEffect(() => {
 		setOptionUser({
 			...optionUser,
 			oldPosition: optionUser.position
 		})
+		console.log(optionUser)
 	}, [optionPopup])
 
 	const handleSubmit = () => {
@@ -340,7 +359,7 @@ const OptionPopup = (props) => {
 					</div>
 					<div className='registered-user-box'>
 						<div className='registered-user-image-box'>
-							<img width='100%' src={optionUser.profilePicture} />
+							<img width='100%' style={{borderRadius: '10px'}} src={optionUser.profilePicture} />
 						</div>
 						<div className='registered-user-details'>
 							<p style={{color: 'black', wordWrap: 'break-word'}}><b>{optionUser.name}</b></p>
@@ -359,9 +378,13 @@ const OptionPopup = (props) => {
 									}}
 									/>
 							</p>
-							<button
-								onClick={handleRemoveMember}
-							>remove member</button>
+							{currentUser.id !== optionUser.id ?
+								<button
+									onClick={handleRemoveMember}
+								>remove member</button>
+								:
+								null
+							}
 						</div>
 					</div>
 					<button onClick={handleSubmit}>submit</button>

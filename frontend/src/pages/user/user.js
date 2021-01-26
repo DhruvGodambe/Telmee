@@ -63,6 +63,13 @@ export default function User(props) {
 					<div className='image-box'>
 						<img src={user.profilePicture}/>
 					</div>
+					<hr style={{
+						position: "absolute",
+						width: "99%",
+						top: "25%",
+						zIndex: "-1",
+						left: "0",
+					}} />
 					<h3>{user.name}</h3>
 					<div className='main-user'>
 						<div className='intro'>

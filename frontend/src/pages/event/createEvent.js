@@ -13,9 +13,9 @@ export default function CreateEvent(props) {
 	const userID = Cookies.get('userID')
 
 	useEffect(() => {
-		// if(!userID){
-		// 	props.history.push('/login')
-		// }
+		if(!userID){
+			props.history.push('/login')
+		}
 	}, [])
 
 	return(

@@ -106,6 +106,7 @@ export default function CommitteeMembers(props) {
 						key={ind}
 						setOptionPopup={setOptionPopup}
 						setOptionUser={setOptionUser}
+						myComm={myComm}
 					/>
 				)
 			})}
@@ -114,7 +115,7 @@ export default function CommitteeMembers(props) {
 }
 
 const MemberCard = (props) => {
-	const {user, setOptionPopup, setOptionUser} = props
+	const {user, setOptionPopup, setOptionUser, myComm} = props
 	const [selected, setSelected] = useState(false)
 
 	return(
@@ -129,6 +130,7 @@ const MemberCard = (props) => {
 						setOptionUser(user)
 					}}
 					style={{cursor: 'pointer', fontSize: '18px', position: 'absolute', left: '88%'}}
+					style={{display: myComm ? 'block' : 'none'}}
 					icon={faBars}
 				/>
 				<p style={{wordWrap: 'break-word'}}><b>{user.name}</b></p>

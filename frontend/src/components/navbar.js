@@ -15,7 +15,7 @@ export default function Navbar() {
 	return(
 		<div className='navbar' >
 			<h1>Telmee</h1>
-			<p>event sharing social network</p>
+			<p>an event sharing social network</p>
 		</div>
 	)
 }

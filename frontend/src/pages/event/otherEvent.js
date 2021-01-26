@@ -143,8 +143,7 @@ export default function OtherEvent(props) {
 							</div>
 							:
 							<div>
-								<p style={{margin: '0', color: 'grey'}}>from {getStdDate(event.timeStamp.heldOn)}</p>
-								<p style={{margin: '0', color: 'grey'}}>to {event.timeStamp.finishedOn}</p>
+								<p style={{margin: '0', color: 'grey'}}>from {getStdDate(event.timeStamp.heldOn)} to {getStdDate(event.timeStamp.finishedOn)}</p>
 							</div>
 						}
 						{event.venue ?

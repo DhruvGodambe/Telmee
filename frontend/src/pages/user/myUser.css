@@ -122,6 +122,10 @@
 	padding: 20px;
 }
 
+.user hr {
+	display: none;
+}
+
 @media only screen and (max-width: 720px) {
 	.user {
 		/* color: white; */
@@ -149,5 +153,9 @@
 	.intro button {
 		width: 30%;
 		margin: 5px auto;
+	}
+
+	.user hr {
+		display: block;
 	}
 }

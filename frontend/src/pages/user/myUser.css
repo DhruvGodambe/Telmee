@@ -150,9 +150,10 @@
 		left: 3%;
 	}
 
-	.intro button {
-		width: 30%;
-		margin: 5px auto;
+	.intro a button {
+		/* width: 30%; */
+		/* margin: 5px auto; */
+		font-size: 16px;
 	}
 
 	.user hr {

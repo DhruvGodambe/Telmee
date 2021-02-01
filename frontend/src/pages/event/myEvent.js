@@ -43,6 +43,7 @@ export default function MyEvent(props) {
 		})
 		.catch(err => {
 			setErrmsg('something went wrong!\n please reload or try again later')
+			// window.reload()
 		})
 		if(props.history.location.query == 'registered'){
 			setRegistered(true)
@@ -282,12 +283,7 @@ const RegisterPopup = (props) => {
 		} else {
 			if(event.registeredUsers){
 				eventRef.update({
-					registeredUsers: [
-						...event.registeredUsers,
-						{
-							id: currentUser.id,
-						}
-					]
+					registeredUsers: [...event.registeredUsers, currentUser.id]
 				})
 				.then(res => {
 					if(currentUser.data.registeredEvents){

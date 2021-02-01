@@ -4,6 +4,7 @@ import {globalContext} from '../../globalContext';
 import Loader from 'react-loader-spinner';
 import './myUser.css';
 import {PostCard3} from '../../components/postCards'
+import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +30,7 @@ export default function User(props) {
 							<div className='committee-member-child' key={ind}>
 								<p>{val['position']}</p>
 								<p>of</p>
-								<p>{val.name}</p>
+								<p><Link to={`/committee/${val.id}`} className='link-tag' >{val.name}</Link></p>
 							</div>
 						)
 					})
@@ -63,13 +64,14 @@ export default function User(props) {
 					<div className='image-box'>
 						<img src={user.profilePicture}/>
 					</div>
-					<hr style={{
+					{/* <hr style={{
 						position: "absolute",
 						width: "99%",
 						top: "25%",
 						zIndex: "-1",
 						left: "0",
-					}} />
+						display: user.profilePicture ? 'block' : 'none'
+					}} /> */}
 					<h3>{user.name}</h3>
 					<div className='main-user'>
 						<div className='intro'>

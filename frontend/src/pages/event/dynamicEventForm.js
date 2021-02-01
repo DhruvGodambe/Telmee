@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import './dynamicEventForm.css'
 import {globalContext} from '../../globalContext';
 import firebase from '../../firebase/index';
@@ -9,6 +9,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function DynamicEventForm(props) {
 	const eventid = props.history.location.pathname.split('/eventForm/')[1]
+	const history = useHistory();
 	const {currentUser, setCurrentUser} = useContext(globalContext);
 	const [event, setEvent] = useState({})
 	const [inputs, setInputs] = useState([]);
@@ -89,9 +90,9 @@ export default function DynamicEventForm(props) {
 							{val.type == 'options' ?
 								<div
 									style={{
-										background: '#aaa',
-										borderRadius: '20px',
-										padding: '20px 5px',
+										background: '#eee',
+										borderRadius: '10px',
+										padding: '10px 5px',
 									}} 
 									className='register-form-sub-div'>
 									<div>
@@ -115,9 +116,9 @@ export default function DynamicEventForm(props) {
 							:
 								<div
 									style={{
-										background: '#aaa',
-										borderRadius: '20px',
-										padding: '20px 5px',
+										background: '#eee',
+										borderRadius: '10px',
+										padding: '10px 5px',
 									}} 
 									className='register-form-sub-div'>
 									<div>
@@ -213,7 +214,7 @@ export default function DynamicEventForm(props) {
 				{inputs.length > 0 ?
 					<div>
 						<button className='create-event-input' type="button" onClick={handleCreateForm}>create form</button>
-						<button className='create-event-input' type="button" onClick={() => {}}>discard form</button>
+						<button className='create-event-input' type="button" onClick={() => {history.goBack()}}>discard form</button>
 					</div>
 					:
 					<div></div>

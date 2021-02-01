@@ -2,7 +2,7 @@
 	width: 60%;
 	margin: 0 auto;
 	background: #ddd;
-	border-radius: 20px;
+	border-radius: 10px;
 	padding: 5%;
 }
 
@@ -14,7 +14,7 @@
 
 .form-box select {
 	width: 60%;
-	font-size: 20px;
+	font-size: 16px;
 }
 
 .form-button {
@@ -33,7 +33,7 @@
 	}
 
 	.form-box {
-		width: 80%;
+		width: 85%;
 		padding: 5%;
 		color: black;
 	}

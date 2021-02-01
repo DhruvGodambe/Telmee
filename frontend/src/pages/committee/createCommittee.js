@@ -51,9 +51,21 @@ export default function CreateCommittee(props){
 							name: committee.name,
 							position: 'leader'
 						})
-					})
-					.then(response => {
-						props.history.push(`/committee/${result.id}`)
+					}).then(response => {
+						setCurrentUser({
+							...currentUser,
+							data: {
+								...currentUser.data,
+								committee: [...currentUser.data.committee, {
+									id: result.id,
+									name: committee.name,
+									position: 'leader'
+								}]
+							}
+						})
+						setTimeout(() => {
+							props.history.push(`/committee/${result.id}`)
+						}, 1000)
 					})
 				})
 				.catch(err => {console.log('firestore error: ', err)})
@@ -84,7 +96,9 @@ export default function CreateCommittee(props){
 					})
 				})
 				.then(response => {
-					props.history.push(`/committee/${result.id}`)
+					setTimeout(() => {
+						props.history.push(`/committee/${result.id}`)
+					}, 1000)
 				})
 			})
 			.catch(err => {console.log('firestore error: ', err)})
@@ -175,7 +189,7 @@ export default function CreateCommittee(props){
 				        color="#ff0033"
 				        height={100}
 				        width={100}
-				        timeout={10000} //3 secs
+				        timeout={1000000} //3 secs
 				    />
 			    </div>
 			}

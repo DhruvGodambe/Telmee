@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import firebase from '../../firebase/index'
 import Editors from '../../components/DraftjsEditor';
+import {globalContext} from '../../globalContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +9,7 @@ import Loader from 'react-loader-spinner';
 
 export default function EditCommittee(props) {
 	const committeeid = props.history.location.pathname.split('/edit/')[1]
+	const {currentUser, setCurrentUser} = useContext(globalContext)
 	const [committee, setCommittee] = useState({})
 	const [upload, setUpload] = useState(false)
 	const [base64, setBase64] = useState('')
@@ -47,35 +49,50 @@ export default function EditCommittee(props) {
 		}
 	}
 
-	const handleDelete = () => {
+	const handleDelete = async () => {
 		setLoading(true)
-		committee.members.forEach(member => {
-			firebase.db.collection('users').doc(member.id).update({
+		committee.members.forEach(async member => {
+			await firebase.db.collection('users').doc(member.id).update({
 				committee: firebase.firebase.firestore.FieldValue.arrayRemove({
 					id: committeeid,
 					name: committee.name,
 					position: member.position
 				})
 			})
-			.then(res => {
-				setMem(member)
-			})
+			
+		})
+		const committeeArray = currentUser.data.committee.filter(commm => commm.id !== committeeid)
+		setCurrentUser({
+			...currentUser,
+			data: {
+				...currentUser.data,
+				committee: committeeArray
+			}
+		})
+
+		committee.events.forEach(async eve => {
+			await firebase.db.collection('events').doc(eve).delete()
+		})
+
+		firebase.db.collection('committees').doc(committeeid).delete()
+		.then(res => {
+			props.history.push('/')
 		})
 	}
 
-	useEffect(() => {
-		if(members.length > 0){
-			const lastMember = members[members.length-1]
-			if(mem.id == lastMember.id){
-				firebase.db.collection('committees').doc(committeeid).delete()
-				.then(res => {
-					console.log('deleted committee')
-					props.history.push('/')
-				})
-			}
-		}
+	// useEffect(() => {
+	// 	if(members.length > 0){
+	// 		const lastMember = members[members.length-1]
+	// 		if(mem.id == lastMember.id){
+	// 			firebase.db.collection('committees').doc(committeeid).delete()
+	// 			.then(res => {
+	// 				console.log('deleted committee')
+	// 				props.history.push('/')
+	// 			})
+	// 		}
+	// 	}
 
-	}, [mem])
+	// }, [mem])
 
 	return(
 		<div className='update-event-box'>

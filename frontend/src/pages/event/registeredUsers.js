@@ -13,22 +13,42 @@ export default function RegisteredUsers(props) {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 		if(props.location.query && props.location.query.length > 0){
+			console.log(props.location.query)
 			props.location.query.forEach(user => {
-				firebase.db.collection('users').doc(user.id).get()
-				.then(result => {
-					setRegisteredUser({
-						name: result.data().name,
-						profilePicture: result.data().profilePicture,
-						details: {
-							...user,
-							email: result.data().email,
-							contact: result.data().contact
-						}
+				if(typeof(user) == "object"){
+					firebase.db.collection('users').doc(user.id).get()
+					.then(result => {
+						setRegisteredUser({
+							name: result.data().name,
+							profilePicture: result.data().profilePicture,
+							details: {
+								...user,
+								email: result.data().email,
+								contact: result.data().contact
+							}
+						})
 					})
-				})
-				.catch(err => {console.log('errrrr: ', err)})
-				if(props.location.query.indexOf(user) == props.location.query.length - 1){
-					setTempUser(user)
+					.catch(err => {console.log('errrrr: ', err)})
+					if(props.location.query.indexOf(user) == props.location.query.length - 1){
+						setTempUser(user)
+					}
+				} else {
+					firebase.db.collection('users').doc(user).get()
+					.then(result => {
+						setRegisteredUser({
+							name: result.data().name,
+							profilePicture: result.data().profilePicture,
+							details: {
+								id: user,
+								email: result.data().email,
+								contact: result.data().contact
+							}
+						})
+					})
+					.catch(err => {console.log('errrrr: ', err)})
+					if(props.location.query.indexOf(user) == props.location.query.length - 1){
+						setTempUser(user)
+					}
 				}
 			})
 		} else {
@@ -60,9 +80,9 @@ export default function RegisteredUsers(props) {
 			<div style={{margin: '20px'}}>
 				<ExcelExport
 					id='test-table-excel-button'
-					table='table-to-excel'
+					table='registered-users'
 					filename='registered-users'
-					sheet='shit1'
+					sheet='sheet1'
 					buttonText='download excel file'
 					className='excel-button'
 				/>

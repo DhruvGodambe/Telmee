@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../../firebase/index';
 import ExcelExport from 'react-html-table-to-excel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function AttendedUsers(props) {
 	const eventid = props.history.location.pathname.split('/attended/')[1];
@@ -18,23 +20,42 @@ export default function AttendedUsers(props) {
 		if(props.location.query){
 			setName(props.location.query.name)
 			props.location.query.attendedUsers.forEach(user => {
-				firebase.db.collection('users').doc(user.id).get()
-				.then(result => {
-					setRegisteredUser({
-						name: result.data().name,
-						profilePicture: result.data().profilePicture,
-						details: {
-							...user,
-							email: result.data().email,
-							college: result.data().college,
-							contact: result.data().contact
-						}
+				if(typeof(user) == "object"){
+					firebase.db.collection('users').doc(user.id).get()
+					.then(result => {
+						setRegisteredUser({
+							name: result.data().name,
+							profilePicture: result.data().profilePicture,
+							details: {
+								...user,
+								email: result.data().email,
+								contact: result.data().contact
+							}
+						})
 					})
-				})
-				.catch(err => {console.log('errrrr: ', err)})
-				if(props.location.query.attendedUsers.indexOf(user) == props.location.query.attendedUsers.length - 1){
-					setTempUser(user)
-					console.log('temp user: ', user)
+					.catch(err => {console.log('errrrr: ', err)})
+					if(props.location.query.attendedUsers.indexOf(user) == props.location.query.attendedUsers.length - 1){
+						setTempUser(user)
+						console.log('temp user: ', user)
+					}
+				} else {
+					firebase.db.collection('users').doc(user).get()
+					.then(result => {
+						setRegisteredUser({
+							name: result.data().name,
+							profilePicture: result.data().profilePicture,
+							details: {
+								id: user,
+								email: result.data().email,
+								contact: result.data().contact
+							}
+						})
+					})
+					.catch(err => {console.log('errrrr: ', err)})
+					if(props.location.query.attendedUsers.indexOf(user) == props.location.query.attendedUsers.length - 1){
+						setTempUser(user)
+						console.log('temp user: ', user)
+					}
 				}
 			})
 		} else {
@@ -43,23 +64,42 @@ export default function AttendedUsers(props) {
 				if(!res.empty){
 					setName(res.data().name)
 					res.data().attendedUsers.forEach(user => {
-						firebase.db.collection('users').doc(user.id).get()
-						.then(result => {
-							setRegisteredUser({
-								name: result.data().name,
-								profilePicture: result.data().profilePicture,
-								details: {
-									...user,
-									email: result.data().email,
-									college: result.data().college,
-									contact: result.data().contact
-								}
+						if(typeof(user) == "object"){
+							firebase.db.collection('users').doc(user.id).get()
+							.then(result => {
+								setRegisteredUser({
+									name: result.data().name,
+									profilePicture: result.data().profilePicture,
+									details: {
+										...user,
+										email: result.data().email,
+										contact: result.data().contact
+									}
+								})
 							})
-						})
-						.catch(err => {console.log('err: ', err)})
-						if(res.data().attendedUsers.indexOf(user) == res.data().attendedUsers.length - 1){
-							setTempUser(user)
-							console.log('temp user: ', user)
+							.catch(err => {console.log('err: ', err)})
+							if(res.data().attendedUsers.indexOf(user) == res.data().attendedUsers.length - 1){
+								setTempUser(user)
+								console.log('temp user: ', user)
+							}
+						} else {
+							firebase.db.collection('users').doc(user).get()
+							.then(result => {
+								setRegisteredUser({
+									name: result.data().name,
+									profilePicture: result.data().profilePicture,
+									details: {
+										id: user,
+										email: result.data().email,
+										contact: result.data().contact
+									}
+								})
+							})
+							.catch(err => {console.log('err: ', err)})
+							if(res.data().attendedUsers.indexOf(user) == res.data().attendedUsers.length - 1){
+								setTempUser(user)
+								console.log('temp user: ', user)
+							}
 						}
 					})
 					setRegisteredUsers2(res.data().registeredUsers)
@@ -79,9 +119,10 @@ export default function AttendedUsers(props) {
 
 	useEffect(() => {
 		var tempArr = []
-		if(arr.length > 0 && arr[0].details.id == tempUser.id){
+		if(arr.length > 0){
 			Object.keys(arr[arr.length - 1]['details']).forEach(field => {
-				if(!(field == 'id') && tempArr.indexOf(field) == -1 ){
+				console.log(field)
+				if(field !== 'id' && excelFields.indexOf(field) == -1 ){
 					tempArr.push(field)
 				}
 			})
@@ -247,20 +288,37 @@ const UserPopup = (props) => {
 	useEffect(() => {
 		if(arr && arr.length > 0){
 			arr.forEach(user => {
-				firebase.db.collection('users').doc(user.id).get()
-				.then(result => {
-					if(result.exists){
-						setTempUser({
-							name: result.data().name,
-							profilePicture: result.data().profilePicture,
-							details: {
-								...user,
-								email: result.data().email,
-								contact: result.data().contact
-							}
-						})
-					}
-				})
+				if(typeof(user) == "object"){
+					firebase.db.collection('users').doc(user.id).get()
+					.then(result => {
+						if(result.exists){
+							setTempUser({
+								name: result.data().name,
+								profilePicture: result.data().profilePicture,
+								details: {
+									...user,
+									email: result.data().email,
+									contact: result.data().contact
+								}
+							})
+						}
+					})
+				} else {
+					firebase.db.collection('users').doc(user).get()
+					.then(result => {
+						if(result.exists){
+							setTempUser({
+								name: result.data().name,
+								profilePicture: result.data().profilePicture,
+								details: {
+									id: user,
+									email: result.data().email,
+									contact: result.data().contact
+								}
+							})
+						}
+					})
+				}
 			})
 		}
 	}, [arr])
@@ -278,14 +336,25 @@ const UserPopup = (props) => {
 		.then(res => {
 			setPopup(false)
 			attendedUsers.forEach(user => {
-				firebase.db.collection('users').doc(user.id).update({
-					attendedEvents: firebase.firebase.firestore.FieldValue.arrayUnion({
-						id: eventid,
-						name: name
+				if(typeof(user) == "object"){
+					firebase.db.collection('users').doc(user.id).update({
+						attendedEvents: firebase.firebase.firestore.FieldValue.arrayUnion({
+							id: eventid,
+							name: name
+						})
+					}).then(res => {
+						window.location.reload();
 					})
-				}).then(res => {
-					window.location.reload();
-				})
+				} else {
+					firebase.db.collection('users').doc(user).update({
+						attendedEvents: firebase.firebase.firestore.FieldValue.arrayUnion({
+							id: eventid,
+							name: name
+						})
+					}).then(res => {
+						window.location.reload();
+					})
+				}
 			})
 		})
 	}
@@ -294,10 +363,13 @@ const UserPopup = (props) => {
 		<div>
 			{popup ?
 				<div style={{height: '450px'}} className='main-popup'>
+					<div style={{textAlign: 'right'}}>
+						<FontAwesomeIcon icon={faTimes} onClick={() => {setPopup(false)}}/>
+					</div>
 					<h2>add attended users</h2>
 					<div style={{
 						color: 'black',
-						background: '#333',
+						background: '#fff',
 						width: '100%',
 						height: '300px',
 						overflow: 'scroll'

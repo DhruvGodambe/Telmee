@@ -73,4 +73,12 @@
 		/* color: white; */
 		font-size: 12px;
 	}
+
+	.google-2 .text {
+		font-size: 16px;
+	}
+
+	.google .text {
+		font-size: 14px;
+	}
 }

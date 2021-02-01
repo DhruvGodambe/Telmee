@@ -116,6 +116,7 @@ pre a {
 	font-size: 20px;
 	border-radius: 20px;
 	margin-left: 90%;
+	box-shadow: none;
 }
 
 .register-form-input {

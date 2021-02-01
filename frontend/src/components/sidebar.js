@@ -25,7 +25,10 @@ export default function Sidebar(props) {
 			<Popup popup={popup} setPopup={setPopup} setSidebar={setSidebar}/>
 			{loggedIn ? 
 				<div className="buttons">
-					<p>logged in as {currentUser.data ? currentUser.data.name : null} </p>
+					<div>
+						<img style={{width: '20%', borderRadius: '10px'}} src={currentUser.data?.profilePicture ? currentUser.data.profilePicture : ""} />
+					</div>
+					<p className="loggedIn">logged in as {currentUser.data ? currentUser.data.name : null} </p>
 					<Link to='/'>
 						<button
 							onClick={googleLogout}

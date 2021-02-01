@@ -24,7 +24,8 @@ export function PostCard(props) {
 
 	const getStdTime = (dateStr) => {
 		const d = new Date(dateStr)
-		return `${d.getHours()}:${d.getMinutes()}`
+		const ampm = d.getHours() > 12 ? 'am' : 'pm';
+		return `${d.getHours()}:${d.getMinutes()} ${ampm}`
 	}
 
 	return(
@@ -101,7 +102,8 @@ export function PostCard2(props) {
 
 	const getStdTime = (dateStr) => {
 		const d = new Date(dateStr)
-		return `${d.getHours()}:${d.getMinutes()}`
+		const ampm = d.getHours() > 12 ? 'am' : 'pm';
+		return `${d.getHours()}:${d.getMinutes()} ${ampm}`
 	}
 
 	return(
@@ -155,7 +157,8 @@ export function PostCard3(props) {
 
 	const getStdTime = (dateStr) => {
 		const d = new Date(dateStr)
-		return `${d.getHours()}:${d.getMinutes()}`
+		const ampm = d.getHours() > 12 ? 'am' : 'pm';
+		return `${d.getHours()}:${d.getMinutes()} ${ampm}`
 	}
 
 	return(
@@ -169,15 +172,14 @@ export function PostCard3(props) {
 				<img alt='' src={image} />
 			</div>
 			<div style={{padding: '2%'}}>
-				<h3>
+				{post.description ? <p>{post.description}</p> : null}
+				<p style={{margin: '10px 0 0'}}>
 					<Link
 						to={`/event/past/${post.eventid}`}
-						style={{textDecoration: 'underline'}}
 					>{post.eventName}
 					</Link>
-				</h3>
-				<p>{post.description}</p>
-				<p 
+				</p>
+				{/* <p 
 					style={{
 						color: 'grey',
 						fontSize: '15px',
@@ -186,14 +188,14 @@ export function PostCard3(props) {
 				>posted by
 					<Link
 						to={`/user/${post.userid}`}
-						style={{textDecoration: 'underline'}}
 					>{post.user}</Link>
-				</p>
+				</p> */}
 				<p 
 					style={{
 						color: 'grey',
 						fontSize: '15px',
-						lineHeight: '12px'
+						lineHeight: '12px',
+						margin: '5px 0'
 					}}
 				>on {getStdDate(post.postedOn)} at {getStdTime(post.postedOn)}</p>
 			</div>

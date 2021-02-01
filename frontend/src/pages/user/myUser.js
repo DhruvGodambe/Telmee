@@ -20,7 +20,6 @@ export default function MyUser(props) {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 		if(currentUser.data){
-			console.log('data: ', currentUser.data);
 			if(currentUser.data.committee){
 				var comArr = currentUser.data.committee.map((val, ind) => {
 					return(
@@ -51,13 +50,14 @@ export default function MyUser(props) {
 			<Popup {...props} popup={popup} setPopup={setPopup} />
 			{ currentUser.data ? 
 				<div className='user'>
-					<hr style={{
+					{/* <hr style={{
 						position: "absolute",
 						width: "99%",
 						top: "195px",
 						zIndex: "-1",
 						left: "0",
-					}} />
+						display: currentUser.data.profilePicture ? 'block' : 'none'
+					}} /> */}
 					<div className='image-box'>
 						<img alt='' src={currentUser.data.profilePicture}/>
 					</div>
@@ -68,9 +68,9 @@ export default function MyUser(props) {
 								<button>edit profile</button>
 							</Link>
 							<p>{currentUser.data.description}</p>
+							<hr/>
 							{ currentUser.data.committee && currentUser.data.committee.length > 0 ?
 								<div className='committee-member'>
-									<hr/>
 									{committeeArray}
 									<hr/>
 								</div>
@@ -121,13 +121,6 @@ const Popup = (props) => {
 		setPopup(false);
 	}
 
-	useEffect(() => {
-		if(currentUser.data){
-			console.log('attendedEvents: ', currentUser.data.attendedEvents)
-		}
-
-	}, [currentUser])
-
 	return(
 		<div>
 			{ popup ?
@@ -137,7 +130,7 @@ const Popup = (props) => {
 					</div>
 					{currentUser.data.attendedEvents.length > 0 ?
 						<div>
-							<h2>upload your moment from these events</h2>
+							<h2>Moment from which event?</h2>
 							{currentUser.data.attendedEvents.map((val, ind) => {
 								return (
 									<div key={ind} style={{cursor: 'pointer'}}>

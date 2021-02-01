@@ -18,6 +18,7 @@ export default function Committee(props) {
 				setId(res.id)
 			}
 		})
+		console.log(currentUser)
 	}, [])
 
 	useEffect(() => {

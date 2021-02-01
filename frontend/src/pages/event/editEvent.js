@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
 import firebase from '../../firebase/index';
 import Editors from '../../components/DraftjsEditor';
+import { useHistory } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +9,7 @@ import Loader from 'react-loader-spinner';
 
 export default function EditEvent(props) {
 	const eventid = props.history.location.pathname.split('/edit/')[1];
+	const history = useHistory();
 	const [event, setEvent] = useState({})
 	const [base64, setBase64] = useState('')
 	const [loading, setLoading] = useState(false)
@@ -20,7 +22,6 @@ export default function EditEvent(props) {
 		} else {
 			setEvent(props.location.query)
 			setDescription(props.location.query.description)
-			console.log(props.location.query)
 		}
 	}, [])
 
@@ -50,6 +51,18 @@ export default function EditEvent(props) {
 			})
 			.catch(err => {console.log('db error without image: ', err)})
 		}
+	}
+
+	const handleDelete = () => {
+		firebase.db.collection('committees').doc(event.organizingCommittee.id).update({
+			events: firebase.firebase.firestore.FieldValue.arrayRemove(eventid)
+		}).then(res => {
+			// firebase.db.collection('users').doc()
+			firebase.db.collection('events').doc(eventid).delete()
+			.then(resp => {
+				history.push("/")
+			})
+		})
 	}
 
 	return(
@@ -192,6 +205,10 @@ export default function EditEvent(props) {
 					className='update-event-submit'
 					onClick={handleSubmit}
 				>update changes</button>
+				<button
+					className='update-event-submit'
+					onClick={handleDelete}
+				>delete event</button>
 			</div>
 			:
 			<div style={{width: '50%', margin: '50px auto', textAlign: 'center'}}>

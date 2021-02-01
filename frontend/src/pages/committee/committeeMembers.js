@@ -8,6 +8,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 
 export default function CommitteeMembers(props) {
 	const committeeid = props.history.location.pathname.split('/members/')[1]
@@ -117,11 +118,17 @@ export default function CommitteeMembers(props) {
 const MemberCard = (props) => {
 	const {user, setOptionPopup, setOptionUser, myComm} = props
 	const [selected, setSelected] = useState(false)
+	console.log(user)
+	const history = useHistory()
 
 	return(
 		<div className='registered-user-box'>
 			<div className='registered-user-image-box'>
-				<img width='100%' style={{borderRadius: '10px'}} src={user.profilePicture} />
+				<img
+					width='100%'
+					style={{borderRadius: '10px'}}
+					onClick={() => {history.push("/user/" + user.id)}}
+					src={user.profilePicture} />
 			</div>
 			<div className='registered-user-details'>
 				<FontAwesomeIcon
@@ -133,7 +140,7 @@ const MemberCard = (props) => {
 					style={{display: myComm ? 'block' : 'none'}}
 					icon={faBars}
 				/>
-				<p style={{wordWrap: 'break-word'}}><b>{user.name}</b></p>
+				<p style={{wordWrap: 'break-word'}}  onClick={() => {history.push("/user/" + user.id)}}><b>{user.name}</b></p>
 				<p style={{wordWrap: 'break-word', color: 'grey'}}>position: {user.position}</p>
 			</div>
 			
@@ -253,7 +260,15 @@ const Popup = (props) => {
 					<input
 						type='text'
 						placeholder='search by email'
-						style={{width: '80%', margin: '10px auto', fontSize: '20px', padding: '10px'}}
+						style={{
+							width: '80%',
+							margin: '10px auto',
+							fontSize: '16px',
+							padding: '8px',
+							borderRadius: '15px',
+							border: 'none',
+							outline: 'none'
+						}}
 						onChange={handleChange}
 					/>
 					<div style={{

@@ -22,6 +22,8 @@ export default function EditCommittee(props) {
 		if(props.location.query && Object.keys(props.location.query).length > 0){
 			setCommittee(props.location.query)
 			setDescription(props.location.query.description)
+			console.log(props.location.query)
+			console.log(props.location.query.description)
 		} else {
 			props.history.goBack()
 		}
@@ -74,6 +76,14 @@ export default function EditCommittee(props) {
 			await firebase.db.collection('events').doc(eve).delete()
 		})
 
+		await firebase.storage.ref(`/committees/${committee.coverImageName}`).delete()
+
+		if(Object.keys(committee.moreImages).length > 0){
+			Object.keys(committee.moreImages).forEach(async image => {
+				await firebase.storage.ref(`/committees/${committee.moreImages[image]}`).delete()
+			})
+		}
+
 		firebase.db.collection('committees').doc(committeeid).delete()
 		.then(res => {
 			props.history.push('/')
@@ -106,6 +116,9 @@ export default function EditCommittee(props) {
 					:
 					null
 				}
+				<div style={{width: '100%', margin: '0 auto', display: committee.description ? "none" : "block"}}>
+					<Editors raw={committee.description} description={description} setDescription={setDescription} />
+				</div>
 				{!upload ?
 					<div className='update-event-input' style={{textAlign: 'center', marginTop: '20px'}}>
 						<label htmlFor='coverImage'><FontAwesomeIcon icon={faUpload}/> change cover image</label>

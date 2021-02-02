@@ -47,6 +47,14 @@ export default function Login(props) {
 								})
 								props.history.goBack()
 							} else {
+								setCurrentUser({
+									data: {
+										name: result.user.displayName,
+										profilePicture: result.user.photoURL,
+										email: result.user.email
+									},
+									id: ret.id
+								})
 								props.history.push(`/user/edit/${ret.id}`)
 							}
 						}

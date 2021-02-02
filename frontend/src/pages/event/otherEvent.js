@@ -25,7 +25,6 @@ export default function OtherEvent(props) {
 	const [description, setDescription] = useState('')
 
 	useEffect(() => {
-		console.log('eventid: ', eventid);
 		firebase.db.collection('events').doc(eventid).get()
 		.then(result => {
 			if(result.exists){
@@ -49,7 +48,6 @@ export default function OtherEvent(props) {
 	}, [])
 
 	useEffect(() => {
-		console.log('currentUser: ', currentUser)
 		if(currentUser.data){
 			if(currentUser.data.registeredEvents){
 				const temp = currentUser.data.registeredEvents.filter((val, ind) => {
@@ -286,6 +284,7 @@ const ConfirmPopup = (props) => {
 										
 						<button onClick={() => {
 							setConfirm(false)
+							window.location.reload()
 						}}>OK
 						</button>
 				</div>

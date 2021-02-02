@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import Home from './pages/home';
+import About from './pages/about';
 import Login from './pages/login';
 import Search from './pages/search';
 import UserLogin from './pages/userLogin';
@@ -94,6 +95,7 @@ function App() {
             <div className="page">
               <Switch>
                 <Route exact path="/" component={Home}/>
+                <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search}/>
                 <AuthLogin exact path="/login" component={Login}/>
                 <AuthLogin exact path="/user-login" component={UserLogin}/>

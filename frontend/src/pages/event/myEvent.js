@@ -356,6 +356,7 @@ const ConfirmPopup = (props) => {
 										
 						<button onClick={() => {
 							setConfirm(false)
+							window.location.reload()
 						}}>OK
 						</button>
 				</div>

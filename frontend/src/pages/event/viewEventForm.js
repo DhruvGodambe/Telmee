@@ -174,7 +174,7 @@ const Popup = (props) => {
 	return(
 		<div>
 			{popup ?
-				<div className='main-popup'>
+				<div className='main-popup hieghtened-popup'>
 					<div style={{textAlign: 'right'}}>
 						<FontAwesomeIcon onClick={() => setPopup(false)} icon={faTimes} />
 					</div>

@@ -5,7 +5,7 @@ import ExcelExport from 'react-html-table-to-excel';
 export default function RegisteredUsers(props) {
 	const eventid = props.history.location.pathname.split('/get/')[1];
 	const [registeredUser, setRegisteredUser] = useState({})
-	const [p, setP] = useState({})
+	const [para, setP] = useState("")
 	const [arr, setArr] = useState([])
 	const [excelFields, setExcelFields] = useState(['name'])
 	const [tempUser, setTempUser] = useState({})
@@ -52,7 +52,11 @@ export default function RegisteredUsers(props) {
 				}
 			})
 		} else {
-			props.history.goBack()
+			if(props.location.query){
+				setP("no registered users yet");
+			} else {
+				props.history.goBack()
+			}
 		}
 	}, [])
 
@@ -77,10 +81,11 @@ export default function RegisteredUsers(props) {
 	return(
 		<div>
 			<h1 className='registered-user-title'>Registered Users</h1>
-			<div style={{margin: '20px'}}>
+			{para !== "" ? <p>{para}</p> : null}
+			<div style={{margin: '20px', display: para !== "" ? "none" : "block"}}>
 				<ExcelExport
 					id='test-table-excel-button'
-					table='registered-users'
+					table='table-to-excel'
 					filename='registered-users'
 					sheet='sheet1'
 					buttonText='download excel file'

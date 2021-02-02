@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './editUser.css';
+import {globalContext} from '../../globalContext';
 import firebase from '../../firebase/index';
 
 export default function EditUser(props) {
 	const [contact, setContact] = useState('');
+	const {currentUser, setCurrentUser} = useContext(globalContext);
 
 	function handleSubmit(e) {
 		e.preventDefault();
 		const userid = window.location.href.split('/edit/')[1];
+		setCurrentUser({
+			...currentUser,
+			data: {
+				...currentUser.data,
+				contact,
+				attendedEvents: [],
+				registeredEvents: [],
+				committee: [],
+				description: "",
+				posts: []
+			}
+		})
 		firebase.db.collection('users').doc(userid).update({
 			contact,
 			attendedEvents: [],
-			registeredEvents: []
+			registeredEvents: [],
+			committee: [],
+			description: "",
+			posts: []
 		}).then(result => {
 			props.history.push(`/user/${userid}`)
 		})

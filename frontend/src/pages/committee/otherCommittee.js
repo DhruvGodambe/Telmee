@@ -125,7 +125,7 @@ export default function OtherCommittee(props){
 							width: '40%',
 							margin: '0 10px',
 							maxHeight: '150px',
-							border: '2px solid grey',
+							border: src2 !== "" ? '2px solid grey' : "none",
 							borderCollapse: 'seperate',
 							borderSpacing: '15px',
 							objectFit: 'cover'
@@ -142,7 +142,7 @@ export default function OtherCommittee(props){
 							width: '40%',
 							margin: '0 10px',
 							maxHeight: '150px',
-							border: '2px solid grey',
+							border: src1 !== "" ? '2px solid grey' : "none",
 							borderCollapse: 'seperate',
 							borderSpacing: '15px',
 							objectFit: 'cover'
@@ -158,7 +158,7 @@ export default function OtherCommittee(props){
 							width: '40%',
 							maxHeight: '150px',
 							margin: '0 10px',
-							border: '2px solid grey',
+							border: src3 !== "" ? '2px solid grey' : "none",
 							borderCollapse: 'seperate',
 							borderSpacing: '15px',
 							objectFit: 'cover'

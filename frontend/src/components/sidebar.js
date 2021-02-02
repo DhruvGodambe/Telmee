@@ -46,7 +46,7 @@ export default function Sidebar(props) {
 				<p>Host an event</p>
 			</Link>
 			<Link to='/create/committee' className="buttons" onClick={() => setSidebar(false)}>create a student organization / council</Link>
-			<div className="buttons">about us</div>
+			<Link to="/about" className="buttons" onClick={() => setSidebar(false)}>about us</Link>
 		</div>
 	)
 }

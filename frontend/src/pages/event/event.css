@@ -171,6 +171,13 @@ pre a {
 	padding: 10px;
 }
 
+.registered-user-option-button {
+	cursor: pointer;
+	font-size: 18px;
+	position: absolute;
+	left: 60%;
+}
+
 .excel-button {
 	width: 50%;
 	font-size: 20px;
@@ -220,6 +227,10 @@ pre a {
 		box-shadow: 0 0 5px grey;
 	}
 
+	.registered-user-option-button {
+		left: 88%;
+	}
+
 	.update-event-box {
 		width: 90%;
 		margin: 20px auto;
@@ -250,5 +261,9 @@ pre a {
 		padding: 10px 5px;
 		margin-left: 23%;
 		margin-top: 20px;
+	}
+
+	.hieghtened-popup {
+		top: 10%;
 	}
 }

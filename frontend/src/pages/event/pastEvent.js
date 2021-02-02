@@ -4,6 +4,8 @@ import Cookies from 'js-cookie';
 import logo from '../../images/logo5.png';
 import {Link} from 'react-router-dom'
 import {PostCard2} from '../../components/postCards'
+import 'draft-js/dist/Draft.css';
+import {Editor, EditorState, convertFromRaw} from 'draft-js';
 
 export default function PastEvent(props) {
 	const [event, setEvent] = useState({})
@@ -66,11 +68,19 @@ export default function PastEvent(props) {
 						:
 						null
 					}
-					{event.description ?
+					{typeof(event.description) == "object" ?
+						<Editor
+							editorState={EditorState.createWithContent(convertFromRaw(event.description))}
+							readOnly={true}
+						/>
+						:
+						<pre className="pre-description">{event.description}</pre>
+					}
+					{/* {event.description ?
 						<pre style={{fontFamily: FONT}}>{event.description}</pre>
 						:
 						null
-					}
+					} */}
 					{event.posts.length > 0 ?
 						<div className='user'>
 							{event.posts.map((val, ind) => {

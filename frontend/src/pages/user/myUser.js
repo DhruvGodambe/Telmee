@@ -19,6 +19,7 @@ export default function MyUser(props) {
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
+		console.log(currentUser)
 		if(currentUser.data){
 			if(currentUser.data.committee){
 				var comArr = currentUser.data.committee.map((val, ind) => {
@@ -85,7 +86,7 @@ export default function MyUser(props) {
 								<p>been to <span>0</span> events</p>
 							}
 							<button alt='you' onClick={handleUpload}>upload a moment +</button>
-							{currentUser.data.posts.length > 0 ?
+							{currentUser.data?.posts?.length > 0 ?
 								currentUser.data.posts.map((val, ind) => {
 									return <PostCard post={val} key={ind} />
 								})
@@ -128,7 +129,7 @@ const Popup = (props) => {
 					<div style={{textAlign: 'right'}}>
 						<FontAwesomeIcon style={{cursor: 'pointer'}} onClick={() => {setPopup(false)}} icon={faTimes}/>
 					</div>
-					{currentUser.data.attendedEvents.length > 0 ?
+					{currentUser.data?.attendedEvents?.length > 0 ?
 						<div>
 							<h2>Moment from which event?</h2>
 							{currentUser.data.attendedEvents.map((val, ind) => {

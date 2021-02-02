@@ -77,6 +77,7 @@ export const OrganizationEvent = (props) => {
 	const userID = Cookies.get('userID');
 	const eventRef = firebase.db.collection('events');
 	const [checked, setChecked] = useState(false);
+	const [error, setError] = useState("")
 
 	useEffect(() => {
 		if(userID){
@@ -93,22 +94,53 @@ export const OrganizationEvent = (props) => {
 	}, [currentUser])
 
 	const handleSubmit = (e) => {
-		setLoading(true);
-		setEvent({
-			...event,
-			description: description
-		})
-		setCurrentUser({
-			...currentUser,
-			data: {
-				...currentUser.data,
-				event: event
-			}
-		})
-		if(event.coverImage){
-
-			firebase.storage.ref(`/events/${event.coverImageName}`).put(event.coverImage)
-			.then(response => {
+		if(event.name && event.name !== "" && event.organizingCommittee && event.venue && Object.keys(description).length > 0 && event.entryFee && event.timeStamp && Object.keys(event.timeStamp).length > 0 ){
+			setLoading(true);
+			setEvent({
+				...event,
+				description: description
+			})
+			setCurrentUser({
+				...currentUser,
+				data: {
+					...currentUser.data,
+					event: event
+				}
+			})
+			if(event.coverImage){
+	
+				firebase.storage.ref(`/events/${event.coverImageName}`).put(event.coverImage)
+				.then(response => {
+					currentUser.data.committee.forEach(comm => {
+						if(event.organizingCommittee.name == comm.name){
+							eventRef.add({
+								...event,
+								organizingCommittee: {
+									...event.organizingCommittee,
+									id: comm.id
+								},
+								description: description,
+								coverImage: {},
+								attendedUsers: [],
+								registeredUsers: [],
+								posts: []
+							}).then(res => {
+								firebase.db.collection('committees').doc(comm.id).update({
+									events: firebase.firebase.firestore.FieldValue.arrayUnion(res.id)
+								})
+								.then(resp => {
+									if(event.eventForm){
+										props.history.push(`/create/eventForm/${res.id}`)
+									} else {
+										props.history.push(`/event/${res.id}`)
+									}
+								})
+							})
+						}
+					})
+				})
+				.catch(err => {console.log('err: ', err)})
+			} else {
 				currentUser.data.committee.forEach(comm => {
 					if(event.organizingCommittee.name == comm.name){
 						eventRef.add({
@@ -129,43 +161,34 @@ export const OrganizationEvent = (props) => {
 							.then(resp => {
 								if(event.eventForm){
 									props.history.push(`/create/eventForm/${res.id}`)
-								} else {
+								}else {
 									props.history.push(`/event/${res.id}`)
 								}
 							})
 						})
 					}
 				})
-			})
-			.catch(err => {console.log('err: ', err)})
+			}
 		} else {
-			currentUser.data.committee.forEach(comm => {
-				if(event.organizingCommittee.name == comm.name){
-					eventRef.add({
-						...event,
-						organizingCommittee: {
-							...event.organizingCommittee,
-							id: comm.id
-						},
-						description: description,
-						coverImage: {},
-						attendedUsers: [],
-						registeredUsers: [],
-						posts: []
-					}).then(res => {
-						firebase.db.collection('committees').doc(comm.id).update({
-							events: firebase.firebase.firestore.FieldValue.arrayUnion(res.id)
-						})
-						.then(resp => {
-							if(event.eventForm){
-								props.history.push(`/create/eventForm/${res.id}`)
-							}else {
-								props.history.push(`/event/${res.id}`)
-							}
-						})
-					})
-				}
-			})
+			if(!description || Object.keys(description).length <= 0){
+				setError("Description of the event is mandatory")
+				console.log(event)
+			}
+			if(!event.timeStamp || Object.keys(event.timeStamp).length <= 0){
+				setError("Date of the event is mandatory")
+			}
+			if(!event.venue){
+				setError("Venue is mandatory")
+			}
+			if(!event.entryFee){
+				setError("Entry fee for the event is required. If the event is free, write 0 for entry fee")
+			}
+			if(!event.organizingCommittee){
+				setError("Please select an organizing committee")
+			}
+			if(!event.name || event.name == ""){
+				setError("Name of the event is mandatory")
+			}
 		}
 		
 	}
@@ -173,6 +196,7 @@ export const OrganizationEvent = (props) => {
 	return (
 		<form className='create-event-form' onSubmit={handleSubmit}>
 			<Popup popup={popup} setPopup={setPopup} {...props} />
+			<ErrorPopup error={error} setError={setError} />
 			{!loading ? 
 			<div>
 			<input
@@ -433,6 +457,23 @@ const Popup = (props) => {
 						props.history.goBack();
 					}}>close
 					</button>
+				</div>
+				:
+				null
+			}
+		</div>
+	)
+}
+
+const ErrorPopup = (props) => {
+	const {error, setError} = props;
+
+	return(
+		<div>
+			{error !== "" ? 
+				<div className='main-popup'>
+					<p>{error}</p>
+					<button onClick={() => {setError("")}}>OK</button>
 				</div>
 				:
 				null

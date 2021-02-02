@@ -17,6 +17,7 @@ export default function CreateCommittee(props){
 	const {currentUser, setCurrentUser} = useContext(globalContext)
 	const [loading, setLoading] = useState(false)
 	const [description, setDescription] = useState({})
+	const [error, setError] = useState("")
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
@@ -26,24 +27,69 @@ export default function CreateCommittee(props){
 	}, [])
 
 	const handleSubmit = () => {
-		if(committee.coverImage){
-			firebase.storage.ref(`/committees/${committee.coverImageName}`).put(committee.coverImage)
-			.then(res => {
+		setLoading(true);
+		if(committee.name && committee.name !== ""){
+			if(committee.coverImage){
+				firebase.storage.ref(`/committees/${committee.coverImageName}`).put(committee.coverImage)
+				.then(res => {
+					setCommittee({
+						...committee,
+						coverImage: {},
+						members: [{id: currentUser.id, position: 'leader'}],
+						moreImages: {},
+						description: Object.keys(description).length > 0 ? description : "",
+						events: []
+					})
+					firebase.db.collection('committees').add({
+						...committee,
+						coverImage: {},
+						members: [{id: currentUser.id, position: 'leader'}],
+						moreImages: {},
+						description: Object.keys(description).length > 0 ? description : "",
+						events: []
+					}).then(result => {
+						firebase.db.collection('users').doc(currentUser.id).update({
+							committee: firebase.firebase.firestore.FieldValue.arrayUnion({
+								id: result.id,
+								name: committee.name,
+								position: 'leader'
+							})
+						}).then(response => {
+							setCurrentUser({
+								...currentUser,
+								data: {
+									...currentUser.data,
+									committee: [...currentUser.data.committee, {
+										id: result.id,
+										name: committee.name,
+										position: 'leader'
+									}]
+								}
+							})
+							setTimeout(() => {
+								props.history.push(`/committee/${result.id}`)
+							}, 1000)
+						})
+					})
+					.catch(err => {console.log('firestore error: ', err)})
+				})
+				.catch(err => {console.log('storage error: ', err)})
+			} else {
 				setCommittee({
 					...committee,
 					coverImage: {},
 					members: [{id: currentUser.id, position: 'leader'}],
 					moreImages: {},
-					description: description,
-					events: []
+					events: [],
+					description: Object.keys(description).length > 0 ? description : "",
 				})
 				firebase.db.collection('committees').add({
 					...committee,
 					coverImage: {},
 					members: [{id: currentUser.id, position: 'leader'}],
 					moreImages: {},
-					description: description,
-					events: []
+					events: [],
+					description: Object.keys(description).length > 0 ? description : "",
 				}).then(result => {
 					firebase.db.collection('users').doc(currentUser.id).update({
 						committee: firebase.firebase.firestore.FieldValue.arrayUnion({
@@ -51,7 +97,8 @@ export default function CreateCommittee(props){
 							name: committee.name,
 							position: 'leader'
 						})
-					}).then(response => {
+					})
+					.then(response => {
 						setCurrentUser({
 							...currentUser,
 							data: {
@@ -69,44 +116,15 @@ export default function CreateCommittee(props){
 					})
 				})
 				.catch(err => {console.log('firestore error: ', err)})
-			})
-			.catch(err => {console.log('storage error: ', err)})
+			}
 		} else {
-			setCommittee({
-				...committee,
-				coverImage: {},
-				members: [{id: currentUser.id, position: 'leader'}],
-				moreImages: {},
-				events: [],
-				description: description
-			})
-			firebase.db.collection('committees').add({
-				...committee,
-				coverImage: {},
-				members: [{id: currentUser.id, position: 'leader'}],
-				moreImages: {},
-				events: [],
-				description: description
-			}).then(result => {
-				firebase.db.collection('users').doc(currentUser.id).update({
-					committee: firebase.firebase.firestore.FieldValue.arrayUnion({
-						id: result.id,
-						name: committee.name,
-						position: 'leader'
-					})
-				})
-				.then(response => {
-					setTimeout(() => {
-						props.history.push(`/committee/${result.id}`)
-					}, 1000)
-				})
-			})
-			.catch(err => {console.log('firestore error: ', err)})
+			setError("name of the committee is required")
 		}
 	}
 
 	return(
 		<div className='create-event-box'>
+			<ErrorPopup error={error} setError={setError} />
 			{!loading ?
 				<div>
 					<div style={{width: '100%', margin: '0', backgroundImage: `url(${bg})`, height: '180px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} >
@@ -192,6 +210,23 @@ export default function CreateCommittee(props){
 				        timeout={1000000} //3 secs
 				    />
 			    </div>
+			}
+		</div>
+	)
+}
+
+const ErrorPopup = (props) => {
+	const {error, setError} = props;
+
+	return(
+		<div>
+			{error !== "" ? 
+				<div className='main-popup'>
+					<p>{error}</p>
+					<button onClick={() => {setError("")}}>OK</button>
+				</div>
+				:
+				null
 			}
 		</div>
 	)

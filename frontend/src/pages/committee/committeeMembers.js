@@ -73,6 +73,7 @@ export default function CommitteeMembers(props) {
 				popup={popup}
 				setPopup={setPopup}
 				committeeName={committee.name}
+				members={members}
 			/>
 			<OptionPopup 
 				optionPopup={optionPopup}
@@ -136,8 +137,10 @@ const MemberCard = (props) => {
 						setOptionPopup(true)
 						setOptionUser(user)
 					}}
-					style={{cursor: 'pointer', fontSize: '18px', position: 'absolute', left: '88%'}}
-					style={{display: myComm ? 'block' : 'none'}}
+					className="registered-user-option-button"
+					style={{
+						display: myComm ? 'block' : 'none',
+					}}
 					icon={faBars}
 				/>
 				<p style={{wordWrap: 'break-word'}}  onClick={() => {history.push("/user/" + user.id)}}><b>{user.name}</b></p>
@@ -149,7 +152,7 @@ const MemberCard = (props) => {
 }
 
 const MemberCard2 = (props) => {
-	const {user, id, setMemberUsers, memberUsers} = props
+	const {user, id, setMemberUsers, memberUsers, members} = props
 	const [selected, setSelected] = useState(false)
 
 	return(
@@ -157,16 +160,25 @@ const MemberCard2 = (props) => {
 			style={{background: selected ? 'skyblue' : 'white'}}
 			className='registered-user-box'
 			onClick={() => {
+				var unique = true;
+				members.forEach(u => {
+					console.log(u, user, id)
+					if(u.id === id){
+						unique = false;
+					}
+				})
 				if(!selected){
-					setMemberUsers([
-						...memberUsers,
-						{
-							id: id,
-							email: user.email,
-							profilePicture: user.profilePicture,
-							position: 'member'
-						}
-					])
+					if(unique){
+						setMemberUsers([
+							...memberUsers,
+							{
+								id: id,
+								email: user.email,
+								profilePicture: user.profilePicture,
+								position: 'member'
+							}
+						])
+					}
 				} else {
 					var temp = memberUsers.filter((val, ind) => (val.id !== id))
 					setMemberUsers(temp)
@@ -188,7 +200,7 @@ const MemberCard2 = (props) => {
 }
 
 const Popup = (props) => {
-	const {popup, setPopup, committeeid, committeeName} = props;
+	const {popup, setPopup, committeeid, committeeName, members} = props;
 	const [users, setUsers] = useState([])
 	const [suggestion, setSuggestion] = useState([])
 	const [memberUsers, setMemberUsers] = useState([])
@@ -226,22 +238,27 @@ const Popup = (props) => {
 	const handleAdd = () => {
 		let arr = memberUsers.map(user => ({id: user.id, position: user.position}))
 		console.log(arr)
-		firebase.db.collection('committees').doc(committeeid).update({
-			members: firebase.firebase.firestore.FieldValue.arrayUnion(...arr)
-		})
-		.then(res => {
-			arr.forEach(user => {
-				firebase.db.collection('users').doc(user.id).update({
-					committee: firebase.firebase.firestore.FieldValue.arrayUnion({
-						id: committeeid,
-						name: committeeName,
-						position: user.position
+		if(arr.length > 0){
+			firebase.db.collection('committees').doc(committeeid).update({
+				members: firebase.firebase.firestore.FieldValue.arrayUnion(...arr)
+			})
+			.then(res => {
+				arr.forEach(user => {
+					firebase.db.collection('users').doc(user.id).update({
+						committee: firebase.firebase.firestore.FieldValue.arrayUnion({
+							id: committeeid,
+							name: committeeName,
+							position: user.position
+						})
 					})
 				})
+				setPopup(false)
+				window.location.reload()
 			})
+		} else {
 			setPopup(false)
 			window.location.reload()
-		})
+		}
 	}
 
 	return(
@@ -284,6 +301,7 @@ const Popup = (props) => {
 									user={val.data}
 									id={val.id}
 									key={ind}
+									members={members}
 								/>
 							)
 						})}

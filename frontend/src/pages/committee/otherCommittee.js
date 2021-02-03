@@ -30,7 +30,6 @@ export default function OtherCommittee(props){
 		.then(res => {
 			if(res.exists){
 				setCommittee(res.data())
-				console.log('committee: ', res.data())
 				firebase.storage.ref(`/committees/${res.data().coverImageName}`).getDownloadURL()
 				.then(url => {
 					setImg(url)
@@ -54,7 +53,6 @@ export default function OtherCommittee(props){
 				res.data().events.forEach(id => {
 					firebase.db.collection('events').doc(id).get()
 					.then(resp => {
-						console.log(resp.data().timeStamp)
 						if(new Date(resp.data().timeStamp.heldOn) > Date.now()){
 							setData({
 								data: resp.data(),
@@ -231,7 +229,6 @@ const Popup = (props) => {
 	useEffect(() => {
 		if(members){
 			members.forEach(mem => {
-				console.log('mem: ', mem.id)
 				firebase.db.collection('users').doc(mem.id).get()
 				.then(res => {
 					if(res.exists){
@@ -243,7 +240,9 @@ const Popup = (props) => {
 						})
 					}
 				})
-				.catch(err => {console.log('errorr: ', err)})
+				.catch(err => {
+					// console.log('errorr: ', err)
+				})
 			})
 		}
 	}, [members])

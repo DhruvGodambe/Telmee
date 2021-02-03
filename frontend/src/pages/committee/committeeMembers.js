@@ -29,7 +29,6 @@ export default function CommitteeMembers(props) {
 			if(res.exists){
 				setCommittee(res.data())
 				setId(res.id)
-				console.log(res.data())
 				res.data().members.forEach(member => {
 					firebase.db.collection('users').doc(member.id).get()
 					.then(result => {
@@ -50,7 +49,6 @@ export default function CommitteeMembers(props) {
 
 	useEffect(() => {
 		if(currentUser.data?.committee && Id !== ''){
-			console.log(currentUser.data.committee)
 			currentUser.data.committee.forEach(comm => {
 				if(Id == comm.id) {
 					setMyComm(true) 
@@ -62,7 +60,6 @@ export default function CommitteeMembers(props) {
 	useEffect(() => {
 		if(Object.keys(user).length > 0){
 			setMembers([user, ...members])
-			console.log(user)
 		}
 	}, [user])
 
@@ -119,7 +116,6 @@ export default function CommitteeMembers(props) {
 const MemberCard = (props) => {
 	const {user, setOptionPopup, setOptionUser, myComm} = props
 	const [selected, setSelected] = useState(false)
-	console.log(user)
 	const history = useHistory()
 
 	return(
@@ -162,7 +158,6 @@ const MemberCard2 = (props) => {
 			onClick={() => {
 				var unique = true;
 				members.forEach(u => {
-					console.log(u, user, id)
 					if(u.id === id){
 						unique = false;
 					}
@@ -184,7 +179,6 @@ const MemberCard2 = (props) => {
 					setMemberUsers(temp)
 				}
 				setSelected(!selected)
-				console.log('member users: ', memberUsers)
 			}}
 			>
 			<div className='registered-user-image-box'>
@@ -237,7 +231,6 @@ const Popup = (props) => {
 
 	const handleAdd = () => {
 		let arr = memberUsers.map(user => ({id: user.id, position: user.position}))
-		console.log(arr)
 		if(arr.length > 0){
 			firebase.db.collection('committees').doc(committeeid).update({
 				members: firebase.firebase.firestore.FieldValue.arrayUnion(...arr)
@@ -323,7 +316,6 @@ const OptionPopup = (props) => {
 			...optionUser,
 			oldPosition: optionUser.position
 		})
-		console.log(optionUser)
 	}, [optionPopup])
 
 	const handleSubmit = () => {

@@ -19,7 +19,6 @@ export default function MyUser(props) {
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
-		console.log(currentUser)
 		if(currentUser.data){
 			if(currentUser.data.committee){
 				var comArr = currentUser.data.committee.map((val, ind) => {

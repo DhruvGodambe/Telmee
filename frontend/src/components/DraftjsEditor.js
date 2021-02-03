@@ -10,7 +10,6 @@ import { faList, faListOl, faBold, faItalic, faUnderline } from '@fortawesome/fr
 class Editors extends Component{
   constructor(props) {
     super(props);
-    console.log(this.props)
     this.state = {editorState: EditorState.createEmpty()};
     this.onChange = editorState => {
     //   let contentState = editorState.getCurrentContent();
@@ -21,7 +20,6 @@ class Editors extends Component{
 
   componentDidMount() {
     if(this.props.raw){
-      console.log(true);
       this.setState({
         editorState: EditorState.createWithContent(convertFromRaw(this.props.raw))
       })

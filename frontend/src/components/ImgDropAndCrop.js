@@ -80,8 +80,6 @@ class ImgDropAndCrop extends Component {
 
         const canvasRef = this.imagePreviewCanvasRef.current
         const {imgSrc}  = this.state
-        console.log('crop: ', crop);
-        console.log('pixelCrop: ', percentCrop);
         var imageWidth = document.getElementsByClassName('ReactCrop')[0].offsetWidth;
         var imageHeight = document.getElementsByClassName('ReactCrop')[0].offsetHeight;
         image64toCanvasRef(canvasRef, imgSrc, percentCrop, imageWidth, imageHeight)
@@ -101,7 +99,6 @@ class ImgDropAndCrop extends Component {
 
             // file to be uploaded
             const myNewCroppedFile = base64StringtoFile(imageData64, myFilename)
-            console.log(myNewCroppedFile)
             // download file
 
             downloadBase64File(imageData64, myFilename)

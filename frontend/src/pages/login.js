@@ -35,8 +35,8 @@ export default function Login(props) {
 				})
 					.then(response => response.json())
 					.then(ret => {
-						console.log(ret);
-						console.log(ret.data)
+						// console.log(ret);
+						// console.log(ret.data)
 						if(ret.id){
 							setLoggedIn(true);
 							Cookies.set('userID', ret.id);

@@ -27,7 +27,6 @@ export default function MyEvent(props) {
 	const [description, setDescription] = useState(false);
 
 	useEffect(() => {
-		console.log('eventid: ', eventid);
 		firebase.db.collection('events').doc(eventid).get()
 		.then(result => {
 			if(result.exists){
@@ -52,7 +51,6 @@ export default function MyEvent(props) {
 	}, [])
 
 	useEffect(() => {
-		console.log('currentUser: ', currentUser)
 		if(currentUser.data){
 			if(currentUser.data.registeredEvents){
 				const temp = currentUser.data.registeredEvents.filter((val, ind) => {

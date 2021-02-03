@@ -5,10 +5,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 export default function Popup(props){
 	const {message, show, options} = props;
 
-	useEffect(() => {
-		console.log(props);
-	}, [])
-
 	let displayOptions = options.map((val, ind) => {
 		return <button style={{margin: '0 10px'}}>{val}</button>
 	})

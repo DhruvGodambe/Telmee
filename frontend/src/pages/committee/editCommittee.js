@@ -22,8 +22,6 @@ export default function EditCommittee(props) {
 		if(props.location.query && Object.keys(props.location.query).length > 0){
 			setCommittee(props.location.query)
 			setDescription(props.location.query.description)
-			console.log(props.location.query)
-			console.log(props.location.query.description)
 		} else {
 			props.history.goBack()
 		}

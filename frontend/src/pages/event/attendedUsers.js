@@ -36,7 +36,6 @@ export default function AttendedUsers(props) {
 					.catch(err => {console.log('errrrr: ', err)})
 					if(props.location.query.attendedUsers.indexOf(user) == props.location.query.attendedUsers.length - 1){
 						setTempUser(user)
-						console.log('temp user: ', user)
 					}
 				} else {
 					firebase.db.collection('users').doc(user).get()
@@ -54,7 +53,6 @@ export default function AttendedUsers(props) {
 					.catch(err => {console.log('errrrr: ', err)})
 					if(props.location.query.attendedUsers.indexOf(user) == props.location.query.attendedUsers.length - 1){
 						setTempUser(user)
-						console.log('temp user: ', user)
 					}
 				}
 			})
@@ -77,10 +75,11 @@ export default function AttendedUsers(props) {
 									}
 								})
 							})
-							.catch(err => {console.log('err: ', err)})
+							.catch(err => {
+								// console.log('err: ', err)
+							})
 							if(res.data().attendedUsers.indexOf(user) == res.data().attendedUsers.length - 1){
 								setTempUser(user)
-								console.log('temp user: ', user)
 							}
 						} else {
 							firebase.db.collection('users').doc(user).get()
@@ -98,7 +97,6 @@ export default function AttendedUsers(props) {
 							.catch(err => {console.log('err: ', err)})
 							if(res.data().attendedUsers.indexOf(user) == res.data().attendedUsers.length - 1){
 								setTempUser(user)
-								console.log('temp user: ', user)
 							}
 						}
 					})
@@ -113,7 +111,6 @@ export default function AttendedUsers(props) {
 	useEffect(() => {
 		if(Object.keys(registeredUser).length > 0){
 			setArr([registeredUser, ...arr])
-			console.log(arr)
 		}
 	}, [registeredUser])
 
@@ -121,7 +118,6 @@ export default function AttendedUsers(props) {
 		var tempArr = []
 		if(arr.length > 0){
 			Object.keys(arr[arr.length - 1]['details']).forEach(field => {
-				console.log(field)
 				if(field !== 'id' && excelFields.indexOf(field) == -1 ){
 					tempArr.push(field)
 				}
@@ -130,9 +126,9 @@ export default function AttendedUsers(props) {
 		}
 	}, [arr])
 
-	useEffect(() => {
- 		console.log(registeredUsers2)
-	}, [registeredUsers2])
+	// useEffect(() => {
+ 	// 	console.log(registeredUsers2)
+	// }, [registeredUsers2])
 
 	return(
 		<div>

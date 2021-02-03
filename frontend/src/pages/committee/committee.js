@@ -18,12 +18,10 @@ export default function Committee(props) {
 				setId(res.id)
 			}
 		})
-		console.log(currentUser)
 	}, [])
 
 	useEffect(() => {
 		if(currentUser.data?.committee && Id !== ''){
-			console.log(currentUser.data.committee)
 			currentUser.data.committee.forEach(comm => {
 				if(Id == comm.id) {
 					setMyComm(true) 

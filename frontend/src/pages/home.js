@@ -40,7 +40,7 @@ export default function Home(props) {
 			var temp = eventArr
 			firebase.db.collection('events').orderBy('timeStamp.heldOn', 'desc').startAfter(paginateDate).limit(3).get()
 			.then(res => {
-				console.log(res)
+				// console.log(res)
 				if(!res.empty){
 					res.docs.forEach((eve, ind) => {
 						if(new Date(eve.data().timeStamp.heldOn) > Date.now()){

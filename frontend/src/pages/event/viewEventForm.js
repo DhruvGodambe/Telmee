@@ -16,7 +16,6 @@ export default function ViewEventForm(props) {
 		window.scrollTo(0, 0)
 		if(props.location.query){
 			setInputs(props.location.query.inputs)
-			console.log(props.location.query.inputs)
 		} else {
 			props.history.goBack()
 		}
@@ -151,16 +150,15 @@ export default function ViewEventForm(props) {
 const Popup = (props) => {
 	const {popup, setPopup, field, setField, inputs, setInputs, fieldIndex} = props;
 
-	useEffect(() => {
-		console.log(field)
-	}, [field])
+	// useEffect(() => {
+	// 	console.log(field)
+	// }, [field])
 
 	const handleSubmit = () => {
 		setPopup(false)
 		var temp = inputs;
 		temp[fieldIndex] = field
 		setInputs(temp)
-		console.log('inputs: ', inputs)
 	}
 
 	const handleDelete = () => {
@@ -168,7 +166,6 @@ const Popup = (props) => {
 		var temp = inputs;
 		temp = temp.filter((val, ind) => ind !== fieldIndex);
 		setInputs(temp)
-		console.log('inputs: ', inputs)
 	}
 
 	return(
@@ -208,7 +205,6 @@ const Popup = (props) => {
 											type: e.target.value
 										})
 									}
-									console.log(e)
 								}}
 								value={field.type}
 								className='create-event-input'>

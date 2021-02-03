@@ -27,7 +27,6 @@ export default function DynamicEventForm(props) {
 			setOptions([])
 			setOptionItems([])
 		}
-		console.log(e.target.value);
 		setType(e.target.value);
 	}
 
@@ -43,7 +42,6 @@ export default function DynamicEventForm(props) {
 		var num = options.length + 1;
 		setOptions([...options, num]);
 		setOptionItems([...optionItems, item]);
-		console.log(options)
 	} 
 
 	function handleAddField() {
@@ -64,8 +62,6 @@ export default function DynamicEventForm(props) {
 	}
 
 	function handleCreateForm() {
-		console.log(inputs);
-		console.log('currentUser: ', currentUser);
 		currentUser.data.committee.forEach(comm => {
 			if(comm.name == event.organizingCommittee.name){
 				firebase.db.collection('events').doc(eventid).update({

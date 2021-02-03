@@ -12,7 +12,6 @@ export default function EventCards(props) {
 
 	useEffect(() => {
 		if(typeof(event.description) == "object"){
-			console.log(event.description)
 			var currentContent = EditorState.createWithContent(convertFromRaw(event.description))
 			setDescription(currentContent.getCurrentContent().getPlainText())
 		} else {

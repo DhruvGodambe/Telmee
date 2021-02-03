@@ -30,7 +30,6 @@ export default function EditEvent(props) {
 		if(upload){
 			firebase.storage.ref(`/events/${event.coverImageName}`).put(event.coverImage)
 			.then(res => {
-				console.log('image updated successfully')
 				firebase.db.collection('events').doc(eventid).set({
 					...event,
 					description: description,
@@ -38,9 +37,13 @@ export default function EditEvent(props) {
 				}).then(resp => {
 					props.history.push(`/event/${eventid}`)
 				})
-				.catch(err => {console.log('db error: ', err)})
+				.catch(err => {
+					// console.log('db error: ', err)
+				})
 			})
-			.catch(error => {console.log('storage error: ', error)})
+			.catch(error => {
+				// console.log('storage error: ', error)
+			})
 		} else {
 			firebase.db.collection('events').doc(eventid).set({
 				...event,
@@ -49,7 +52,9 @@ export default function EditEvent(props) {
 			}).then(resp => {
 				props.history.push(`/event/${eventid}`)
 			})
-			.catch(err => {console.log('db error without image: ', err)})
+			.catch(err => {
+				// console.log('db error without image: ', err)
+			})
 		}
 	}
 

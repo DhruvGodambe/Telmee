@@ -52,9 +52,6 @@ export default function UserEditProfile(props) {
 		.catch(err => {
 			console.log('error: ', err)
 		})
-		console.log('name: ', name)
-		console.log('contact: ', contact)
-		console.log('user: ', currentUser.id)
 	}
 
 	return(
@@ -120,9 +117,9 @@ export default function UserEditProfile(props) {
 const Popup = (props) => {
 	const {popup, setPopup, userImage} = props;
 
-	useEffect(() => {
-		console.log('popup props', props);
-	}, [])
+	// useEffect(() => {
+	// 	console.log('popup props', props);
+	// }, [])
 
 	function deletePost(e) {
 		alert('delete the post?');

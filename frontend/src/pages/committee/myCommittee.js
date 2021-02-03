@@ -28,7 +28,6 @@ export default function MyCommittee(props){
 		.then(res => {
 			if(res.exists){
 				setCommittee(res.data())
-				console.log('committee: ', res.data())
 				firebase.storage.ref(`/committees/${res.data().coverImageName}`).getDownloadURL()
 				.then(url => {
 					setImg(url)
@@ -52,7 +51,6 @@ export default function MyCommittee(props){
 				res.data().events.forEach(id => {
 					firebase.db.collection('events').doc(id).get()
 					.then(resp => {
-						console.log(resp.data().timeStamp)
 						if(new Date(resp.data().timeStamp.heldOn) > Date.now()){
 							setData({
 								data: resp.data(),

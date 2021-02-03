@@ -22,8 +22,6 @@ export default function AddImages(props) {
 			firebase.db.collection('committees').doc(committeeid).get()
 			.then(res => {
 				if(res.exists){
-					console.log('moreImages: ', res.data().moreImages)
-
 					setMoreImagesArr(res.data().moreImages)
 
 					Object.keys(res.data().moreImages).forEach((val, ind) => {
@@ -50,10 +48,9 @@ export default function AddImages(props) {
 	}, [])
 
 	const handleSubmit = () => {
-		Object.keys(images).forEach((photo, ind) => {
-			firebase.storage.ref(`/committees/${images[photo].name}`).put(images[photo].file)
+		Object.keys(images).forEach(async (photo, ind) => {
+			await firebase.storage.ref(`/committees/${images[photo].name}`).put(images[photo].file)
 		})
-		console.log(moreImagesArr)
 		if(Object.keys(images).length > 0) {
 			firebase.db.collection('committees').doc(committeeid).update({
 				moreImages: moreImagesArr

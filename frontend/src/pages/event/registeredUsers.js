@@ -13,7 +13,6 @@ export default function RegisteredUsers(props) {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 		if(props.location.query && props.location.query.length > 0){
-			console.log(props.location.query)
 			props.location.query.forEach(user => {
 				if(typeof(user) == "object"){
 					firebase.db.collection('users').doc(user.id).get()

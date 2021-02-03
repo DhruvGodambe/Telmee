@@ -172,7 +172,6 @@ export const OrganizationEvent = (props) => {
 		} else {
 			if(!description || Object.keys(description).length <= 0){
 				setError("Description of the event is mandatory")
-				console.log(event)
 			}
 			if(!event.timeStamp || Object.keys(event.timeStamp).length <= 0){
 				setError("Date of the event is mandatory")

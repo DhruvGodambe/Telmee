@@ -21,7 +21,7 @@ export default function Search(props) {
 		.then(res => {
 			var temp = []
 			res.docs.forEach(doc => {
-				console.log(doc.data())
+				// console.log(doc.data())
 				temp.push({
 					name: doc.data().name,
 					id: doc.id,

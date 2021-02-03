@@ -1,6 +1,6 @@
 .editor > .DraftEditor-root {
     margin-top: 2px !important;
-    height: 253px !important;
+    min-height: 253px;
     width: 94.5% !important;
     font-size: .9rem !important;
     resize: none !important;
@@ -72,6 +72,6 @@
 @media(max-width: 360px) {
     .editor > .DraftEditor-root {
         width: 91% !important;
-        height: 220px !important;
+        min-height: 220px;
     }
 }

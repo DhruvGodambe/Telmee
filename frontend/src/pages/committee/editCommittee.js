@@ -76,7 +76,9 @@ export default function EditCommittee(props) {
 			await firebase.db.collection('events').doc(eve).delete()
 		})
 
-		await firebase.storage.ref(`/committees/${committee.coverImageName}`).delete()
+		if(committee.coverImageName){
+			await firebase.storage.ref(`/committees/${committee.coverImageName}`).delete()
+		}
 
 		if(Object.keys(committee.moreImages).length > 0){
 			Object.keys(committee.moreImages).forEach(async image => {

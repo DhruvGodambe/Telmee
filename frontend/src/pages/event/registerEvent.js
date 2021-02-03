@@ -39,7 +39,7 @@ export default function RegisterEvent(props) {
 			})
 		})
 	}
-
+	
 	return(
 		<div>
 			<h1 className='create-event-box'>Registeration Form</h1>
@@ -59,7 +59,7 @@ export default function RegisterEvent(props) {
 												setUser(obj)
 											}}
 											className='register-form-input'
-										>
+											>
 											<option></option>
 											{val.options.map((opt, index) => <option>{opt}</option>)}
 										</select>
@@ -79,11 +79,19 @@ export default function RegisterEvent(props) {
 												setUser(obj)
 											}}
 											className='register-form-input'
-										/>
+											/>
 									</div>
 								)
 							}
 						})}
+						{event.organizingCommittee.id == "Kg0Dm9H4l3dUeZPj3ZAS" ?
+							<div style={{display: 'flex', alignItems: 'center', textAlign: 'left', width: '90%', margin: '10px auto'}}>
+								<input type="checkbox" required  />
+								<p>I AGREE TO COMPLETE THE WORKSHOP AND RECEIVE THE CERTIFICATE AFTER COMPLETION OF MY PROJECT</p>
+							</div>
+							:
+							null
+						}
 						<button className='register-form-submit' type="submit">submit</button>
 					</form>
 				</div>

@@ -29,6 +29,7 @@ export default function OtherEvent(props) {
 		.then(result => {
 			if(result.exists){
 				setEvent(result.data())
+				console.log(result.data())
 				if(new Date(result.data().timeStamp.heldOn) < Date.now()){
 					props.history.replace(`/event/past/${eventid}`)
 				}
@@ -163,7 +164,7 @@ export default function OtherEvent(props) {
 							:
 							null
 						}
-						{event.entryFee ?
+						{event.entryFee && event.entryFee !== "0" ?
 							<p style={{fontSize: '18px'}}><b>entry fee: Rs.{event.entryFee}/-</b></p>
 							:
 							null

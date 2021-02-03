@@ -18,6 +18,7 @@ export default function CreateCommittee(props){
 	const [loading, setLoading] = useState(false)
 	const [description, setDescription] = useState({})
 	const [error, setError] = useState("")
+	const [position, setPosition] = useState("team-leader")
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
@@ -35,7 +36,7 @@ export default function CreateCommittee(props){
 					setCommittee({
 						...committee,
 						coverImage: {},
-						members: [{id: currentUser.id, position: 'leader'}],
+						members: [{id: currentUser.id, position}],
 						moreImages: {},
 						description: Object.keys(description).length > 0 ? description : "",
 						events: []
@@ -43,7 +44,7 @@ export default function CreateCommittee(props){
 					firebase.db.collection('committees').add({
 						...committee,
 						coverImage: {},
-						members: [{id: currentUser.id, position: 'leader'}],
+						members: [{id: currentUser.id, position}],
 						moreImages: {},
 						description: Object.keys(description).length > 0 ? description : "",
 						events: []
@@ -52,7 +53,7 @@ export default function CreateCommittee(props){
 							committee: firebase.firebase.firestore.FieldValue.arrayUnion({
 								id: result.id,
 								name: committee.name,
-								position: 'leader'
+								position
 							})
 						}).then(response => {
 							setCurrentUser({
@@ -62,7 +63,7 @@ export default function CreateCommittee(props){
 									committee: [...currentUser.data.committee, {
 										id: result.id,
 										name: committee.name,
-										position: 'leader'
+										position
 									}]
 								}
 							})
@@ -78,7 +79,7 @@ export default function CreateCommittee(props){
 				setCommittee({
 					...committee,
 					coverImage: {},
-					members: [{id: currentUser.id, position: 'leader'}],
+					members: [{id: currentUser.id, position}],
 					moreImages: {},
 					events: [],
 					description: Object.keys(description).length > 0 ? description : "",
@@ -86,7 +87,7 @@ export default function CreateCommittee(props){
 				firebase.db.collection('committees').add({
 					...committee,
 					coverImage: {},
-					members: [{id: currentUser.id, position: 'leader'}],
+					members: [{id: currentUser.id, position}],
 					moreImages: {},
 					events: [],
 					description: Object.keys(description).length > 0 ? description : "",
@@ -95,7 +96,7 @@ export default function CreateCommittee(props){
 						committee: firebase.firebase.firestore.FieldValue.arrayUnion({
 							id: result.id,
 							name: committee.name,
-							position: 'leader'
+							position
 						})
 					})
 					.then(response => {
@@ -106,7 +107,7 @@ export default function CreateCommittee(props){
 								committee: [...currentUser.data.committee, {
 									id: result.id,
 									name: committee.name,
-									position: 'leader'
+									position
 								}]
 							}
 						})
@@ -130,7 +131,7 @@ export default function CreateCommittee(props){
 					<div style={{width: '100%', margin: '0', backgroundImage: `url(${bg})`, height: '180px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} >
 						<br/>
 						<br/>
-						<h2 style={{fontSize: '35px'}}>create a student council</h2>
+						<h2 style={{fontSize: '35px'}}>create a committee</h2>
 					</div>
 					<form className='create-event-form'>
 						<input
@@ -146,6 +147,15 @@ export default function CreateCommittee(props){
 							}}
 							className='create-event-input'
 						/>
+						<input
+							name='position'
+							placeholder='your position in the organization'
+							type='text'
+							onChange={(e) => {
+								setPosition(e.target.value)
+							}}
+							className='create-event-input'
+						/>
 						{upload ?
 							<div className='create-event-input'>
 								image uploaded   <FontAwesomeIcon icon={faCheck} />
@@ -156,7 +166,7 @@ export default function CreateCommittee(props){
 							<div className='create-event-input'>
 								<FontAwesomeIcon icon={faUpload} style={{margin: '0 10px'}}/>
 								<label htmlFor='coverImage'>	
-									add cover image for your event
+									add cover image for your committee
 								</label>
 							</div>
 						}

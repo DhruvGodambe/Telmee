@@ -234,7 +234,7 @@ export default function MyEvent(props) {
 								:
 								null
 							}
-							{event.entryFee ?
+							{event.entryFee && event.entryFee !== "0" ?
 								<p style={{fontSize: '18px'}}><b>entry fee: Rs.{event.entryFee}/-</b></p>
 								:
 								null

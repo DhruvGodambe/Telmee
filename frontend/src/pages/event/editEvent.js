@@ -56,8 +56,15 @@ export default function EditEvent(props) {
 	const handleDelete = () => {
 		firebase.db.collection('committees').doc(event.organizingCommittee.id).update({
 			events: firebase.firebase.firestore.FieldValue.arrayRemove(eventid)
-		}).then(res => {
-			// firebase.db.collection('users').doc()
+		}).then(async res => {
+			if(event.coverImageName){
+				await firebase.storage.ref(`/events/${event.coverImageName}`).delete()
+			}
+			// if(event.posts.length > 0){
+			// 	event.posts.forEach(async post => {
+			// 		await firebase.storage.ref(`/posts/${post.imageName}`).delete()
+			// 	})
+			// }
 			firebase.db.collection('events').doc(eventid).delete()
 			.then(resp => {
 				history.push("/")
@@ -95,6 +102,40 @@ export default function EditEvent(props) {
 					})
 				}}
 			/>
+			<div className="event-box-oneday" style={{margin: '20px auto'}}>
+				<label style={{width: '50%', textAlign: 'right'}}>one day event? </label>
+				<div style={{width: '50%', display: 'flex'}}>
+					<div className="event-box-binary">
+						<input
+							type='radio'
+							name='oneDay'
+							checked={event.oneDay}
+							onChange={(e) => {
+								if(e.target.value == 'on'){
+									setEvent({
+										...event,
+										oneDay: true
+									})
+								}
+							}}/>yes
+					</div>
+					<br/>
+					<div className="event-box-binary">
+						<input
+							type='radio'
+							name='oneDay'
+							checked={!event.oneDay}
+							onChange={(e) => {
+								if(e.target.value == 'on'){
+									setEvent({
+										...event,
+										oneDay: false
+									})
+								}
+							}} />no
+					</div>
+				</div>
+			</div>
 			{event.oneDay ?
 				<div>
 					<div className='update-event-label'><label>held on</label></div>
@@ -121,7 +162,7 @@ export default function EditEvent(props) {
 					<input
 						type='date'
 						className='update-event-input'
-						name='entry fee'
+						name='start date'
 						value={event.timeStamp ? event.timeStamp.heldOn : null}
 						onChange={(e) => {
 							setEvent({
@@ -137,12 +178,15 @@ export default function EditEvent(props) {
 					<input
 						type='date'
 						className='update-event-input'
-						name='entry fee'
+						name='end date'
 						value={event.timeStamp ? event.timeStamp.finishedOn : null}
 						onChange={(e) => {
 							setEvent({
 								...event,
-								entryFee: e.target.value
+								timeStamp: {
+									...event.timeStamp,
+									finishedOn: e.target.value
+								}
 							})
 						}}
 					/>

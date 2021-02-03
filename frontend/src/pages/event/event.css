@@ -231,6 +231,10 @@ pre a {
 		left: 88%;
 	}
 
+	.registered-user-details {
+		font-size: 14px;
+	}
+
 	.update-event-box {
 		width: 90%;
 		margin: 20px auto;

@@ -46,6 +46,7 @@ export default function EditUser(props) {
 					type='text'
 					className='update-event-input'
 					name='contact'
+					required
 					placeholder='+91'
 					onChange={(e) => {
 						setContact(e.target.value)

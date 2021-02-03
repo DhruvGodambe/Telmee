@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function About(){
     return(
-        <div style={{textAlign: 'left'}}>
+        <div style={{textAlign: 'left', padding: '10px'}}>
             <h2 style={{textAlign: 'center'}}>About us</h2>
             <p>Telmee is an easy to use platform dedicated to bring together the event organizing committees and the interested audience.</p>
             <p>This app is mainly designed for the students and committees of Datta Meghe College of Engineering</p>

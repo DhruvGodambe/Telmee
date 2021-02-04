@@ -12,6 +12,13 @@ export default function RegisteredUsers(props) {
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
+		firebase.db.collection("events").doc(eventid).get()
+		.then(res => {
+			if(res.data().formTemplate?.length > 0){
+				var temparr = res.data().formTemplate.map(val => val.name)
+				setExcelFields(["name", "contact", "email", ...temparr])
+			}
+		})
 		if(props.location.query && props.location.query.length > 0){
 			props.location.query.forEach(user => {
 				if(typeof(user) == "object"){
@@ -73,7 +80,7 @@ export default function RegisteredUsers(props) {
 					tempArr.push(field)
 				}
 			})
-			setExcelFields([...excelFields, ...tempArr])
+			// setExcelFields([...excelFields, ...tempArr])
 		}
 	}, [arr])
 
@@ -156,6 +163,9 @@ const UserCard = (props) => {
 			<div className='registered-user-details'>
 			{Object.keys(user.details).map((key, index) => {
 				if(key !== 'id'){
+					if(user.details[key]?.substring(0,8) == "https://"){
+						return <li key={index}><b>{key}</b>: <a href={user.details[key]}>{user.details[key]}</a></li>	
+					}
 					return <li key={index}><b>{key}</b>: {user.details[key]}</li>
 				}
 			})}

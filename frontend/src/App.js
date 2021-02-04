@@ -5,6 +5,7 @@ import Home from './pages/home';
 import About from './pages/about';
 import Login from './pages/login';
 import Search from './pages/search';
+import Test from './pages/test';
 import UserLogin from './pages/userLogin';
 import EditUser from './pages/user/editUser';
 import MyUser from './pages/user/myUser';
@@ -31,6 +32,7 @@ import Sidebar from './components/sidebar';
 import { globalContext } from './globalContext';
 import firebase from './firebase/index';
 import Cookies from 'js-cookie';
+import MyEditor from './components/draftjsLink';
 import {AuthEditUser, AuthMyUser, AuthLogin} from './authRoutes';
 
 
@@ -97,6 +99,7 @@ function App() {
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search}/>
+                <Route exact path="/test" component={Test}/>
                 <AuthLogin exact path="/login" component={Login}/>
                 <AuthLogin exact path="/user-login" component={UserLogin}/>
                 <AuthMyUser exact path="/user/:userid" component={MyUser}/>

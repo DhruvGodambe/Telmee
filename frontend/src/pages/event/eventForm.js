@@ -397,6 +397,25 @@ export const OrganizationEvent = (props) => {
 					})
 				}}
 			/>
+			{/* <div style={{margin: '10px auto', width: '60%'}}>
+				<label>last date of registration: </label>
+				<input
+					type='date'
+					required
+					name='lastDate'
+					className='create-event-input'
+					placeholder='last date of registration'
+					onChange={(e) => {
+						setEvent({
+							...event,
+							timeStamp: {
+								...event.timeStamp,
+								lastRegistration: e.target.value
+							}
+						})
+					}}
+				/>	
+			</div> */}
 			<div style={{width: '90%', margin: '0 auto'}}>
 				<Editors description={description} setDescription={setDescription} />
 			</div>

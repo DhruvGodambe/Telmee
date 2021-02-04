@@ -42,7 +42,7 @@ export default function MyEvent(props) {
 		})
 		.catch(err => {
 			setErrmsg('something went wrong!\n please reload or try again later')
-			// window.reload()
+			window.location.reload()
 		})
 		if(props.history.location.query == 'registered'){
 			setRegistered(true)
@@ -240,6 +240,7 @@ export default function MyEvent(props) {
 							<div className='event-register'>
 							<button
 								className='event-register-button'
+								disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
 								onClick={() => {
 									if(Cookies.get('userID')){
 										if(!registered){

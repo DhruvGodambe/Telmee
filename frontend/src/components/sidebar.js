@@ -17,6 +17,7 @@ export default function Sidebar(props) {
 		firebase.auth.signOut().then(() => {
 			setLoggedIn(false);
 			Cookies.remove('userID')
+			window.location.reload()
 		})
 	}
 

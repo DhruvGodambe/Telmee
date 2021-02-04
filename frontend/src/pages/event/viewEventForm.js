@@ -93,25 +93,43 @@ export default function ViewEventForm(props) {
 						</div>
 					)
 				} else {
-					return(
-						<div 
-							onMouseEnter={() => {}}
-							className='register-form-sub-div'>
-							<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
-								<FontAwesomeIcon onClick={() => {
-									setPopup(true)
-									setField(val)
-									setFieldIndex(ind)
-								}} icon={faEllipsisV} />
+					if (val.type == 'note') {
+						return(
+							<div 
+								onMouseEnter={() => {}}
+								className='register-form-sub-div'>
+								<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
+									<FontAwesomeIcon onClick={() => {
+										setPopup(true)
+										setField(val)
+										setFieldIndex(ind)
+									}} icon={faEllipsisV} />
+								</div>
+								<p className='register-form-label'>{val.name}</p>
 							</div>
-							<p className='register-form-label'>{val.name}</p>
-							<input
-								name={val.name}
-								placeholder='answer'
-								className='register-form-input'
-							/>
-						</div>
-					)
+						)
+					} else {
+						return(
+							<div 
+								onMouseEnter={() => {}}
+								className='register-form-sub-div'>
+								<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
+									<FontAwesomeIcon onClick={() => {
+										setPopup(true)
+										setField(val)
+										setFieldIndex(ind)
+									}} icon={faEllipsisV} />
+								</div>
+								<p className='register-form-label'>{val.name}</p>
+								<input
+									name={val.name}
+									type={val.type}
+									placeholder='answer'
+									className='register-form-input'
+								/>
+							</div>
+						)
+					}
 				}
 			})}
 				<div style={{
@@ -128,6 +146,21 @@ export default function ViewEventForm(props) {
 							])
 						}}
 					>Add Question +</button>
+				</div>
+				<div style={{
+					margin: '20px auto'
+				}}>	
+					<button
+						onClick={() => {
+							setFieldIndex(inputs.length)
+							setPopup(true)
+							setField({name: 'add description', type: 'note'})
+							setInputs([
+								...inputs,
+								{name: 'add description', type: 'note'}
+							])
+						}}
+					>Add Note / Description +</button>
 				</div>
 			</div>
 			<div style={{
@@ -211,6 +244,7 @@ const Popup = (props) => {
 								<option value='options'>list of options</option>
 								<option value="text">text</option>
 								<option value="number">number</option>
+								<option value="file">document upload</option>
 							</select>
 							<p className='register-form-label'>options</p>
 							<div style={{
@@ -244,37 +278,58 @@ const Popup = (props) => {
 							</div>
 						</div>
 						:
-						<div style={{
-							textAlign: 'left' 
-						}}>
-							<p className='register-form-label'>question: </p>
-							<input
-								className='create-event-input'
-								value={field.name}
-								onChange={(e) => {
-									setField({
-										...field,
-										name: e.target.value
-									})
-								}}
-							/>
-							<p className='register-form-label'>response type: </p>
-							<select
-								onChange={(e) => {
-									if(e.target.value == 'options'){
+						field.type == 'note' ?
+							<div>
+								<p className='register-form-label'>note: </p>
+								<input
+									className='create-event-input'
+									value={field.name}
+									onChange={(e) => {
 										setField({
 											...field,
-											type: e.target.value,
-											options: []
+											name: e.target.value
 										})
-									}
-								}}
-								className='create-event-input'>
-								<option>{field.type}</option>
-								<option value='options'>list of options</option>
-								<option>{field.type == 'text' ? 'number' : 'text' }</option>
-							</select>
-						</div>
+									}}
+								/>
+							</div>
+							:
+							<div style={{
+								textAlign: 'left' 
+							}}>
+								<p className='register-form-label'>question: </p>
+								<input
+									className='create-event-input'
+									value={field.name}
+									onChange={(e) => {
+										setField({
+											...field,
+											name: e.target.value
+										})
+									}}
+								/>
+								<p className='register-form-label'>response type: </p>
+								<select
+									onChange={(e) => {
+										if(e.target.value == 'options'){
+											setField({
+												...field,
+												type: e.target.value,
+												options: []
+											})
+										} else {
+											setField({
+												...field,
+												type: e.target.value
+											})
+										}
+									}}
+									className='create-event-input'>
+									<option>{field.type}</option>
+									<option value='options'>list of options</option>
+									<option>{field.type == 'text' ? 'number' : 'text' }</option>
+									<option value="file">document upload</option>
+								</select>
+							</div>
 					}
 					<div>
 						<button onClick={handleSubmit}>change</button>

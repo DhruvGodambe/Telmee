@@ -18,6 +18,8 @@ export default function DynamicEventForm(props) {
 	const [options, setOptions] = useState([]);
 	const [optionItems, setOptionItems] = useState([]);
 	const [type, setType] = useState('');
+	const [addNote, setAddNote] = useState(false);
+	const [note, setNote] = useState("")
 	let item = '';
 
 	function handleOptions(e) {
@@ -28,6 +30,13 @@ export default function DynamicEventForm(props) {
 			setOptionItems([])
 		}
 		setType(e.target.value);
+	}
+
+	function handleAddNote(e) {
+		setInputs([...inputs, {type: "note", name: note}])
+		setOptions([])
+		setAddNote(false);
+		setNote("")
 	}
 
 	useEffect(() => {
@@ -82,7 +91,7 @@ export default function DynamicEventForm(props) {
 			<div>
 				<div className='form-box'>
 					{inputs.map((val, ind) => (
-						<div>
+						<div key={ind}>
 							{val.type == 'options' ?
 								<div
 									style={{
@@ -110,13 +119,14 @@ export default function DynamicEventForm(props) {
 									</select>
 								</div>
 							:
+								val.type == "note" ?
 								<div
-									style={{
-										background: '#eee',
-										borderRadius: '10px',
-										padding: '10px 5px',
-									}} 
-									className='register-form-sub-div'>
+								style={{
+									background: '#eee',
+									borderRadius: '10px',
+									padding: '10px 5px',
+								}} 
+								className='register-form-sub-div'>
 									<div>
 										<button
 										className='register-form-button'
@@ -125,24 +135,83 @@ export default function DynamicEventForm(props) {
 											setInputs(temp)	
 										}}>x</button>
 									</div>
-									<p className='register-form-label'>{val.name}</p>
-									<input
-										placeholder={val.name}
-										type={val.type}
-										className='register-form-input'
-									/>
+									<p style={{fontSize: '16px'}}>{val.name}</p>
 								</div>
+								:
+									val.type == "file" ?
+									<div
+										style={{
+											background: '#eee',
+											borderRadius: '10px',
+											padding: '10px 5px',
+										}} 
+										className='register-form-sub-div'>
+										<div>
+											<button
+											className='register-form-button'
+											onClick={() => {
+												var temp = inputs.filter((val, index) => ind !== index)
+												setInputs(temp)	
+											}}>x</button>
+										</div>
+										<p className='register-form-label'>{val.name}</p>
+										<input
+											placeholder={val.name}
+											type={val.type}
+											className='register-form-input'
+										/>
+									</div>
+									:
+									<div
+										style={{
+											background: '#eee',
+											borderRadius: '10px',
+											padding: '10px 5px',
+										}} 
+										className='register-form-sub-div'>
+										<div>
+											<button
+											className='register-form-button'
+											onClick={() => {
+												var temp = inputs.filter((val, index) => ind !== index)
+												setInputs(temp)	
+											}}>x</button>
+										</div>
+										<p className='register-form-label'>{val.name}</p>
+										<input
+											placeholder={val.name}
+											type={val.type}
+											className='register-form-input'
+										/>
+									</div>
 							}
 						</div>
 					))}
-				{!render ?
-					<button
-						type="button"
-						onClick={() => {
-							setRender(true)
-						}}
-						className='create-event-input'
-					>add a question</button>
+				{addNote ?
+					<div style={{width: '90%', margin: '10px auto'}}>
+						<textarea rows="10" style={{width: '95%', padding: '2.5%', fontFamily: 'Helvetica'}} onChange={(e) => {setNote(e.target.value)}} />
+						<button className='create-event-input' type="button" onClick={handleAddNote}>Add</button>
+					</div>
+					:
+					null
+				}
+				{!render && !addNote ?
+					<div>
+						<button
+							type="button"
+							onClick={() => {
+								setRender(true)
+							}}
+							className='create-event-input'
+						>add a question</button>
+						<button
+							type="button"
+							onClick={() => {
+								setAddNote(true)
+							}}
+							className='create-event-input'
+						>add description / note</button>
+					</div>
 					:
 					null
 				}
@@ -167,6 +236,7 @@ export default function DynamicEventForm(props) {
 							<option>text</option>
 							<option value='options'>list of options</option>
 							<option>number</option>
+							<option value="file">document upload</option>
 						</select>
 						{options.map((val, ind) => (
 							<div className='deep-form' >

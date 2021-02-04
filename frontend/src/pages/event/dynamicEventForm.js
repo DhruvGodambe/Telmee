@@ -20,6 +20,7 @@ export default function DynamicEventForm(props) {
 	const [type, setType] = useState('');
 	const [addNote, setAddNote] = useState(false);
 	const [note, setNote] = useState("")
+	const [checked, setChecked] = useState(false);
 	let item = '';
 
 	function handleOptions(e) {
@@ -56,14 +57,15 @@ export default function DynamicEventForm(props) {
 	function handleAddField() {
 		setRender(false);
 		if(type === 'options'){
-			setInputs([...inputs, {type: type, name: name, options: optionItems}]);
+			setInputs([...inputs, {type: type, name: name, options: optionItems, required: checked}]);
 			setOptions([]);
 			setOptionItems([]);
+			setChecked(false);
 		} else {
-			setInputs([...inputs, {type: type, name: name}])
+			setInputs([...inputs, {type: type, name: name, required: checked}])
 			setOptions([])
+			setChecked(false)
 		}
-		console.log('inputs: ', inputs)
 	}
 
 	function handleOptionChange(e) {
@@ -272,6 +274,10 @@ export default function DynamicEventForm(props) {
 								}
 							</div>
 						))}
+						<div style={{padding: '10px'}}>
+							<input type="checkbox" onChange={(e) => {setChecked(e.target.checked)}} />
+							<p style={{margin: '0', display: 'inline'}}>mandatory</p>
+						</div>
 						<button className='create-event-input' type="button" onClick={handleAddField}>Add</button>
 					</div>
 					:

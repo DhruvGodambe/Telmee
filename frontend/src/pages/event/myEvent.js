@@ -9,7 +9,7 @@ import 'draft-js/dist/Draft.css';
 
 import {Editor, EditorState, convertFromRaw} from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faShare, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faFont } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +27,7 @@ export default function MyEvent(props) {
 	const [description, setDescription] = useState(false);
 
 	useEffect(() => {
+		window.scrollTo(0,0)
 		firebase.db.collection('events').doc(eventid).get()
 		.then(result => {
 			if(result.exists){
@@ -100,6 +101,16 @@ export default function MyEvent(props) {
 	const getStdDate = (dateStr) => {
 		const d = new Date(dateStr);
 		return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+	}
+
+	const share = () => {
+		console.log(navigator)
+		if(navigator.share){
+			navigator.share({
+				title: event.name,
+				url: window.location.href,
+			}).then(() => console.log('Successful share'))
+		}
 	}
 
 	// const FONT = 'Palatino, serif';
@@ -195,6 +206,15 @@ export default function MyEvent(props) {
 										<p style={{width: '80%'}}>{event.eventForm ? 'view form' : 'create a form'}</p>
 									</button>
 								</div>
+								<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 2.5%'}}>
+									<button
+										className='event-nav'
+										onClick={share}
+									>
+										<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faShare}/></div>
+										<p style={{width: '80%', marginLeft: '2px'}}>share</p>
+									</button>
+								</div>
 							</div>
 							<h3 style={{margin: '20px 0 5px'}}>Organized by
 								<Link
@@ -240,7 +260,7 @@ export default function MyEvent(props) {
 							<div className='event-register'>
 							<button
 								className='event-register-button'
-								disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
+								// disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
 								onClick={() => {
 									if(Cookies.get('userID')){
 										if(!registered){

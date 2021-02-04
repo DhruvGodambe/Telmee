@@ -49,7 +49,7 @@ export default function RegisterEvent(props) {
 									<div key={ind} className='register-form-sub-div'>
 										<p className='register-form-label'>{val.name}</p>
 										<select 
-											required
+											required={val.required}
 											onChange={(e) => {
 												var obj = Object.assign({}, user)
 												obj[val.name] = e.target.value
@@ -64,9 +64,16 @@ export default function RegisterEvent(props) {
 								)
 							} else {
 								if(val.type == 'note'){
+									var str = '';
+									val.name.split(" ").forEach(val => {
+										if(val.includes("https://")){
+											var temp = `<a href="${val}">${val}</a>`;
+											str = str.concat(temp)
+										} else { str = str.concat(val + " ")}
+									})
 									return (
 										<div key={ind} className='register-form-sub-div'>
-											<p style={{fontSize: '16px'}}>{val.name}</p>
+											<p className="register-form-note" dangerouslySetInnerHTML={{__html: str}}></p>
 										</div>
 									)
 								} else {
@@ -76,6 +83,7 @@ export default function RegisterEvent(props) {
 												<p className='register-form-label'>{val.name}</p>
 												<input
 													type={val.type}
+													required={val.required}
 													placeholder={val.name}
 													onChange={async (e) => {
 														let imageNameArr = e.target.files[0].name.split(".");
@@ -100,7 +108,7 @@ export default function RegisterEvent(props) {
 											<div key={ind} className='register-form-sub-div'>
 												<p className='register-form-label'>{val.name}</p>
 												<input
-													required
+													required={val.required}
 													type={val.type}
 													placeholder={val.name}
 													onChange={(e) => {

@@ -94,6 +94,13 @@ export default function ViewEventForm(props) {
 					)
 				} else {
 					if (val.type == 'note') {
+						var str = '';
+						val.name.split(" ").forEach(val => {
+							if(val.includes("https://")){
+								var temp = `<a href="${val}">${val}</a>`;
+								str = str.concat(temp)
+							} else { str = str.concat(val + " ")}
+						})
 						return(
 							<div 
 								onMouseEnter={() => {}}
@@ -105,7 +112,9 @@ export default function ViewEventForm(props) {
 										setFieldIndex(ind)
 									}} icon={faEllipsisV} />
 								</div>
-								<p className='register-form-label'>{val.name}</p>
+								<div key={ind} className='register-form-sub-div'>
+									<p className="register-form-note" dangerouslySetInnerHTML={{__html: str}}></p>
+								</div>
 							</div>
 						)
 					} else {
@@ -223,6 +232,18 @@ const Popup = (props) => {
 									})
 								}}
 							/>
+							<div style={{padding: '10px'}}>
+								<input
+									type="checkbox"
+									checked={field.required}
+									onChange={(e) => {
+										setField({
+											...field,
+											required: e.target.checked
+										})
+										}} />
+								<p style={{margin: '0', display: 'inline'}}>mandatory</p>
+							</div>
 							<p className='register-form-label'>response type: </p>
 							<select
 								onChange={(e) => {
@@ -307,6 +328,17 @@ const Popup = (props) => {
 										})
 									}}
 								/>
+								<div style={{padding: '10px'}}>
+									<input type="checkbox" 
+										checked={field.required}
+										onChange={(e) => {
+											setField({
+												...field,
+												required: e.target.checked
+											})
+										}} />
+									<p style={{margin: '0', display: 'inline'}}>mandatory</p>
+								</div>
 								<p className='register-form-label'>response type: </p>
 								<select
 									onChange={(e) => {

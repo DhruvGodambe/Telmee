@@ -11,7 +11,7 @@ import 'draft-js/dist/Draft.css';
 import {Editor, EditorState, convertFromRaw} from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faShare } from '@fortawesome/free-solid-svg-icons';
 
 export default function OtherEvent(props) {
 	const {currentUser} = useContext(globalContext);
@@ -25,6 +25,7 @@ export default function OtherEvent(props) {
 	const [description, setDescription] = useState('')
 
 	useEffect(() => {
+		window.scrollTo(0,0)
 		firebase.db.collection('events').doc(eventid).get()
 		.then(result => {
 			if(result.exists){
@@ -98,6 +99,16 @@ export default function OtherEvent(props) {
 		return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
 	}
 
+	const share = () => {
+		console.log(navigator)
+		if(navigator.share){
+			navigator.share({
+				title: event.name,
+				url: window.location.href,
+			}).then(() => console.log('Successful share'))
+		}
+	}
+
 	// const FONT = 'Palatino, serif';
 	const FONT = "Arial, Helvetica, sans-serif";
 
@@ -128,6 +139,15 @@ export default function OtherEvent(props) {
 				</div>
 				{event.name ?
 					<div className='event-content'>
+						<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 2.5%'}}>
+							<button
+								className='event-nav'
+								onClick={share}
+							>
+								<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faShare}/></div>
+								<p style={{width: '80%', marginLeft: '2px'}}>share</p>
+							</button>
+						</div>
 						<h3 style={{margin: '5px 0'}}>Organized by
 							<Link
 								style={{ marginLeft: '5px', color: '#ff003f', opacity: '0.5'}}
@@ -172,7 +192,7 @@ export default function OtherEvent(props) {
 						<div className='event-register'>
 						<button
 							className='event-register-button'
-							disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
+							// disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
 							onClick={() => {
 								if(Cookies.get('userID')){
 									if(!registered){

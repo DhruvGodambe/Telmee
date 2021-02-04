@@ -105,6 +105,15 @@ pre a {
 	border-radius: 10px;
 }
 
+.register-form-note {
+	font-size: 16px;
+}
+
+.register-form-note a {
+	color: #ff003f;
+	opacity: .5;
+}
+
 .register-form-sub-div {
 	width: 90%;
 	margin: 20px auto;

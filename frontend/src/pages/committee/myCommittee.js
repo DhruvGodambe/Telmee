@@ -28,6 +28,7 @@ export default function MyCommittee(props){
 		.then(res => {
 			if(res.exists){
 				setCommittee(res.data())
+				document.title = res.data().name
 				firebase.storage.ref(`/committees/${res.data().coverImageName}`).getDownloadURL()
 				.then(url => {
 					setImg(url)

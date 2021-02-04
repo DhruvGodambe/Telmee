@@ -13,6 +13,7 @@ export default function Home(props) {
 	const [paginateDate, setPaginateDate] = useState(0)
 
 	useEffect(() => {
+		document.title = "Telmee: Discover new events"
 		var temp = [];
 		firebase.db.collection('events').orderBy('timeStamp.heldOn', 'desc').limit(3).get()
 		.then(res => {

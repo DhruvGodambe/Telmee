@@ -30,6 +30,7 @@ export default function OtherEvent(props) {
 		.then(result => {
 			if(result.exists){
 				setEvent(result.data())
+				document.title = result.data().name;
 				if(new Date(result.data().timeStamp.heldOn) < Date.now()){
 					props.history.replace(`/event/past/${eventid}`)
 				}

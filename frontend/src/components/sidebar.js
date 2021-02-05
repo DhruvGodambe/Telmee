@@ -27,7 +27,7 @@ export default function Sidebar(props) {
 			{loggedIn ? 
 				<div className="buttons">
 					<div>
-						<img style={{width: '20%', borderRadius: '10px'}} src={currentUser.data?.profilePicture ? currentUser.data.profilePicture : ""} />
+						<img style={{width: '30%', borderRadius: '10px'}} src={currentUser.data?.profilePicture ? currentUser.data.profilePicture : ""} />
 					</div>
 					<p className="loggedIn">logged in as {currentUser.data ? currentUser.data.name : null} </p>
 					<Link to='/'>

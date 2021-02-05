@@ -86,6 +86,19 @@ export default function DynamicEventForm(props) {
 		})
 	}
 
+	function RenderDescription(desc) {
+		var str = '';
+		desc.name.split(" ").forEach(val => {
+			if(val.includes("https://")){
+				var temp = `<a href="${val}">${val}</a>`;
+				str = str.concat(temp)
+			} else { str = str.concat(val + " ")}
+		})
+		return(
+			<p className="register-form-note" dangerouslySetInnerHTML={{__html: str}}></p>	
+		)
+	}
+
 	return(
 		<div className='create-form-root'>
 			<h1>Create A Registeration Form</h1>
@@ -137,7 +150,7 @@ export default function DynamicEventForm(props) {
 											setInputs(temp)	
 										}}>x</button>
 									</div>
-									<p style={{fontSize: '16px'}}>{val.name}</p>
+									{RenderDescription(val)}
 								</div>
 								:
 									val.type == "file" ?

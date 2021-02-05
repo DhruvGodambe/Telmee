@@ -107,6 +107,7 @@ pre a {
 
 .register-form-note {
 	font-size: 16px;
+	word-break: break-all;
 }
 
 .register-form-note a {

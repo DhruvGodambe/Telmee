@@ -15,6 +15,7 @@ import UserEditPicture from './pages/user/userEditPicture';
 import UploadPost from './pages/user/uploadPost';
 import Event from './pages/event/event';
 import PastEvent from './pages/event/pastEvent';
+import AddEventMedia from './pages/event/addEventMedia';
 import RegisteredUsers from './pages/event/registeredUsers';
 import AttendedUsers from './pages/event/attendedUsers';
 import RegisterEvent from './pages/event/registerEvent';
@@ -109,6 +110,7 @@ function App() {
                 <Route exact path='/user/upload/post' component={UploadPost} />
                 <Route exact path='/event/:eventid' component={Event} />
                 <Route exact path='/event/edit/:eventid' component={EditEvent} />
+                <Route exact path='/event/add_media/:eventid' component={AddEventMedia} />
                 <Route exact path='/event/register/:eventid' component={RegisterEvent} />
                 <Route exact path='/event/get/:eventid' component={RegisteredUsers} />
                 <Route exact path='/event/attended/:eventid' component={AttendedUsers} />

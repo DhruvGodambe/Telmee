@@ -79,7 +79,7 @@ a {
     top: 0;
     right: 0;
     opacity: 1;
-    background: linear-gradient(#a6102b, #ff0066);
+    background: linear-gradient(#ff003f, #ff0066);
     box-shadow: 1px 1px solid red;
     height: 100%;
     transition: .3s;

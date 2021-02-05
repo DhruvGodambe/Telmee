@@ -3,31 +3,29 @@ import {globalContext} from '../../globalContext';
 import Cookies from 'js-cookie';
 import firebase from '../../firebase/index';
 import './event.css';
+import {PostCard2} from '../../components/postCards'
 import logo from '../../images/logo5.png';
 import {Link} from 'react-router-dom';
 import 'draft-js/dist/Draft.css';
 
 import {Editor, EditorState, convertFromRaw} from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShare, faUsers, faListAlt, faCameraRetro } from '@fortawesome/free-solid-svg-icons';
+import { faShare, faUsers, faListAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faFont } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-export default function MyEvent(props) {
+export default function MyPastEvent(props) {
 	const {currentUser} = useContext(globalContext);
 	const [event, setEvent] = useState({})
 	const [popup, setPopup] = useState(false)
 	const [errmsg, setErrmsg] = useState('')
 	const [img, setImg] = useState('');
-	let tempPath = props.history.location.pathname.split('/');
-	const eventid = tempPath[tempPath.length - 1];
+	const eventid = props.history.location.pathname.split('/past/')[1];
 	const [registered, setRegistered] = useState(false);
 	const [confirm, setConfirm] = useState(false);
 	const [description, setDescription] = useState(false);
-	const [media1, setMedia1] = useState("");
-	const [media2, setMedia2] = useState("");
 
 	useEffect(() => {
 		window.scrollTo(0,0)
@@ -35,12 +33,10 @@ export default function MyEvent(props) {
 		.then(result => {
 			if(result.exists){
 				setEvent(result.data())
-				console.log(result.data())
-				//check if event is upcoming or past event
 				if(new Date(result.data().timeStamp.heldOn) < Date.now()){
 					props.history.replace(`/event/past/${eventid}`)
-				}
-				//check if eventForm and formTemplate status matches
+                }
+                //check if eventForm and formTemplate status matches
 				if(!result.data().formTemplate){
 					console.log(true)
 					if(result.data().eventForm){
@@ -48,19 +44,6 @@ export default function MyEvent(props) {
 							eventForm: false
 						}).then(() => {window.location.reload()})
 					}
-				}
-				//check if any media in the event
-				if(result.data().media1Name){
-					firebase.storage.ref(`/events/${result.data().media1Name}`).getDownloadURL()
-					.then(url => {
-						setMedia1(url);
-					})
-				}
-				if(result.data().media2Name){
-					firebase.storage.ref(`/events/${result.data().media2Name}`).getDownloadURL()
-					.then(url => {
-						setMedia2(url);
-					})
 				}
 				firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
 				.then(url => {
@@ -208,27 +191,13 @@ export default function MyEvent(props) {
 										className='event-nav'
 										onClick={() => {
 											props.history.push({
-												pathname: `/event/add_media/${eventid}`,
-												query: event
-											})
-										}}
-									>
-										<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faCameraRetro}/></div>
-										<p style={{marginLeft: '2px'}}>add media</p>
-									</button>
-								</div>
-								<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 2.5%'}}>
-									<button
-										className='event-nav'
-										onClick={() => {
-											props.history.push({
 												pathname: `/event/edit/${eventid}`,
 												query: event
 											})
 										}}
 									>
 										<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faEdit}/></div>
-										<p >edit</p>
+										<p>edit</p>
 									</button>
 								</div>
 								<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 2.5%'}}>
@@ -244,7 +213,7 @@ export default function MyEvent(props) {
 										}}
 									>
 										<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faListAlt}/></div>
-										<p style={{marginLeft: '2px'}}>{event.eventForm ? 'view form' : 'create a form'}</p>
+										<p style={{ marginLeft: '2px'}}>{event.eventForm ? 'view form' : 'create a form'}</p>
 									</button>
 								</div>
 								<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 2.5%'}}>
@@ -279,30 +248,6 @@ export default function MyEvent(props) {
 								:
 								null
 							}
-							{media1 !== "" ?
-								event.media1Type.indexOf("image") !== -1 ?
-									<div style={{width: '95%', margin: '30px auto'}}>
-										<img width="100%" src={media1} /> 
-									</div>
-									:
-									<div style={{width: '95%', margin: '30px auto'}}>
-										<video width="100%" src={media1} autoPlay controls controlsList="nodownload nofullscreen" /> 
-									</div>
-								:
-								null
-							}
-							{media2 !== "" ?
-								event.media2Type.indexOf("image") !== -1 ?
-									<div style={{width: '95%', margin: '30px auto'}}>
-										<img width="100%" src={media2} /> 
-									</div>
-									:
-									<div style={{width: '95%', margin: '30px auto'}}>
-										<video width="100%" src={media2} autoPlay controls controlsList="nodownload nofullscreen" /> 
-									</div>
-								:
-								null
-							}
 							{event.description ?
 								<div>
 									{typeof(event.description) == "object" ?
@@ -322,22 +267,28 @@ export default function MyEvent(props) {
 								:
 								null
 							}
-							<div className='event-register'>
-							<button
-								className='event-register-button'
-								// disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
-								onClick={() => {
-									if(Cookies.get('userID')){
-										if(!registered){
-											setPopup(true)
-										}
-									} else {
-										props.history.push('/login')
-									}
-								}}
-							><FontAwesomeIcon icon={faCheck} style={{display: registered ? 'inline-block' : 'none'}} /> {registered ? 'registered' : 'register'}</button>
-							
-							</div>
+                            {new Date(event.timeStamp.finishedOn) > Date.now() ?
+                                <div className='event-register' style={{textAlign: 'center'}}>
+                                    <p style={{
+                                        fontWeight: 'bold',
+                                        fontSize: '20px',
+                                        padding: '10px',
+                                        border: '1px solid red',
+                                        borderRadius: '10px'
+                                    }}>The Registration has been closed</p>
+                                </div>
+                                :
+                                null
+                            }
+                            {event.posts.length > 0 ?
+                                <div className='user'>
+                                    {event.posts.map((val, ind) => {
+                                        return <PostCard2 post={val} key={ind} />
+                                    })}
+                                </div>
+                                :
+                                null
+                            }
 						</div>
 						: 
 						null

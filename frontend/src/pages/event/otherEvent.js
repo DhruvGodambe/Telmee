@@ -19,10 +19,13 @@ export default function OtherEvent(props) {
 	const [errmsg, setErrmsg] = useState('')
 	const [popup, setPopup] = useState(false)
 	const [img, setImg] = useState('');
-	const eventid = props.history.location.pathname.split('/event/')[1];
+	let tempPath = props.history.location.pathname.split('/');
+	const eventid = tempPath[tempPath.length - 1];
 	const [registered, setRegistered] = useState(false);
 	const [confirm, setConfirm] = useState(false);
 	const [description, setDescription] = useState('')
+	const [media1, setMedia1] = useState("");
+    const [media2, setMedia2] = useState("");
 
 	useEffect(() => {
 		window.scrollTo(0,0)
@@ -33,6 +36,19 @@ export default function OtherEvent(props) {
 				document.title = result.data().name;
 				if(new Date(result.data().timeStamp.heldOn) < Date.now()){
 					props.history.replace(`/event/past/${eventid}`)
+				}
+				//check if any media in the event
+				if(result.data().media1Name){
+					firebase.storage.ref(`/events/${result.data().media1Name}`).getDownloadURL()
+					.then(url => {
+						setMedia1(url);
+					})
+				}
+				if(result.data().media2Name){
+					firebase.storage.ref(`/events/${result.data().media2Name}`).getDownloadURL()
+					.then(url => {
+						setMedia2(url);
+					})
 				}
 				firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
 				.then(url => {
@@ -168,6 +184,30 @@ export default function OtherEvent(props) {
 						}
 						{event.venue ?
 							<p style={{margin: '5px 0 30px', color: 'grey'}}>venue: {event.venue}</p>
+							:
+							null
+						}
+						{media1 !== "" ?
+							event.media1Type.indexOf("image") !== -1 ?
+								<div style={{width: '95%', margin: '30px auto'}}>
+									<img width="100%" src={media1} /> 
+								</div>
+								:
+								<div style={{width: '95%', margin: '30px auto'}}>
+									<video width="100%" src={media1} autoPlay controls controlsList="nodownload nofullscreen" /> 
+								</div>
+							:
+							null
+						}
+						{media2 !== "" ?
+							event.media2Type.indexOf("image") !== -1 ?
+								<div style={{width: '95%', margin: '30px auto'}}>
+									<img width="100%" src={media2} /> 
+								</div>
+								:
+								<div style={{width: '95%', margin: '30px auto'}}>
+									<video width="100%" src={media2} autoPlay controls controlsList="nodownload nofullscreen" /> 
+								</div>
 							:
 							null
 						}

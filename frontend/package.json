@@ -20,6 +20,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
+    "react-helmet": "^6.1.0",
     "react-html-table-to-excel": "^2.0.0",
     "react-image-crop": "^8.6.2",
     "react-json-excel": "^1.0.0",

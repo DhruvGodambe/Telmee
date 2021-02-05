@@ -1,11 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {globalContext} from '../../globalContext';
 import firebase from '../../firebase/index';
+import Loader from 'react-loader-spinner';
 
 export default function RegisterEvent(props) {
 	const [event, setEvent] = useState({})
 	const [user, setUser] = useState({})
 	const {currentUser} = useContext(globalContext);
+	const [loading, setLoading] = useState(false);
 	const eventid = props.history.location.pathname.split('register/')[1];
 
 	useEffect(() => {
@@ -86,9 +88,11 @@ export default function RegisterEvent(props) {
 													required={val.required}
 													placeholder={val.name}
 													onChange={async (e) => {
+														setLoading(true);
 														let imageNameArr = e.target.files[0].name.split(".");
 														let imageName = imageNameArr[imageNameArr.length - 1];
 														await firebase.storage.ref(`/user-files/${val.name}-${currentUser.id}.${imageName}`).put(e.target.files[0])
+														console.log("uploaded")
 														
 														await firebase.storage.ref(`/user-files/${val.name}-${currentUser.id}.${imageName}`).getDownloadURL()
 														.then(url => {
@@ -96,6 +100,7 @@ export default function RegisterEvent(props) {
 															obj[val.name] = url;
 															console.log(url)
 															setUser(obj);
+															setLoading(false);
 														})
 													}}
 													className='register-form-input'
@@ -132,7 +137,21 @@ export default function RegisterEvent(props) {
 							:
 							null
 						}
-						<button className='register-form-submit' type="submit">submit</button>
+						{loading ?
+							<Loader
+								type="ThreeDots"
+								color="#ff0033"
+								height={100}
+								width={100}
+								timeout={10000} //10 secs
+							/>
+							:
+							null
+						}
+						<button
+							disabled={loading}
+							className='register-form-submit'
+							type="submit">submit</button>
 					</form>
 				</div>
 				:

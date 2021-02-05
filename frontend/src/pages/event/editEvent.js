@@ -65,6 +65,12 @@ export default function EditEvent(props) {
 			if(event.coverImageName){
 				await firebase.storage.ref(`/events/${event.coverImageName}`).delete()
 			}
+			if(event.media1Name){
+				await firebase.storage.ref(`/events/${event.media1Name}`).delete()
+			}
+			if(event.media2Name){
+				await firebase.storage.ref(`/events/${event.media2Name}`).delete()
+			}
 			// if(event.posts.length > 0){
 			// 	event.posts.forEach(async post => {
 			// 		await firebase.storage.ref(`/posts/${post.imageName}`).delete()

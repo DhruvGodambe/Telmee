@@ -1,7 +1,7 @@
 .navbar {
 	display: flex;
 	flex-wrap: wrap;
-	background: #ff003f;
+	background: #55887C;
 	flex-direction: column;
 	/* box-shadow: 1px 1px 10px #aaa; */
 	/* height: 150px; */
@@ -14,6 +14,7 @@
 .navbar h1 {
 	width: 100%;
 	margin: 5px 0;
+	color: #FAF2EF;
 }
 
 .navbar p {
@@ -23,6 +24,7 @@
 	width: 100%;
 	letter-spacing: 1px;
 	font-style: italic;
+	color: #FAF2EF;
 }
 
 .nav-icons {
@@ -32,7 +34,7 @@
 	margin: 0 auto;
 	position: sticky;
 	top: 0;
-	background: #ff003f;
+	background: #55887C;
 	color: aliceblue;
 	z-index: 5;
 }
@@ -41,6 +43,7 @@
 	width: 33%;
 	padding: 10px 0;
 	font-size: 20px;
+	color: #FAF2EF;
 }
 
 .icons:nth-child(4){
@@ -55,6 +58,7 @@
 
 	.nav-icons {
 		width: 100%;
+		/* border-radius: 0 0 20px 20px; */
 	}
 
 	.icons {

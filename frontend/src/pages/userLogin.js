@@ -43,7 +43,8 @@ export default function UserLogin(props) {
 							if(ret.data){
 								setCurrentUser({
 									data: ret.data,
-									id: ret.id
+									id: ret.id,
+									newUser: false
 								})
 								props.history.push(`/user/${ret.id}`)
 							} else {

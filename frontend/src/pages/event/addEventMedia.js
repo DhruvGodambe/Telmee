@@ -48,11 +48,11 @@ export default function AddEventMedia(props) {
             await firebase.storage.ref("/events/" + change2).delete()
         }
 
-        if(media1 !== '' && media1.indexOf("https") == -1){
+        if(media1 !== '' && media1.substring(0,5) !== 'https'){
             await firebase.storage.ref(`/events/${event.media1Name}`).put(event.media1)
         }
 
-        if(media2 !== '' && media2.indexOf("https") == -1){
+        if(media2 !== '' && media2.substring(0,5) !== "https"){
             await firebase.storage.ref(`/events/${event.media2Name}`).put(event.media2)
         }
 
@@ -68,23 +68,35 @@ export default function AddEventMedia(props) {
     const handleDelete1 = async () => {
         await firebase.storage.ref(`/events/${event.media1Name}`).delete()
         setMedia1("");
-        let obj = Object.assign({}, event);
-        delete obj.media1;
-        delete obj.media1Type;
-        delete obj.media1Name;
-        setEvent(obj);
-        await firebase.db.collection("events").doc(eventid).update(event);
+        setEvent({
+            ...event,
+            media1: {},
+            media1Name: "",
+            media1Type: ""
+        });
+        await firebase.db.collection("events").doc(eventid).update({
+            ...event,
+            media1: {},
+            media1Name: "",
+            media1Type: ""
+        });
     }
 
     const handleDelete2 = async () => {
         await firebase.storage.ref(`/events/${event.media2Name}`).delete()
         setMedia2("");
-        let obj = Object.assign({}, event);
-        delete obj.media2;
-        delete obj.media2Type;
-        delete obj.media2Name;
-        setEvent(obj);
-        await firebase.db.collection("events").doc(eventid).update(event);
+        setEvent({
+            ...event,
+            media2: {},
+            media2Name: "",
+            media2Type: ""
+        });
+        await firebase.db.collection("events").doc(eventid).update({
+            ...event,
+            media2: {},
+            media2Name: "",
+            media2Type: ""
+        });
     }
 
     return(
@@ -99,7 +111,12 @@ export default function AddEventMedia(props) {
                     {event.media1Type.indexOf("image") !== -1 ?
 					    <img className='create-event-image' src={media1} />
                         :
-                        <video style={{margin: '20px auto', borderRadius: '10px'}} width="100%" autoPlay src={media1} controls />
+                        <video
+                            style={{margin: '20px auto', borderRadius: '10px'}}
+                            width="100%"
+                            autoPlay
+                            src={media1}
+                            controls />
                     }
 					<label htmlFor='media1' onClick={() => {setChange1(event.media1Name)}} className='create-event-input'>change media</label>
 				</div>
@@ -112,7 +129,7 @@ export default function AddEventMedia(props) {
 				</div>
 			}
 			<input
-				name='coverImage'
+				name='media1'
 				id='media1'
 				type='file'
 				accept='.jpg, .jpeg, .png, .mp4'
@@ -120,6 +137,7 @@ export default function AddEventMedia(props) {
                     var file = e.target.files[0]
                     if(file.type.includes("video")){
                         const url = URL.createObjectURL(file);
+                        console.log(url);
                         setMedia1(url);
                     } else {
                         const reader = new FileReader();
@@ -163,7 +181,7 @@ export default function AddEventMedia(props) {
 				</div>
 			}
 			<input
-				name='coverImage'
+				name='media2'
 				id='media2'
 				type='file'
 				accept='.jpg, .jpeg, .png, .mp4'
@@ -204,7 +222,10 @@ export default function AddEventMedia(props) {
                 null
             }
             <div>
-                <button className="register-form-submit" onClick={handleSubmit}>Submit</button>
+                <button
+                    disabled={loading}
+                    className="register-form-submit"
+                    onClick={handleSubmit}>Submit</button>
             </div>
         </div>
     )

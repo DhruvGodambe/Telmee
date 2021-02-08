@@ -12,6 +12,7 @@ export default function EditUser(props) {
 		const userid = window.location.href.split('/edit/')[1];
 		setCurrentUser({
 			...currentUser,
+			newUser: true,
 			data: {
 				...currentUser.data,
 				contact,

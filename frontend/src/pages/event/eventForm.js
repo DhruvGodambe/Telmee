@@ -78,6 +78,7 @@ export const OrganizationEvent = (props) => {
 	const eventRef = firebase.db.collection('events');
 	const [checked, setChecked] = useState(false);
 	const [error, setError] = useState("")
+	const [externalLink, setExternalLink] = useState([{link: "", description: ""}]);
 
 	useEffect(() => {
 		if(userID){
@@ -107,6 +108,7 @@ export const OrganizationEvent = (props) => {
 					event: event
 				}
 			})
+			const finalExternalLink = externalLink.filter((val) => val.link !== "")
 			if(event.coverImage){
 	
 				firebase.storage.ref(`/events/${event.coverImageName}`).put(event.coverImage)
@@ -119,6 +121,7 @@ export const OrganizationEvent = (props) => {
 									...event.organizingCommittee,
 									id: comm.id
 								},
+								externalLink: finalExternalLink,
 								description: description,
 								coverImage: {},
 								attendedUsers: [],
@@ -149,6 +152,7 @@ export const OrganizationEvent = (props) => {
 								...event.organizingCommittee,
 								id: comm.id
 							},
+							externalLink: finalExternalLink,
 							description: description,
 							coverImage: {},
 							attendedUsers: [],
@@ -385,6 +389,55 @@ export const OrganizationEvent = (props) => {
 				:
 				null
 			}
+			{externalLink.map((val, ind) => {
+				return(
+					<div>
+						<input
+							type="url"
+							name={`external_link${ind}`}
+							className="create-event-input"
+							placeholder={`external link ${ind+1} (optional)`}
+							onChange={(e) => {
+								var arr = externalLink;
+								arr[ind] = {
+									...arr[ind],
+									link: e.target.value
+								}
+								setExternalLink(arr);
+							}}
+						/>
+						<textarea
+							// type="textarea"
+							className="create-event-input"
+							name="description1"
+							placeholder="description of the link"
+							onChange={(e) => {
+								var arr = externalLink;
+								arr[ind] = {
+									...arr[ind],
+									description: e.target.value
+								}
+								setExternalLink(arr);
+								console.log(externalLink)
+							}}
+						/>
+					</div>
+				)
+			})}
+			<button
+				type="button"
+				style={{
+					padding: '10px',
+					borderRadius: '5px',
+					boxShadow: '0 0 5px grey',
+					margin: '10px auto'
+				}}
+				onClick={() => {
+					setExternalLink([
+						...externalLink,
+						{link: "", description: ""}
+					])
+				}}>Add another external link</button>
 			<input
 				type='text'
 				name='venue'

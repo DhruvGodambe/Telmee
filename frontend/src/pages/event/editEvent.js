@@ -15,6 +15,7 @@ export default function EditEvent(props) {
 	const [loading, setLoading] = useState(false)
 	const [upload, setUpload] = useState(false)
 	const [description, setDescription] = useState({})
+	const [externalLink, setExternalLink] = useState([{link: "", description: ""}])
 
 	useEffect(() => {
 		if(!props.location.query){
@@ -22,17 +23,22 @@ export default function EditEvent(props) {
 		} else {
 			setEvent(props.location.query)
 			setDescription(props.location.query.description)
+			if(props.location.query.externalLink?.length > 0){
+				setExternalLink(props.location.query.externalLink);
+			}
 		}
 	}, [])
 
 	const handleSubmit = () => {
 		setLoading(true)
+		const finalExternalLink = externalLink.filter((val) => val.link !== "")
 		if(upload){
 			firebase.storage.ref(`/events/${event.coverImageName}`).put(event.coverImage)
 			.then(res => {
 				firebase.db.collection('events').doc(eventid).set({
 					...event,
 					description: description,
+					externalLink: finalExternalLink,
 					coverImage: {}
 				}).then(resp => {
 					props.history.push(`/event/${eventid}`)
@@ -48,6 +54,7 @@ export default function EditEvent(props) {
 			firebase.db.collection('events').doc(eventid).set({
 				...event,
 				description: description,
+				externalLink: finalExternalLink,
 				coverImage: {}
 			}).then(resp => {
 				props.history.push(`/event/${eventid}`)
@@ -249,8 +256,61 @@ export default function EditEvent(props) {
 					})
 				}}
 			/>
+			{externalLink.map((val, ind) => {
+				console.log(val);
+				return(
+					<div>
+						<div><label className='update-event-label'>{`external link ${ind+1}`}</label></div>
+						<input
+							type="url"
+							name={`external_link${ind}`}
+							className="update-event-input"
+							defaultValue={val.link}
+							placeholder={`external link ${ind+1} (optional)`}
+							onChange={(e) => {
+								var arr = externalLink;
+								arr[ind] = {
+									...arr[ind],
+									link: e.target.value
+								}
+								setExternalLink(arr);
+							}}
+						/>
+						<div><label className='update-event-label'>{`link ${ind+1} description`}</label></div>
+						<textarea
+							// type="textarea"
+							className="update-event-input"
+							name="description1"
+							defaultValue={val.description}
+							placeholder="description of the link"
+							onChange={(e) => {
+								var arr = externalLink;
+								arr[ind] = {
+									...arr[ind],
+									description: e.target.value
+								}
+								setExternalLink(arr);
+							}}
+						/>
+					</div>
+				)
+			})}
+			<button
+				type="button"
+				style={{
+					padding: '10px',
+					borderRadius: '5px',
+					boxShadow: '0 0 5px grey',
+					margin: '10px auto'
+				}}
+				onClick={() => {
+					setExternalLink([
+						...externalLink,
+						{link: "", description: ""}
+					])
+				}}>Add another external link</button>
 			{event.description ?
-				<div style={{width: '90%', margin: '0 auto'}}>
+				<div style={{width: '100%', margin: '0 auto'}}>
 					<Editors raw={event.description} description={description} setDescription={setDescription} />
 				</div>
 				:
@@ -262,6 +322,7 @@ export default function EditEvent(props) {
 				>update changes</button>
 				<button
 					className='update-event-submit'
+					style={{marginTop: "50px"}}
 					onClick={handleDelete}
 				>delete event</button>
 			</div>

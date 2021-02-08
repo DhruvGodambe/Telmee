@@ -43,6 +43,7 @@ export default function Login(props) {
 							if(ret.data){
 								setCurrentUser({
 									data: ret.data,
+									newUser: false,
 									id: ret.id
 								})
 								props.history.goBack()
@@ -53,6 +54,7 @@ export default function Login(props) {
 										profilePicture: result.user.photoURL,
 										email: result.user.email
 									},
+									newUser: true,
 									id: ret.id
 								})
 								props.history.push(`/user/edit/${ret.id}`)

@@ -78,13 +78,7 @@ export default function OtherPastEvent(props) {
 					}
                     {new Date(event.timeStamp.finishedOn) > Date.now() ?
                         <div className='event-register' style={{textAlign: 'center'}}>
-                            <p style={{
-                                fontWeight: 'bold',
-                                fontSize: '20px',
-                                padding: '10px',
-                                border: '1px solid red',
-                                borderRadius: '10px'
-                            }}>The Registration has been closed</p>
+                            <p className="past-event-closed">The Registration has been closed</p>
                         </div>
                         :
                         null

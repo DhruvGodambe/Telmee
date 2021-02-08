@@ -6,6 +6,7 @@ import About from './pages/about';
 import Login from './pages/login';
 import Search from './pages/search';
 import Test from './pages/test';
+import LandingPage from './pages/landingPage';
 import UserLogin from './pages/userLogin';
 import EditUser from './pages/user/editUser';
 import MyUser from './pages/user/myUser';
@@ -80,7 +81,12 @@ function App() {
                 <FontAwesomeIcon icon={faHome}/>
               </Link>
             </div>
-            <div className='icons'>
+            <div className='icons'
+            // onClick={() => {
+            //   document.getElementsByClassName("home")[0].classList.add("not-home")
+            //   document.getElementsByClassName("home")[0].classList.toggle("home", false)
+            // }}
+            >
               <Link to={loggedIn ? `/user/${currentUser.id}` : '/user-login'}>
                 <FontAwesomeIcon icon={faUser}/>
               </Link>
@@ -101,6 +107,7 @@ function App() {
                 <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search}/>
                 <Route exact path="/test" component={Test}/>
+                <Route exact path="/home" component={LandingPage}/>
                 <AuthLogin exact path="/login" component={Login}/>
                 <AuthLogin exact path="/user-login" component={UserLogin}/>
                 <AuthMyUser exact path="/user/:userid" component={MyUser}/>

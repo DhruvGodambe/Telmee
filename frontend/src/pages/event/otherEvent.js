@@ -7,6 +7,7 @@ import logo from '../../images/logo5.png';
 import {Link} from 'react-router-dom';
 import InnerHTML from 'dangerously-set-html-content'
 import 'draft-js/dist/Draft.css';
+// import { RippleButton } from 'react-ripple-effect';
 
 import {Editor, EditorState, convertFromRaw} from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -147,25 +148,25 @@ export default function OtherEvent(props) {
 					setConfirm={setConfirm}
 				/>
 				<div className='cover-image-container'>
+					<h2>{event.name}</h2>
 					{img !== '' ?
 						<img width='100%' src={img} />
 						:
 						<img width='100%' src={logo} />
 					}
-					<h2>{event.name}</h2>
 				</div>
 				{event.name ?
 					<div className='event-content'>
-						<div style={{margin: '10px 0', display: 'inline-block', margin: '0 0 2.5% 2.5%'}}>
+						<div style={{ margin: '0 0 2.5% 75%'}}>
 							<button
 								className='event-nav'
 								onClick={share}
 							>
 								<div style={{margin: 'auto', width: 'auto', alignItems: 'center'}}><FontAwesomeIcon style={{ fontSize: '20px'}} icon={faShare}/></div>
-								<p style={{width: '80%', marginLeft: '2px'}}>share</p>
+								<p style={{ marginLeft: '2px'}}>share</p>
 							</button>
 						</div>
-						<h3 style={{margin: '5px 0'}}>Organized by
+						<h3>Organized by
 							<Link
 								style={{ marginLeft: '5px', color: '#ff003f', opacity: '0.5'}}
 								to={`/committee/${event.organizingCommittee.id}`}
@@ -183,7 +184,7 @@ export default function OtherEvent(props) {
 							</div>
 						}
 						{event.venue ?
-							<p style={{margin: '5px 0 30px', color: 'grey'}}>venue: {event.venue}</p>
+							<p style={{margin: '0px 0 0', color: 'grey'}}>venue: {event.venue}</p>
 							:
 							null
 						}
@@ -212,7 +213,7 @@ export default function OtherEvent(props) {
 							null
 						}
 						{event.description ?
-							<div>
+							<div style={{marginTop: '30px'}}>
 								{typeof(event.description) == "object" ?
 									<Editor
 										editorState={EditorState.createWithContent(convertFromRaw(event.description))}
@@ -222,6 +223,18 @@ export default function OtherEvent(props) {
 									<pre style={{fontFamily: FONT}}>{event.description}</pre>
 								}
 							</div>
+							:
+							null
+						}
+						{event.externalLink?.length > 0 ?
+							event.externalLink.map((val, ind) => {
+								return(
+									<div className="event-external-link">
+										<p>{val.description}</p>
+										<a style={{color: "#ff003f", opacity: '.5'}} href={val.link}>{val.link}</a>
+									</div>
+								)
+							})
 							:
 							null
 						}

@@ -25,9 +25,12 @@
     "react-image-crop": "^8.6.2",
     "react-json-excel": "^1.0.0",
     "react-loader-spinner": "^3.1.14",
+    "react-ripple-effect": "^1.0.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "react-switch": "^5.0.1"
+    "react-switch": "^5.0.1",
+    "reactour": "^1.18.0",
+    "styled-components": "^4.4.1"
   },
   "proxy": "http://localhost:5000",
   "scripts": {

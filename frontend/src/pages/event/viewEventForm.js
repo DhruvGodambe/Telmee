@@ -45,6 +45,15 @@ export default function ViewEventForm(props) {
 		}
 	}
 
+	const handleDelete = () => {
+		firebase.db.collection('events').doc(eventid).update({
+			formTemplate: [],
+			eventForm: false
+		}).then(res => {
+			props.history.goBack();
+		})
+	}
+
 	return(
 		<div>
 			<Popup
@@ -184,6 +193,19 @@ export default function ViewEventForm(props) {
 					}}
 					onClick={handleSubmit}
 				>submit changes</button>
+			</div>
+			<div style={{
+				margin: '20px auto'
+			}}>	
+				<button
+					style={{
+						padding: '10px',
+						margin: '40px auto 0',
+						fontSize: '18px',
+						borderRadius: '15px'
+					}}
+					onClick={handleDelete}
+				>delete form</button>
 			</div>
 		</div>
 	)

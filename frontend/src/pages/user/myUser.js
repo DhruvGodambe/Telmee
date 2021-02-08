@@ -16,6 +16,7 @@ export default function MyUser(props) {
 	const [committeeArray, setCommitteeArray] = useState([]);
 	const [popup, setPopup] = useState(false);
 	const [eventPopup, setEventPopup] = useState(false)
+	const [isTourOpen, closeTour] = useState(true);
 
 	useEffect(() => {
 		window.scrollTo(0, 0)

@@ -71,7 +71,8 @@
 
 @media(max-width: 360px) {
     .editor > .DraftEditor-root {
-        width: 91% !important;
+        width: 92.5%;
+        /* width: 91%; */
         min-height: 220px;
     }
 }

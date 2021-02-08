@@ -29,7 +29,7 @@
 .event-card-content .organized {
 	margin: 5px auto;
 	text-align: center;
-	color: #777;
+	color: #E79981;
 	font-size: 14px;
 }
 
@@ -40,7 +40,16 @@
 @media only screen and (max-width: 720px) {
   .event-card {
   	width: 100%;
-  	background: white;
+  	background: #FAF2EF;
 	box-shadow: 1px 1px 10px black;
+	color: #1D5F74;
+  }
+
+  .event-card-content h3 {
+	  font-size: 16px;
+  }
+
+  .event-card-content p {
+	  font-size: 14px;
   }
 }

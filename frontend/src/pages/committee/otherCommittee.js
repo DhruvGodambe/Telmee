@@ -203,7 +203,7 @@ export default function OtherCommittee(props){
 			}
 			{pastEvents.length > 0 ? 
 				<div className='home'>
-					<h2>past Events</h2>
+					<h2 className='committee-title'>Past Events</h2>
 					{pastEvents.map((val, ind) => {
 						return(
 							<EventCard

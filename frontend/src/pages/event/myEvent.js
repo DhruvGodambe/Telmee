@@ -257,7 +257,7 @@ export default function MyEvent(props) {
 									</button>
 								</div>
 							</div>
-							<h3 style={{margin: '20px 0 5px'}}>Organized by
+							<h3>Organized by
 								<Link
 									style={{ marginLeft: '5px', color: '#ff003f', opacity: '0.5'}}
 									to={`/committee/${event.organizingCommittee.id}`}
@@ -275,7 +275,7 @@ export default function MyEvent(props) {
 								</div>
 							}
 							{event.venue ?
-								<p style={{margin: '5px 0 30px', color: 'grey'}}>venue: {event.venue}</p>
+								<p style={{margin: '0px 0 0', color: 'grey'}}>venue: {event.venue}</p>
 								:
 								null
 							}
@@ -304,7 +304,7 @@ export default function MyEvent(props) {
 								null
 							}
 							{event.description ?
-								<div>
+								<div style={{marginTop: '30px'}}>
 									{typeof(event.description) == "object" ?
 										<Editor
 											editorState={EditorState.createWithContent(convertFromRaw(event.description))}
@@ -317,6 +317,18 @@ export default function MyEvent(props) {
 								:
 								null
 							}
+							{event.externalLink?.length > 0 ?
+								event.externalLink.map((val, ind) => {
+									return(
+										<div className="event-external-link">
+											<p>{val.description}</p>
+											<a style={{color: "#ff003f", opacity: '.5'}} href={val.link}>{val.link}</a>
+										</div>
+									)
+								})
+								:
+								null
+							}
 							{event.entryFee && event.entryFee !== "0" ?
 								<p style={{fontSize: '18px'}}><b>entry fee: Rs.{event.entryFee}/-</b></p>
 								:
@@ -325,7 +337,6 @@ export default function MyEvent(props) {
 							<div className='event-register'>
 							<button
 								className='event-register-button'
-								// disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
 								onClick={() => {
 									if(Cookies.get('userID')){
 										if(!registered){

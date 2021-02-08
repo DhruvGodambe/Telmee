@@ -18,10 +18,12 @@ export default function Home(props) {
 		firebase.db.collection('events').orderBy('timeStamp.heldOn', 'desc').limit(3).get()
 		.then(res => {
 			res.docs.forEach((eve, ind) => {
-				if(new Date(eve.data().timeStamp.heldOn) > Date.now()){
-					temp.unshift({data: eve.data(), id: eve.id})
-				} else {
-					temp.push({data: eve.data(), id: eve.id})
+				if(eve.data().name !== 'Test Event'){
+					if(new Date(eve.data().timeStamp.heldOn) > Date.now()){
+						temp.unshift({data: eve.data(), id: eve.id})
+					} else {
+						temp.push({data: eve.data(), id: eve.id})
+					}
 				}
 			})
 			setEventArr(temp)

@@ -54,6 +54,10 @@ pre a {
 	word-wrap: break-word;
 }
 
+.event-content h3 {
+	margin: 20px 0 5px;
+}
+
 .event-box-oneday {
 	display: flex;
 }
@@ -174,6 +178,7 @@ pre a {
 	width: 70%;
 	word-wrap: break-word;
 	flex-wrap: wrap;
+	word-break: break-all;
 }
 
 .registered-user-image-box {
@@ -202,11 +207,27 @@ pre a {
 	overflow: scroll;
 }
 
+.past-event-closed {
+	font-weight: bold;
+	font-size: 18px;
+	padding: 10px;
+	border: 1px solid red;
+	border-radius: 10px;
+}
+
+.event-content .event-external-link p, .event-content .event-external-link a {
+	margin: 10px 0 2px;
+}
+
 @media only screen and (max-width: 720px) {
 	.cover-image-container {
 		width: 100%;
-		margin: 0 auto;
+		margin: 10px auto;
 		/* color: white; */
+	}
+
+	.cover-image-container h2 {
+		font-size: 20px;
 	}
 
 	.registered-user-title {
@@ -217,6 +238,19 @@ pre a {
 		/* color: white; */
 	}
 
+	.event-content h3 {
+		margin: 20px 0 0;
+		font-size: 16px;
+	}
+
+	.event-content p {
+		font-size: 16px;
+	}
+
+	.event-content .DraftEditor-root {
+		font-size: 14px;
+	}
+
 	.event-nav {
 		width: auto;
 		box-shadow: 0 0 5px grey;
@@ -224,6 +258,20 @@ pre a {
 
 	.event-nav p {
 		font-size: 12px;
+	}
+
+	.event-external-link {
+		margin: 20px auto;
+	}
+
+	.event-content .event-external-link p, .event-content .event-external-link a {
+		font-size: 14px;
+		margin: 2px auto;
+	}
+
+	.event-register .event-register-button {
+		font-size: 18px;
+		padding: 10px;
 	}
 
 	.event-box-oneday {
@@ -269,6 +317,7 @@ pre a {
 	.update-event-submit {
 		font-size: 16px;
 		border-radius: 10px;
+		font-weight: bold;
 		background: #ff003f;
 		color: white;
 		box-shadow: 0 0 5px grey;

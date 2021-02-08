@@ -1,4 +1,13 @@
 .home {
 	width: 90%;
 	margin: 0 auto;
+	transition: .5s;
+	opacity: 1;
+}
+
+.not-home {
+	width: 0;
+	left: 0;
+	opacity: 0;
+	transition: .5s;
 }

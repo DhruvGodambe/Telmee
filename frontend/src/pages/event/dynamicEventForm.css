@@ -27,9 +27,23 @@
 	margin: 0 auto;
 }
 
+.create-form-root .note {
+	color: grey;
+	margin: 10px auto;
+	width: 90%;
+}
+
 @media only screen and (max-width: 720px){
 	.create-form-root {
-		color: white;
+		/* color: white; */
+	}
+
+	.create-form-root h1 {
+		font-size: 18px;
+	}
+
+	.create-form-root .note {
+		font-size: 14px;
 	}
 
 	.form-box {

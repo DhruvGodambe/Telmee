@@ -15,6 +15,7 @@ firebase.initializeApp({
 });
 
 let db = firebase.firestore();
+db.enablePersistence();
 
 let storage = firebase.storage();
 

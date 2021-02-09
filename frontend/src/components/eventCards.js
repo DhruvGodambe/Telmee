@@ -17,10 +17,12 @@ export default function EventCards(props) {
 		} else {
 			setDescription(event.description)
 		}
-		firebase.storage.ref(`/events/${event.coverImageName}`).getDownloadURL()
-		.then(url => {
-			setImg(url)
-		})
+		if(event.coverImageName){
+			firebase.storage.ref(`/events/${event.coverImageName}`).getDownloadURL()
+			.then(url => {
+				setImg(url)
+			})
+		}
 	}, [])
 
 	const getStdDate = (dateStr) => {

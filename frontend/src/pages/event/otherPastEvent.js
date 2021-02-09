@@ -17,10 +17,12 @@ export default function OtherPastEvent(props) {
 		.then(res => {
 			if(res.exists){
 				setEvent(res.data())
-				firebase.storage.ref(`/events/${res.data().coverImageName}`).getDownloadURL()
-				.then(url => {
-					setImg(url);
-				})
+				if(res.data().coverImageName){
+					firebase.storage.ref(`/events/${res.data().coverImageName}`).getDownloadURL()
+					.then(url => {
+						setImg(url);
+					})
+				}
 			}
 		})
 		.catch(err => {console.log('errorr: ', err)})

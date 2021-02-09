@@ -31,25 +31,29 @@ export default function OtherCommittee(props){
 			if(res.exists){
 				setCommittee(res.data())
 				document.title = res.data().name
-				firebase.storage.ref(`/committees/${res.data().coverImageName}`).getDownloadURL()
-				.then(url => {
-					setImg(url)
-				})
-				Object.keys(res.data().moreImages).forEach((val, ind) => {
-					firebase.storage.ref(`/committees/${res.data().moreImages[val]}`).getDownloadURL()
+				if(res.data().coverImageName){
+					firebase.storage.ref(`/committees/${res.data().coverImageName}`).getDownloadURL()
 					.then(url => {
-						switch(ind){
-							case 0:
-								setSrc1(url)
-								break;
-							case 1:
-								setSrc2(url)
-								break;
-							case 2:
-								setSrc3(url)
-								break;
-						}
+						setImg(url)
 					})
+				}
+				Object.keys(res.data().moreImages).forEach((val, ind) => {
+					if(res.data().moreImages[val]){
+						firebase.storage.ref(`/committees/${res.data().moreImages[val]}`).getDownloadURL()
+						.then(url => {
+							switch(ind){
+								case 0:
+									setSrc1(url)
+									break;
+								case 1:
+									setSrc2(url)
+									break;
+								case 2:
+									setSrc3(url)
+									break;
+							}
+						})
+					}
 				})
 				res.data().events.forEach(id => {
 					firebase.db.collection('events').doc(id).get()

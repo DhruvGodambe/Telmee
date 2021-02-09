@@ -424,20 +424,22 @@ export const OrganizationEvent = (props) => {
 					</div>
 				)
 			})}
-			<button
-				type="button"
-				style={{
-					padding: '10px',
-					borderRadius: '5px',
-					boxShadow: '0 0 5px grey',
-					margin: '10px auto'
-				}}
-				onClick={() => {
-					setExternalLink([
-						...externalLink,
-						{link: "", description: ""}
-					])
-				}}>Add another external link</button>
+			<div>
+				<button
+					type="button"
+					style={{
+						padding: '10px',
+						borderRadius: '5px',
+						boxShadow: '0 0 5px grey',
+						margin: '10px auto'
+					}}
+					onClick={() => {
+						setExternalLink([
+							...externalLink,
+							{link: "", description: ""}
+						])
+					}}>Add another external link</button>
+			</div>
 			<input
 				type='text'
 				name='venue'

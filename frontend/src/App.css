@@ -46,17 +46,11 @@ a {
 @media only screen and (max-width: 720px) {
   .App {
     min-height: 800px;
-    background: #FAF2EF;
-  }
-
-  hr {
-    color: #E79981;
-    border: 0.5px solid #E79981;
+    /* background: #333333; */
   }
 
   .main-container{
     width: 100%;
-    /* font-size: .8em; */
   }
 
   .page {
@@ -69,12 +63,12 @@ a {
     right: 0;
     top: 50px;
     opacity: 0;
-    transition: .3s cubic-bezier(0.01, 0.02, 0, 0.8);
+    /* transition: .5s; */
   }
 
   .navbar-x {
-    font-size: 20px;
-    margin: 10px 1% 10px 90%;
+    font-size: 30px;
+    margin: 10px 1% 10px 80%;
     color: white;
   }
 
@@ -88,7 +82,7 @@ a {
     background: linear-gradient(#ff003f, #ff0066);
     box-shadow: 1px 1px solid red;
     height: 100%;
-    transition: .3s cubic-bezier(0.01, 0.02, 0, 0.8);
+    transition: .3s;
     overflow: scroll;
     z-index: 12;
   }

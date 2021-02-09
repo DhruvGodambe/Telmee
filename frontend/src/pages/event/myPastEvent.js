@@ -45,10 +45,12 @@ export default function MyPastEvent(props) {
 						}).then(() => {window.location.reload()})
 					}
 				}
-				firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
-				.then(url => {
-					setImg(url);
-				})
+				if(result.data().coverImageName){
+					firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
+					.then(url => {
+						setImg(url);
+					})
+				}
 			}
 		})
 		.catch(err => {
@@ -57,7 +59,7 @@ export default function MyPastEvent(props) {
 		})
 		if(props.history.location.query == 'registered'){
 			setRegistered(true)
-			setConfirm(true)
+			setConfirm(true)   
 		}
 	}, [])
 

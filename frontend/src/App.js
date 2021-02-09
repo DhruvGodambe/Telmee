@@ -74,7 +74,7 @@ function App() {
         setLoggedIn, loggedIn
       }}>
         <Router>
-          <Navbar/>
+          {/* <Navbar/> */}
           <div className="nav-icons">
             <div className='icons'>
               <Link to='/'>
@@ -107,7 +107,6 @@ function App() {
                 <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search}/>
                 <Route exact path="/test" component={Test}/>
-                <Route exact path="/home" component={LandingPage}/>
                 <AuthLogin exact path="/login" component={Login}/>
                 <AuthLogin exact path="/user-login" component={UserLogin}/>
                 <AuthMyUser exact path="/user/:userid" component={MyUser}/>

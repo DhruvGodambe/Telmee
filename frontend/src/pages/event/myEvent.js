@@ -35,14 +35,12 @@ export default function MyEvent(props) {
 		.then(result => {
 			if(result.exists){
 				setEvent(result.data())
-				console.log(result.data())
 				//check if event is upcoming or past event
 				if(new Date(result.data().timeStamp.heldOn) < Date.now()){
 					props.history.replace(`/event/past/${eventid}`)
 				}
 				//check if eventForm and formTemplate status matches
 				if(!result.data().formTemplate){
-					console.log(true)
 					if(result.data().eventForm){
 						firebase.db.collection('events').doc(eventid).update({
 							eventForm: false
@@ -62,10 +60,12 @@ export default function MyEvent(props) {
 						setMedia2(url);
 					})
 				}
-				firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
-				.then(url => {
-					setImg(url);
-				})
+				if(result.data().coverImageName){
+					firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
+					.then(url => {
+						setImg(url);
+					})
+				}
 			}
 		})
 		.catch(err => {

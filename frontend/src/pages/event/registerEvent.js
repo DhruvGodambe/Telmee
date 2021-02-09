@@ -143,7 +143,7 @@ export default function RegisterEvent(props) {
 								color="#ff0033"
 								height={100}
 								width={100}
-								timeout={10000} //10 secs
+								timeout={1000000} //10 secs
 							/>
 							:
 							null

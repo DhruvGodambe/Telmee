@@ -10,27 +10,32 @@ import {globalContext} from '../globalContext';
 export default function Home(props) {
 	const [eventArr, setEventArr] = useState([])
 	const [paginate, setPaginate] = useState(false)
+	const {currentUser} = useContext(globalContext);
 	const [paginateDate, setPaginateDate] = useState(0)
 
 	useEffect(() => {
 		document.title = "Telmee: Discover new events"
 		var temp = [];
-		firebase.db.collection('events').orderBy('timeStamp.heldOn', 'desc').limit(3).get()
-		.then(res => {
-			res.docs.forEach((eve, ind) => {
-				if(eve.data().name !== 'Test Event'){
-					if(new Date(eve.data().timeStamp.heldOn) > Date.now()){
-						temp.unshift({data: eve.data(), id: eve.id})
-					} else {
-						temp.push({data: eve.data(), id: eve.id})
+		if(currentUser.id){
+			firebase.db.collection('events').orderBy('timeStamp.heldOn', 'desc').limit(3).get()
+			.then(res => {
+				res.docs.forEach((eve, ind) => {
+					if(eve.data().name !== 'Test Event'){
+						if(new Date(eve.data().timeStamp.heldOn) > Date.now()){
+							temp.unshift({data: eve.data(), id: eve.id})
+						} else {
+							temp.push({data: eve.data(), id: eve.id})
+						}
 					}
-				}
+				})
+				setEventArr(temp)
+				setPaginate(true)
+				setPaginateDate(res.docs[res.docs.length-1].data().timeStamp.heldOn)
 			})
-			setEventArr(temp)
-			setPaginate(true)
-			setPaginateDate(res.docs[res.docs.length-1].data().timeStamp.heldOn)
-		})
-		.catch(err => {console.log('error: ', err)})
+			.catch(err => {console.log('error: ', err)})
+		} else {
+			props.history.push("/login")
+		}
 	}, [])
 
 	// useEffect(() => {

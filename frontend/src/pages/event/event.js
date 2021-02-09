@@ -11,12 +11,16 @@ export default function Event(props) {
 	const [admin, setAdmin] = useState(false)
 
 	useEffect(() => {
-		firebase.db.collection('events').doc(eventid).get()
-		.then(res => {
-			if(res.exists){
-				setCommittee(res.data().organizingCommittee)
-			}
-		})
+		if(currentUser.id){
+			firebase.db.collection('events').doc(eventid).get()
+			.then(res => {
+				if(res.exists){
+					setCommittee(res.data().organizingCommittee)
+				}
+			})
+		} else {
+			props.history.push("/login")
+		}
 	}, [])
 
 	useEffect(() => {

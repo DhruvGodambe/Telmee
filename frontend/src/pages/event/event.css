@@ -22,7 +22,7 @@
 }
 
 .registered-user {
-	background: #f03;
+	background: #55887C;
 	color: white;
 	/* width: 30%; */
 }
@@ -33,7 +33,7 @@ pre a {
 
 .event-register-button {
 	width: 90%;
-	background: #f03;
+	background: #E79981;
 	padding: 10px;
 	color: white;
 	font-size: 25px;

@@ -168,7 +168,7 @@ export default function OtherEvent(props) {
 						</div>
 						<h3>Organized by
 							<Link
-								style={{ marginLeft: '5px', color: '#ff003f', opacity: '0.5'}}
+								style={{ marginLeft: '5px', color: '#E79981'}}
 								to={`/committee/${event.organizingCommittee.id}`}
 							>
 							{event.organizingCommittee.name}

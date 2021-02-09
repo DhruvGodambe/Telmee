@@ -74,7 +74,7 @@ function App() {
         setLoggedIn, loggedIn
       }}>
         <Router>
-          <Navbar/>
+          {/* <Navbar/> */}
           <div className="nav-icons">
             <div className='icons'>
               <Link to='/'>

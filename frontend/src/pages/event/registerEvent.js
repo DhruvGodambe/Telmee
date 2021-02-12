@@ -2,12 +2,14 @@ import React, {useState, useEffect, useContext} from 'react';
 import {globalContext} from '../../globalContext';
 import firebase from '../../firebase/index';
 import Loader from 'react-loader-spinner';
+import Cookies from 'js-cookie';
 
 export default function RegisterEvent(props) {
 	const [event, setEvent] = useState({})
 	const [user, setUser] = useState({})
 	const {currentUser} = useContext(globalContext);
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState("")
 	const eventid = props.history.location.pathname.split('register/')[1];
 
 	useEffect(() => {
@@ -21,27 +23,25 @@ export default function RegisterEvent(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		firebase.db.collection('events').doc(eventid).update({
-			registeredUsers: firebase.firebase.firestore.FieldValue.arrayUnion({
-				...user,
-				id: currentUser.id
-			})
-		}).then(res => {
-			firebase.db.collection('users').doc(currentUser.id).update({
-				registeredEvents: firebase.firebase.firestore.FieldValue.arrayUnion(eventid)
-			})
-			.then(rsp => {
+		try{
+			firebase.db.collection('events').doc(eventid).update({
+				registeredUsers: firebase.firebase.firestore.FieldValue.arrayUnion(user)
+			}).then(res => {
+				Cookies.set("")
 				props.history.push({
 					pathname: `/event/${eventid}`,
 					query: 'registered'
 				})
 			})
-		})
+		} catch(err) {
+			setError("unknown error occured during submission. Please try registering again")
+		}
 	}
 	
 	return(
 		<div>
 			<h1 className='create-event-box'>Registeration Form</h1>
+			<ErrorPopup error={error} setError={setError} />
 			{event.formTemplate ?
 				<div className='register-form-div'>
 					<form onSubmit={handleSubmit}>
@@ -60,7 +60,7 @@ export default function RegisterEvent(props) {
 											className='register-form-input'
 											>
 											<option></option>
-											{val.options.map((opt, index) => <option>{opt}</option>)}
+											{val.options.map((opt, index) => <option key={index}>{opt}</option>)}
 										</select>
 									</div>
 								)
@@ -153,6 +153,21 @@ export default function RegisterEvent(props) {
 							className='register-form-submit'
 							type="submit">submit</button>
 					</form>
+				</div>
+				:
+				null
+			}
+		</div>
+	)
+}
+
+const ErrorPopup = ({error, setError}) => {
+	return(
+		<div>
+			{error !== "" ?
+				<div className="main-popup">
+					<p>{error}</p>
+					<button onClick={() => {setError(""); window.location.reload()}}>OK</button>
 				</div>
 				:
 				null

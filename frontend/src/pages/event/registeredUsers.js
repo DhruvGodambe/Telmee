@@ -15,46 +15,46 @@ export default function RegisteredUsers(props) {
 		firebase.db.collection("events").doc(eventid).get()
 		.then(res => {
 			if(res.data().formTemplate?.length > 0){
-				var temparr = res.data().formTemplate.map(val => val.name)
-				setExcelFields(["name", "contact", "email", ...temparr])
+				var temparr = res.data().formTemplate.map(val => {
+					if(val.type !== "note"){
+						return val.name
+					}
+				}).filter(v => v !== undefined)
+				console.log(temparr)
+				setExcelFields(temparr)
 			}
 		})
 		if(props.location.query && props.location.query.length > 0){
 			props.location.query.forEach(user => {
 				if(typeof(user) == "object"){
-					firebase.db.collection('users').doc(user.id).get()
-					.then(result => {
+					console.log(user);
+					// firebase.db.collection('users').doc(user.id).get()
+					// .then(result => {
 						setRegisteredUser({
-							name: result.data().name,
-							profilePicture: result.data().profilePicture,
-							details: {
-								...user,
-								email: result.data().email,
-								contact: result.data().contact
-							}
+							details: user
 						})
-					})
-					.catch(err => {console.log('errrrr: ', err)})
+					// })
+					// .catch(err => {console.log('errrrr: ', err)})
 					if(props.location.query.indexOf(user) == props.location.query.length - 1){
 						setTempUser(user)
 					}
-				} else {
-					firebase.db.collection('users').doc(user).get()
-					.then(result => {
-						setRegisteredUser({
-							name: result.data().name,
-							profilePicture: result.data().profilePicture,
-							details: {
-								id: user,
-								email: result.data().email,
-								contact: result.data().contact
-							}
-						})
-					})
-					.catch(err => {console.log('errrrr: ', err)})
-					if(props.location.query.indexOf(user) == props.location.query.length - 1){
-						setTempUser(user)
-					}
+				// } else {
+					// firebase.db.collection('users').doc(user).get()
+					// .then(result => {
+						// setRegisteredUser({
+						// 	name: result.data().name,
+						// 	profilePicture: result.data().profilePicture,
+						// 	details: {
+						// 		id: user,
+						// 		email: result.data().email,
+						// 		contact: result.data().contact
+						// 	}
+						// })
+					// })
+					// .catch(err => {console.log('errrrr: ', err)})
+					// if(props.location.query.indexOf(user) == props.location.query.length - 1){
+					// 	setTempUser(user)
+					// }
 				}
 			})
 		} else {
@@ -67,6 +67,7 @@ export default function RegisteredUsers(props) {
 	}, [])
 
 	useEffect(() => {
+		console.log(registeredUser)
 		if(Object.keys(registeredUser).length > 0){
 			setArr([registeredUser, ...arr])
 		}
@@ -119,11 +120,8 @@ export default function RegisteredUsers(props) {
 						arr.map((val, ind) => {
 							return(
 								<tr key={ind}>
-									<td>{val.name}</td>
 									{excelFields.map((key, index) => {
-										if(!(key == 'name')){
-											return <td key={index}>{val['details'][key]}</td>
-										}
+										return <td key={index}>{val['details'][key]}</td>
 									})}
 								</tr>
 							)

@@ -30,39 +30,43 @@ export default function OtherEvent(props) {
 
 	useEffect(() => {
 		window.scrollTo(0,0)
-		firebase.db.collection('events').doc(eventid).get()
-		.then(result => {
-			if(result.exists){
-				setEvent(result.data())
-				document.title = result.data().name;
-				if(new Date(result.data().timeStamp.heldOn) < Date.now()){
-					props.history.replace(`/event/past/${eventid}`)
+
+		function initAsync() {
+			firebase.db.collection('events').doc(eventid).get()
+			.then(result => {
+				if(result.exists){
+					setEvent(result.data())
+					document.title = result.data().name;
+					if(new Date(result.data().timeStamp.heldOn) < Date.now()){
+						props.history.replace(`/event/past/${eventid}`)
+					}
+					//check if any media in the event
+					if(result.data().media1Name){
+						firebase.storage.ref(`/events/${result.data().media1Name}`).getDownloadURL()
+						.then(url => {
+							setMedia1(url);
+						})
+					}
+					if(result.data().media2Name){
+						firebase.storage.ref(`/events/${result.data().media2Name}`).getDownloadURL()
+						.then(url => {
+							setMedia2(url);
+						})
+					}
+					if(result.data().coverImageName){
+						firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
+						.then(url => {
+							setImg(url);
+						})
+					}
 				}
-				//check if any media in the event
-				if(result.data().media1Name){
-					firebase.storage.ref(`/events/${result.data().media1Name}`).getDownloadURL()
-					.then(url => {
-						setMedia1(url);
-					})
-				}
-				if(result.data().media2Name){
-					firebase.storage.ref(`/events/${result.data().media2Name}`).getDownloadURL()
-					.then(url => {
-						setMedia2(url);
-					})
-				}
-				if(result.data().coverImageName){
-					firebase.storage.ref(`/events/${result.data().coverImageName}`).getDownloadURL()
-					.then(url => {
-						setImg(url);
-					})
-				}
-			}
-		})
-		.catch(err => {
-			setErrmsg('something went wrong!\n please reload or try again later')
-			window.location.reload()
-		})
+			})
+			.catch(err => {
+				setErrmsg('something went wrong!\n please reload or try again later')
+				window.location.reload()
+			})
+		}
+		initAsync();
 		if(props.history.location.query == 'registered'){
 			setRegistered(true)
 			setConfirm(true)
@@ -231,7 +235,7 @@ export default function OtherEvent(props) {
 						{event.externalLink?.length > 0 ?
 							event.externalLink.map((val, ind) => {
 								return(
-									<div className="event-external-link">
+									<div key={ind} className="event-external-link">
 										<p>{val.description}</p>
 										<a style={{color: "#ff003f", opacity: '.5'}} href={val.link}>{val.link}</a>
 									</div>
@@ -249,15 +253,7 @@ export default function OtherEvent(props) {
 						<button
 							className='event-register-button'
 							// disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
-							onClick={() => {
-								if(Cookies.get('userID')){
-									if(!registered){
-										setPopup(true)
-									}
-								} else {
-									props.history.push('/login')
-								}
-							}}
+							onClick={() => {setPopup(true)}}
 						><FontAwesomeIcon icon={faCheck} style={{display: registered ? 'inline-block' : 'none'}} /> {registered ? 'registered' : 'register'}</button>
 						</div>
 					</div>

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './home.css';
 import firebase from '../firebase/index';
+import Cookies from 'js-cookie';
 
 import EventCard from '../components/eventCards';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,7 @@ export default function Home(props) {
 	useEffect(() => {
 		document.title = "Telmee: Discover new events"
 		var temp = [];
-		if(currentUser.id){
+		// if(Cookies.get('userID')){
 			firebase.db.collection('events').orderBy('timeStamp.heldOn', 'desc').limit(3).get()
 			.then(res => {
 				res.docs.forEach((eve, ind) => {
@@ -33,9 +34,9 @@ export default function Home(props) {
 				setPaginateDate(res.docs[res.docs.length-1].data().timeStamp.heldOn)
 			})
 			.catch(err => {console.log('error: ', err)})
-		} else {
-			props.history.push("/login")
-		}
+		// } else {
+		// 	props.history.push("/login")
+		// }
 	}, [])
 
 	// useEffect(() => {

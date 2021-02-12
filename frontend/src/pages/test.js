@@ -9,9 +9,12 @@ export default function Test() {
         var arr = []
         firebase.db.collection("users").get()
         .then(res => {
-            // console.log(res.docs.length)
+            console.log(res.docs.length)
             res.docs.forEach(doc => {
-                setTempObj({name: doc.data().name})
+                if(doc.data().registeredEvents.length == 0){
+                    console.log(doc.data().name)
+                    setTempObj({name: doc.data().name})
+                }
             })
         })
     }, [])

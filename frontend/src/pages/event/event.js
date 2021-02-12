@@ -3,6 +3,7 @@ import {globalContext} from '../../globalContext'
 import firebase from '../../firebase/index'
 import OtherEvent from './otherEvent'
 import MyEvent from './myEvent'
+import Cookies from 'js-cookie';
 
 export default function Event(props) {
 	const eventid = props.history.location.pathname.split('/event/')[1]
@@ -11,16 +12,16 @@ export default function Event(props) {
 	const [admin, setAdmin] = useState(false)
 
 	useEffect(() => {
-		if(currentUser.id){
+		// if(Cookies.get('userID')){
 			firebase.db.collection('events').doc(eventid).get()
 			.then(res => {
 				if(res.exists){
 					setCommittee(res.data().organizingCommittee)
 				}
 			})
-		} else {
-			props.history.push("/login")
-		}
+		// } else {
+		// 	props.history.push("/login")
+		// }
 	}, [])
 
 	useEffect(() => {

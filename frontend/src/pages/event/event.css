@@ -60,6 +60,8 @@ pre a {
 
 .event-box-oneday {
 	display: flex;
+	align-items: center;
+	margin: 0 auto 20px;
 }
 
 .update-event-input {
@@ -175,14 +177,14 @@ pre a {
 
 .registered-user-details {
 	padding: 10px;
-	width: 70%;
+	width: 80%;
 	word-wrap: break-word;
 	flex-wrap: wrap;
 	word-break: break-all;
 }
 
 .registered-user-image-box {
-	width: 30%;
+	width: 20%;
 	padding: 10px;
 }
 
@@ -194,10 +196,10 @@ pre a {
 }
 
 .excel-button {
-	width: 50%;
+	/* width: 50%; */
 	font-size: 20px;
 	border-radius: 25px;
-	padding: 5px;
+	padding: 10px;
 	font-weight: bold;
 }
 
@@ -328,5 +330,9 @@ pre a {
 
 	.hieghtened-popup {
 		top: 10%;
+	}
+
+	.excel-button {
+		font-size: 16px;
 	}
 }

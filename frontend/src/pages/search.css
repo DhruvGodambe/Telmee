@@ -19,14 +19,14 @@
   font-size: 20px;
   margin: 0 20px;
   outline: none;
-  border: 1px solid #ff0033;
+  border: 1px solid #E79981;
   border-radius: 20px;
   padding: 10px;
 }
 
 .search-icon {
   margin: auto 0;
-  color: black;
+  color: #55887C;
 }
 
 .search-tab {

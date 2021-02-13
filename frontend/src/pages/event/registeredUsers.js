@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../../firebase/index';
 import ExcelExport from 'react-html-table-to-excel';
+import XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faFileExcel} from '@fortawesome/free-solid-svg-icons'
 
 export default function RegisteredUsers(props) {
 	const eventid = props.history.location.pathname.split('/get/')[1];
 	const [registeredUser, setRegisteredUser] = useState({})
 	const [para, setP] = useState("")
 	const [arr, setArr] = useState([])
+	const [event, setEvent] = useState({})
 	const [excelFields, setExcelFields] = useState(['name'])
 	const [tempUser, setTempUser] = useState({})
 
@@ -14,49 +20,24 @@ export default function RegisteredUsers(props) {
 		window.scrollTo(0, 0)
 		firebase.db.collection("events").doc(eventid).get()
 		.then(res => {
+			setEvent(res.data())
 			if(res.data().formTemplate?.length > 0){
-				var temparr = res.data().formTemplate.map(val => val.name)
-				setExcelFields(["name", "contact", "email", ...temparr])
+				var temparr = res.data().formTemplate.map(val => {
+					if(val.type !== "note"){
+						return val.name
+					}
+				}).filter(v => v !== undefined)
+				setExcelFields(temparr)
 			}
 		})
 		if(props.location.query && props.location.query.length > 0){
-			props.location.query.forEach(user => {
+			var arr = props.location.query.map(user => {
 				if(typeof(user) == "object"){
-					firebase.db.collection('users').doc(user.id).get()
-					.then(result => {
-						setRegisteredUser({
-							name: result.data().name,
-							profilePicture: result.data().profilePicture,
-							details: {
-								...user,
-								email: result.data().email,
-								contact: result.data().contact
-							}
-						})
-					})
-					.catch(err => {console.log('errrrr: ', err)})
-					if(props.location.query.indexOf(user) == props.location.query.length - 1){
-						setTempUser(user)
-					}
-				} else {
-					firebase.db.collection('users').doc(user).get()
-					.then(result => {
-						setRegisteredUser({
-							name: result.data().name,
-							profilePicture: result.data().profilePicture,
-							details: {
-								id: user,
-								email: result.data().email,
-								contact: result.data().contact
-							}
-						})
-					})
-					.catch(err => {console.log('errrrr: ', err)})
-					if(props.location.query.indexOf(user) == props.location.query.length - 1){
-						setTempUser(user)
-					}
+					console.log(user);
+					return {details: user}
 				}
 			})
+			setArr(arr);
 		} else {
 			if(props.location.query){
 				setP("no registered users yet");
@@ -66,37 +47,50 @@ export default function RegisteredUsers(props) {
 		}
 	}, [])
 
-	useEffect(() => {
-		if(Object.keys(registeredUser).length > 0){
-			setArr([registeredUser, ...arr])
-		}
-	}, [registeredUser])
+	function TableToExcel(){
+		console.log(XLSX, saveAs)
+		var wb = XLSX.utils.table_to_book(document.getElementById("table-to-excel"), {sheet: "sheet 1"});
 
-	useEffect(() => {
-		var tempArr = []
-		if(arr.length > 0 && arr[0].details.id == tempUser.id){
-			Object.keys(arr[arr.length - 1]['details']).forEach(field => {
-				if(!(field == 'id') && tempArr.indexOf(field) == -1 ){
-					tempArr.push(field)
-				}
-			})
-			// setExcelFields([...excelFields, ...tempArr])
+		var wbout = XLSX.write(wb, {bookType: "xlsx", bookSST: true, type: "binary", raw: true});
+
+		function s2ab(s){
+			var buf = new ArrayBuffer(s.length);
+			var view = new Uint8Array(buf);
+			for(var i = 0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+			return buf;
 		}
-	}, [arr])
+		
+		saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), `${event.name} registered users.xlsx`);
+	}
+
+	// useEffect(() => {
+	// 	var tempArr = []
+	// 	if(arr.length > 0 && arr[0].details.id == tempUser.id){
+	// 		Object.keys(arr[arr.length - 1]['details']).forEach(field => {
+	// 			if(!(field == 'id') && tempArr.indexOf(field) == -1 ){
+	// 				tempArr.push(field)
+	// 			}
+	// 		})
+	// 		// setExcelFields([...excelFields, ...tempArr])
+	// 	}
+	// }, [arr])
 
 	return(
 		<div>
 			<h1 className='registered-user-title'>Registered Users</h1>
 			{para !== "" ? <p>{para}</p> : null}
 			<div style={{margin: '20px', display: para !== "" ? "none" : "block"}}>
-				<ExcelExport
+				{/* <ExcelExport
 					id='test-table-excel-button'
 					table='table-to-excel'
 					filename='registered-users'
 					sheet='sheet1'
 					buttonText='download excel file'
 					className='excel-button'
-				/>
+				/> */}
+				<button
+					onClick={TableToExcel}
+					className='excel-button'><FontAwesomeIcon icon={faFileExcel} style={{color: "#55887C"}} /> Download Excel File</button>
 			</div>
 			{arr ?
 				arr.map((val, ind) => {
@@ -119,11 +113,8 @@ export default function RegisteredUsers(props) {
 						arr.map((val, ind) => {
 							return(
 								<tr key={ind}>
-									<td>{val.name}</td>
 									{excelFields.map((key, index) => {
-										if(!(key == 'name')){
-											return <td key={index}>{val['details'][key]}</td>
-										}
+										return <td key={index}>{val['details'][key]}</td>
 									})}
 								</tr>
 							)

@@ -22,16 +22,17 @@ button {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
 }
 
 .page {
-  width: 75%;
-  margin-top: 40px;
+  width: 100%;
+  /* margin-top: 40px; */
 }
 
 .side {
+  display: none;
   margin-top: 40px;
   width: 25%;
   font-size: 3vh;
@@ -39,6 +40,11 @@ button {
   position: sticky;
   top: 170px;
   height: 500px;
+}
+
+hr {
+  color: #E79981;
+  border: 0.5px solid #E79981;
 }
 
 a {
@@ -54,10 +60,6 @@ a {
     background: #FAF2EF;
   }
 
-  hr {
-    color: #E79981;
-    border: 0.5px solid #E79981;
-  }
 
   .main-container{
     width: 100%;

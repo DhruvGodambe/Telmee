@@ -41,11 +41,7 @@ import {AuthEditUser, AuthMyUser, AuthLogin} from './authRoutes';
 import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUser, faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [search, setSearch] = useState(false);
@@ -74,40 +70,14 @@ function App() {
         setLoggedIn, loggedIn
       }}>
         <Router>
-          {/* <Navbar/> */}
-          <div className="nav-icons">
-            <div className='icons'>
-              <Link to='/'>
-                <FontAwesomeIcon icon={faHome}/>
-              </Link>
-            </div>
-            <div className='icons'
-            // onClick={() => {
-            //   document.getElementsByClassName("home")[0].classList.add("not-home")
-            //   document.getElementsByClassName("home")[0].classList.toggle("home", false)
-            // }}
-            >
-              <Link to={loggedIn ? `/user/${currentUser.id}` : '/user-login'}>
-                <FontAwesomeIcon icon={faUser}/>
-              </Link>
-            </div>
-            <div className='icons'>
-              <Link to='/search'>
-                <FontAwesomeIcon icon={faSearch}/>
-              </Link>
-            </div>
-            <div className='icons' onClick={() => {setSidebar(!sidebar)}}>
-              <FontAwesomeIcon icon={faBars}/>
-            </div>
-          </div>
           <div className="main-container">
             <div className="page">
               <Switch>
                 <Route exact path="/" component={Home}/>
+                <Route exact path="/home" component={LandingPage}/>
                 <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search}/>
                 <Route exact path="/test" component={Test}/>
-                <Route exact path="/home" component={LandingPage}/>
                 <AuthLogin exact path="/login" component={Login}/>
                 <AuthLogin exact path="/user-login" component={UserLogin}/>
                 <AuthMyUser exact path="/user/:userid" component={MyUser}/>

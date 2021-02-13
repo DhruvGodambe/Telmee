@@ -13,9 +13,30 @@ import {Link} from 'react-router-dom';
 export default function Navbar() {
 	const {search , currentUser, setSearch, sidebar, setSidebar, loggedIn} = useContext(globalContext);
 	return(
-		<div className='navbar' >
-			<h1>Telmee</h1>
-			<p>an event sharing social network</p>
-		</div>
+		<div className="nav-icons">
+            <div className='icons'>
+              <Link to='/'>
+                <FontAwesomeIcon icon={faHome}/>
+              </Link>
+            </div>
+            <div className='icons'
+            // onClick={() => {
+            //   document.getElementsByClassName("home")[0].classList.add("not-home")
+            //   document.getElementsByClassName("home")[0].classList.toggle("home", false)
+            // }}
+            >
+              <Link to={loggedIn ? `/user/${currentUser.id}` : '/user-login'}>
+                <FontAwesomeIcon icon={faUser}/>
+              </Link>
+            </div>
+            <div className='icons'>
+              <Link to='/search'>
+                <FontAwesomeIcon icon={faSearch}/>
+              </Link>
+            </div>
+            <div className='icons' onClick={() => {setSidebar(!sidebar)}}>
+              <FontAwesomeIcon icon={faBars}/>
+            </div>
+        </div>
 	)
 }

@@ -5,7 +5,7 @@ import firebase from '../../firebase/index';
 import Editors from '../../components/DraftjsEditor';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Switch from "react-switch";
@@ -64,7 +64,7 @@ export const PersonalEvent = (props) => {
 }
 
 export const OrganizationEvent = (props) => {
-	const [event, setEvent] = useState({eventForm: false})
+	const [event, setEvent] = useState({eventForm: true})
 	const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
 	const [popup, setPopup] = useState(false)
 	const [loading, setLoading] = useState(false);
@@ -202,6 +202,7 @@ export const OrganizationEvent = (props) => {
 			<ErrorPopup error={error} setError={setError} />
 			{!loading ? 
 			<div>
+			{/* <label className="create-event-title-label">Event Name</label> */}
 			<input
 				name='eventName'
 				placeholder='event name / title'
@@ -254,15 +255,15 @@ export const OrganizationEvent = (props) => {
 				className='create-event-input'
 			/>
 			{uploaded ? 
-				<div className='create-event-input'>
+				<div className='create-event-input' style={{color: '#55887C'}}>
 					image uploaded   <FontAwesomeIcon icon={faCheck} />
 					<img className='create-event-image' src={base64} />
 					<label htmlFor='coverImage' className='create-event-input'>change image</label>
 				</div>
 				:
 				<div className='create-event-input'>
-					<FontAwesomeIcon icon={faUpload} style={{margin: '0 10px'}}/>
-					<label htmlFor='coverImage'>	
+					<FontAwesomeIcon icon={faUpload} style={{margin: '0 10px', color: '#55887C'}}/>
+					<label htmlFor='coverImage' style={{color: '#55887C'}}>	
 						add cover image for your event
 					</label>
 				</div>
@@ -277,13 +278,13 @@ export const OrganizationEvent = (props) => {
 					var file = e.target.files[0]
 					const reader = new FileReader();
 					reader.readAsDataURL(file);
-			        reader.addEventListener('load', () => {
-			        	setBase64(reader.result);
-			        });
-			        var arr = event.name.split(' ');
+					reader.addEventListener('load', () => {
+						setBase64(reader.result);
+					});
+					var arr = event.name.split(' ');
 					var eventName = arr.toString();
 					var extension = file.name.split('.')[1];
-			        setEvent({
+					setEvent({
 						...event,
 						coverImage: file,
 						coverImageName: `${eventName}.${extension}`
@@ -430,14 +431,16 @@ export const OrganizationEvent = (props) => {
 					padding: '10px',
 					borderRadius: '5px',
 					boxShadow: '0 0 5px grey',
-					margin: '10px auto'
+					margin: '10px auto',
+					color: '#55887C',
+					display: "block"
 				}}
 				onClick={() => {
 					setExternalLink([
 						...externalLink,
 						{link: "", description: ""}
 					])
-				}}>Add another external link</button>
+				}}> <FontAwesomeIcon icon={faPlus} /> Add another external link</button>
 			<input
 				type='text'
 				name='venue'
@@ -472,7 +475,7 @@ export const OrganizationEvent = (props) => {
 			<div style={{width: '90%', margin: '0 auto'}}>
 				<Editors description={description} setDescription={setDescription} />
 			</div>
-			<div style={{
+			{/* <div style={{
 				margin: '10px auto',
 				maxWidth: '80%',
 				display: 'flex',
@@ -488,7 +491,7 @@ export const OrganizationEvent = (props) => {
 				/>
 				<div style={{
 				}}>  create a form for this event</div>
-			</div>
+			</div> */}
 			<button
 				type='button'
 				style={{
@@ -497,7 +500,7 @@ export const OrganizationEvent = (props) => {
 					padding: '5px'
 				}}
 				onClick={handleSubmit}
-			>submit</button>
+			>Next</button>
 			</div>
 			:
 			<Loader

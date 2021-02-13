@@ -6,6 +6,15 @@
   	background: white;
 }
 
+.event-card-2 {
+	width: 30%;
+	margin: 10px 1%;
+	box-shadow: 1px 1px 5px grey;
+	border-radius: 10px;
+  	background: white;
+	flex-shrink: 0;
+}
+
 .event-card-image {
 	width: 100%;
 }
@@ -29,7 +38,7 @@
 .event-card-content .organized {
 	margin: 5px auto;
 	text-align: center;
-	color: #E79981;
+	color: grey;
 	font-size: 14px;
 }
 
@@ -43,6 +52,13 @@
   	background: #FAF2EF;
 	box-shadow: 1px 1px 10px black;
 	color: #1D5F74;
+  }
+
+  .event-card-2 {
+	  width: 50%;
+	  margin: 10px;
+	  max-height: 300px;
+	  overflow: scroll;
   }
 
   .event-card-content h3 {

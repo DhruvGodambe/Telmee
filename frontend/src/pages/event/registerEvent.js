@@ -1,13 +1,18 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {globalContext} from '../../globalContext';
 import firebase from '../../firebase/index';
+
+import { v1 as uuidv1 } from 'uuid';
 import Loader from 'react-loader-spinner';
+import Cookies from 'js-cookie';
 
 export default function RegisterEvent(props) {
 	const [event, setEvent] = useState({})
 	const [user, setUser] = useState({})
 	const {currentUser} = useContext(globalContext);
 	const [loading, setLoading] = useState(false);
+	const [loading2, setLoading2] = useState(false);
+	const [error, setError] = useState("")
 	const eventid = props.history.location.pathname.split('register/')[1];
 
 	useEffect(() => {
@@ -20,28 +25,32 @@ export default function RegisterEvent(props) {
 	}, [])
 
 	const handleSubmit = (e) => {
+		setLoading2(true)
 		e.preventDefault();
-		firebase.db.collection('events').doc(eventid).update({
-			registeredUsers: firebase.firebase.firestore.FieldValue.arrayUnion({
-				...user,
-				id: currentUser.id
-			})
-		}).then(res => {
-			firebase.db.collection('users').doc(currentUser.id).update({
-				registeredEvents: firebase.firebase.firestore.FieldValue.arrayUnion(eventid)
-			})
-			.then(rsp => {
+		try{
+			firebase.db.collection('events').doc(eventid).update({
+				registeredUsers: firebase.firebase.firestore.FieldValue.arrayUnion(user)
+			}).then(res => {
+				var registeredEvents = Cookies.get("telmee-registered-events");
+				if(registeredEvents){
+					Cookies.set("telmee-registered-events",[...registeredEvents, eventid]);
+				} else {
+					Cookies.set("telmee-registered-events",[eventid]);
+				}
 				props.history.push({
 					pathname: `/event/${eventid}`,
 					query: 'registered'
 				})
 			})
-		})
+		} catch(err) {
+			setError("unknown error occured during submission. Please try registering again")
+		}
 	}
 	
 	return(
 		<div>
 			<h1 className='create-event-box'>Registeration Form</h1>
+			<ErrorPopup error={error} setError={setError} />
 			{event.formTemplate ?
 				<div className='register-form-div'>
 					<form onSubmit={handleSubmit}>
@@ -60,7 +69,7 @@ export default function RegisterEvent(props) {
 											className='register-form-input'
 											>
 											<option></option>
-											{val.options.map((opt, index) => <option>{opt}</option>)}
+											{val.options.map((opt, index) => <option key={index}>{opt}</option>)}
 										</select>
 									</div>
 								)
@@ -91,10 +100,11 @@ export default function RegisterEvent(props) {
 														setLoading(true);
 														let imageNameArr = e.target.files[0].name.split(".");
 														let imageName = imageNameArr[imageNameArr.length - 1];
-														await firebase.storage.ref(`/user-files/${val.name}-${currentUser.id}.${imageName}`).put(e.target.files[0])
+														let random_id = uuidv1();
+														await firebase.storage.ref(`/user-files/${random_id}.${imageName}`).put(e.target.files[0])
 														console.log("uploaded")
 														
-														await firebase.storage.ref(`/user-files/${val.name}-${currentUser.id}.${imageName}`).getDownloadURL()
+														await firebase.storage.ref(`/user-files/${random_id}.${imageName}`).getDownloadURL()
 														.then(url => {
 															var obj = Object.assign({}, user)
 															obj[val.name] = url;
@@ -149,10 +159,36 @@ export default function RegisterEvent(props) {
 							null
 						}
 						<button
-							disabled={loading}
+							disabled={loading || loading2}
 							className='register-form-submit'
 							type="submit">submit</button>
+						{loading2 ?
+							<Loader
+								type="TailSpin"
+								color="#ff0033"
+								height={70}
+								width={70}
+								timeout={1000000} //10 secs
+							/>
+							:
+							null
+						}
 					</form>
+				</div>
+				:
+				null
+			}
+		</div>
+	)
+}
+
+const ErrorPopup = ({error, setError}) => {
+	return(
+		<div>
+			{error !== "" ?
+				<div className="main-popup">
+					<p>{error}</p>
+					<button onClick={() => {setError(""); window.location.reload()}}>OK</button>
 				</div>
 				:
 				null

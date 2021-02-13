@@ -35,14 +35,12 @@ export default function MyEvent(props) {
 		.then(result => {
 			if(result.exists){
 				setEvent(result.data())
-				console.log(result.data())
 				//check if event is upcoming or past event
 				if(new Date(result.data().timeStamp.heldOn) < Date.now()){
 					props.history.replace(`/event/past/${eventid}`)
 				}
 				//check if eventForm and formTemplate status matches
 				if(!result.data().formTemplate){
-					console.log(true)
 					if(result.data().eventForm){
 						firebase.db.collection('events').doc(eventid).update({
 							eventForm: false
@@ -74,6 +72,12 @@ export default function MyEvent(props) {
 			setErrmsg('something went wrong!\n please reload or try again later')
 			window.location.reload()
 		})
+		if(Cookies.get("telmee-registered-events")){
+			let arr = JSON.parse(Cookies.get("telmee-registered-events"))
+			if(arr.includes(eventid)){
+				setRegistered(true)
+			}
+		}
 		if(props.history.location.query == 'registered'){
 			setRegistered(true)
 			setConfirm(true)
@@ -133,7 +137,6 @@ export default function MyEvent(props) {
 	}
 
 	const share = () => {
-		console.log(navigator)
 		if(navigator.share){
 			navigator.share({
 				title: event.name,
@@ -322,7 +325,7 @@ export default function MyEvent(props) {
 							{event.externalLink?.length > 0 ?
 								event.externalLink.map((val, ind) => {
 									return(
-										<div className="event-external-link">
+										<div key={ind} className="event-external-link">
 											<p>{val.description}</p>
 											<a style={{color: "#ff003f", opacity: '.5'}} href={val.link}>{val.link}</a>
 										</div>
@@ -340,12 +343,8 @@ export default function MyEvent(props) {
 							<button
 								className='event-register-button'
 								onClick={() => {
-									if(Cookies.get('userID')){
-										if(!registered){
-											setPopup(true)
-										}
-									} else {
-										props.history.push('/login')
+									if(!registered){
+										setPopup(true)
 									}
 								}}
 							><FontAwesomeIcon icon={faCheck} style={{display: registered ? 'inline-block' : 'none'}} /> {registered ? 'registered' : 'register'}</button>

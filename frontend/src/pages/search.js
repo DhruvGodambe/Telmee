@@ -151,21 +151,21 @@ export default function Search(props) {
 	        		}}>
 	        		<div
 	        			style={{
-	        				borderBottom: activeTab == 'events' ? '2px #f03 solid' : 'inherit',
+	        				borderBottom: activeTab == 'events' ? '2px #55887C solid' : 'inherit',
 	        				transition: '0.3s'
 	        			}} 
 	        			onClick={eventSearch}
 	        			className='search-tab'>events</div>
 	        		<div
 	        			style={{
-	        				borderBottom: activeTab == 'committees' ? '2px #f03 solid' : 'inherit',
+	        				borderBottom: activeTab == 'committees' ? '2px #55887C solid' : 'inherit',
 	        				transition: '0.3s'
 	        			}} 
 	        			onClick={committeeSearch}
 	        			className='search-tab'>organizations</div>
 	        		<div
 	        			style={{
-	        				borderBottom: activeTab == 'users' ? '2px #f03 solid' : 'inherit',
+	        				borderBottom: activeTab == 'users' ? '2px #55887C solid' : 'inherit',
 	        				transition: '0.3s'
 	        			}} 
 	        			onClick={userSearch}

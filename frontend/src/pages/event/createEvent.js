@@ -4,7 +4,7 @@ import './createEvent.css';
 import Cookies from 'js-cookie';
 
 import {PersonalEvent, OrganizationEvent} from './eventForm.js';
-import bg from '../../images/bg3.png'
+import bg from '../../images/host_event_bg.png'
 
 export default function CreateEvent(props) {
 	const {currentUser} = useContext(globalContext);
@@ -13,19 +13,17 @@ export default function CreateEvent(props) {
 	const userID = Cookies.get('userID')
 
 	useEffect(() => {
-		if(!userID){
-			props.history.push('/login')
-		}
+		// if(!userID){
+		// 	props.history.push('/login')
+		// }
 	}, [])
 
 	return(
 		<div className='create-event-box'>
-			<div style={{width: '100%', margin: '0', backgroundImage: `url(${bg})`, height: '180px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} >
-				<br/>
-				<br/>
-				<br/>
-				<h1>Host an Event</h1>
+			<div className="create-event-title">
+				<img src={bg} />
 			</div>
+			<p className="create-event-sub-heading">Enter Event Details</p>
 			{eventType == 'organization_event' ?
 				<OrganizationEvent {...props}/>
 				:

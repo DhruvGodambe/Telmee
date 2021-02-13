@@ -99,11 +99,10 @@
 	position: fixed;
 	top: 25%;
 	left: 25%;
-	background: #ff0033;
+	background: #FAF2EF;
 	box-shadow: 1px 1px 10px gray;
 	padding: 10px;
-	background: #ff003f;
-	color: white;
+	/* color: white; */
 	border-radius: 10px;
 	z-index: 10;
 }

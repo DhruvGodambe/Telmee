@@ -63,6 +63,12 @@ export default function OtherEvent(props) {
 			setErrmsg('something went wrong!\n please reload or try again later')
 			window.location.reload()
 		})
+		if(Cookies.get("telmee-registered-events")){
+			let arr = JSON.parse(Cookies.get("telmee-registered-events"))
+			if(arr.includes(eventid)){
+				setRegistered(true)
+			}
+		}
 		if(props.history.location.query == 'registered'){
 			setRegistered(true)
 			setConfirm(true)
@@ -231,7 +237,7 @@ export default function OtherEvent(props) {
 						{event.externalLink?.length > 0 ?
 							event.externalLink.map((val, ind) => {
 								return(
-									<div className="event-external-link">
+									<div key={ind} className="event-external-link">
 										<p>{val.description}</p>
 										<a style={{color: "#ff003f", opacity: '.5'}} href={val.link}>{val.link}</a>
 									</div>
@@ -249,15 +255,7 @@ export default function OtherEvent(props) {
 						<button
 							className='event-register-button'
 							// disabled={eventid == "GWRJjoUwIgVbnf8LhoYd" ? true : false}
-							onClick={() => {
-								if(Cookies.get('userID')){
-									if(!registered){
-										setPopup(true)
-									}
-								} else {
-									props.history.push('/login')
-								}
-							}}
+							onClick={() => {setPopup(true)}}
 						><FontAwesomeIcon icon={faCheck} style={{display: registered ? 'inline-block' : 'none'}} /> {registered ? 'registered' : 'register'}</button>
 						</div>
 					</div>

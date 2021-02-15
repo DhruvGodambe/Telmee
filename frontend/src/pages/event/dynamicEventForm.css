@@ -30,12 +30,49 @@
 .create-form-root .note {
 	color: grey;
 	margin: 10px auto;
-	width: 90%;
 }
 
-@media only screen and (max-width: 720px){
+.create-form-root {
+	width: 60%;
+}
+
+.create-event-form-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.create-event-form-title {
+	width: 40%;
+	margin: 0;
+	background-image: url("../../images/create_event_form_desktop.svg");
+	min-height: 100vh;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/* @media only screen and (max-width: 1024px) {
+	.create-event-form-title {
+		width: 50%;
+	}
+
 	.create-form-root {
-		/* color: white; */
+		width: 50%;
+	}
+} */
+
+@media only screen and (max-width: 720px){
+	.create-event-form-container {
+		flex-direction: column;
+	}
+
+	.create-event-form-title {
+		width: 100%;
+		background-image: url("../../images/create_event_form_mobile.png");
+		min-height: 230px;
+	}
+
+	.create-form-root {
+		width: 100%;
 	}
 
 	.create-form-root h1 {
@@ -50,5 +87,11 @@
 		width: 85%;
 		padding: 5%;
 		color: black;
+	}
+}
+
+@media only screen and (max-width: 470px) {
+	.create-event-form-title {
+		min-height: 150px;
 	}
 }

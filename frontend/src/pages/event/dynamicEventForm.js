@@ -100,67 +100,50 @@ export default function DynamicEventForm(props) {
 	}
 
 	return(
-		<div className='create-form-root'>
-			<h1>Create A Registeration Form</h1>
-			<p className="note" >Note: basic information like name, email id and contact number will be directly recorded when the person registers for the event. You don't need to ask for these details in the custom form.</p>
-			<div>
-				<div className='form-box'>
-					{inputs.map((val, ind) => (
-						<div key={ind}>
-							{val.type == 'options' ?
-								<div
+		<div className="create-event-form-container">
+			<div className="create-event-form-title"></div>
+			<div className='create-form-root'>
+				<h1>Create A Registeration Form</h1>
+				<p className="note" >Note: basic information like name, email id and contact number will be directly recorded when the person registers for the event. You don't need to ask for these details in the custom form.</p>
+				<div>
+					<div className='form-box'>
+						{inputs.map((val, ind) => (
+							<div key={ind}>
+								{val.type == 'options' ?
+									<div
+										style={{
+											background: '#eee',
+											borderRadius: '10px',
+											padding: '10px 5px',
+										}} 
+										className='register-form-sub-div'>
+										<div>
+											<button
+											className='register-form-button'
+											onClick={() => {
+												var temp = inputs.filter((val, index) => ind !== index)
+												setInputs(temp)	
+											}}>x</button>
+										</div>
+										<p className='register-form-label'>{val.name}</p>
+										<select
+											className='register-form-input'
+										>
+											<option value=''>select option</option>
+											{val.options.map((opt, index) => (
+												<option>{opt}</option>
+											))}
+										</select>
+									</div>
+								:
+									val.type == "note" ?
+									<div
 									style={{
 										background: '#eee',
 										borderRadius: '10px',
 										padding: '10px 5px',
 									}} 
 									className='register-form-sub-div'>
-									<div>
-										<button
-										className='register-form-button'
-										onClick={() => {
-											var temp = inputs.filter((val, index) => ind !== index)
-											setInputs(temp)	
-										}}>x</button>
-									</div>
-									<p className='register-form-label'>{val.name}</p>
-									<select
-										className='register-form-input'
-									>
-										<option value=''>select option</option>
-										{val.options.map((opt, index) => (
-											<option>{opt}</option>
-										))}
-									</select>
-								</div>
-							:
-								val.type == "note" ?
-								<div
-								style={{
-									background: '#eee',
-									borderRadius: '10px',
-									padding: '10px 5px',
-								}} 
-								className='register-form-sub-div'>
-									<div>
-										<button
-										className='register-form-button'
-										onClick={() => {
-											var temp = inputs.filter((val, index) => ind !== index)
-											setInputs(temp)	
-										}}>x</button>
-									</div>
-									{RenderDescription(val)}
-								</div>
-								:
-									val.type == "file" ?
-									<div
-										style={{
-											background: '#eee',
-											borderRadius: '10px',
-											padding: '10px 5px',
-										}} 
-										className='register-form-sub-div'>
 										<div>
 											<button
 											className='register-form-button'
@@ -169,143 +152,163 @@ export default function DynamicEventForm(props) {
 												setInputs(temp)	
 											}}>x</button>
 										</div>
-										<p className='register-form-label'>{val.name}</p>
-										<input
-											placeholder={val.name}
-											type={val.type}
-											className='register-form-input'
-										/>
+										{RenderDescription(val)}
 									</div>
 									:
-									<div
-										style={{
-											background: '#eee',
-											borderRadius: '10px',
-											padding: '10px 5px',
-										}} 
-										className='register-form-sub-div'>
-										<div>
-											<button
-											className='register-form-button'
-											onClick={() => {
-												var temp = inputs.filter((val, index) => ind !== index)
-												setInputs(temp)	
-											}}>x</button>
-										</div>
-										<p className='register-form-label'>{val.name}</p>
-										<input
-											placeholder={val.name}
-											type={val.type}
-											className='register-form-input'
-										/>
-									</div>
-							}
-						</div>
-					))}
-				{addNote ?
-					<div style={{width: '90%', margin: '10px auto'}}>
-						<textarea rows="10" style={{width: '95%', padding: '2.5%', fontFamily: 'Helvetica'}} onChange={(e) => {setNote(e.target.value)}} />
-						<button className='create-event-input' type="button" onClick={handleAddNote}>Add</button>
-					</div>
-					:
-					null
-				}
-				{!render && !addNote ?
-					<div>
-						<button
-							type="button"
-							onClick={() => {
-								setRender(true)
-							}}
-							className='create-event-input'
-						>add a question</button>
-						<button
-							type="button"
-							onClick={() => {
-								setAddNote(true)
-							}}
-							className='create-event-input'
-						>add description / note</button>
-					</div>
-					:
-					null
-				}
-				{render ? 
-					<div>
-						<input
-							placeholder='question'
-							onChange={(e) => setName(e.target.value)}
-							className='create-event-input'
-							style={{width: '90%'}}
-						/>
-						<select 
-							style={{
-								padding: '10px',
-								border: 'none',
-								borderRadius: '20px',
-								outline: 'none'
-							}}
-							onChange={handleOptions}
-						>
-							<option>answer type</option>
-							<option>text</option>
-							<option value='options'>list of options</option>
-							<option>number</option>
-							<option value="file">document upload</option>
-						</select>
-						{options.map((val, ind) => (
-							<div className='deep-form' >
-								<input 
-									placeholder={`option${ind+1}`}
-									onChange={handleOptionChange}
-									style={{
-										fontSize: '15px',
-										width: '60%',
-										margin: '5%',
-										border: 'none',
-										padding: '10px',
-										borderRadius: '10px'
-									}}
-								/>
-								<button
-									type="button"
-									onClick={addOption}
-									style={{
-										width: '10%',
-										margin: '5% 2.5%',
-									}}
-								>+</button>
-								{
-									options.length > ind + 1 ?
-										<FontAwesomeIcon
+										val.type == "file" ?
+										<div
 											style={{
-												margin: '5% 2.5%'
-											}}
-											icon={faCheck} />
+												background: '#eee',
+												borderRadius: '10px',
+												padding: '10px 5px',
+											}} 
+											className='register-form-sub-div'>
+											<div>
+												<button
+												className='register-form-button'
+												onClick={() => {
+													var temp = inputs.filter((val, index) => ind !== index)
+													setInputs(temp)	
+												}}>x</button>
+											</div>
+											<p className='register-form-label'>{val.name}</p>
+											<input
+												placeholder={val.name}
+												type={val.type}
+												className='register-form-input'
+											/>
+										</div>
 										:
-										null
+										<div
+											style={{
+												background: '#eee',
+												borderRadius: '10px',
+												padding: '10px 5px',
+											}} 
+											className='register-form-sub-div'>
+											<div>
+												<button
+												className='register-form-button'
+												onClick={() => {
+													var temp = inputs.filter((val, index) => ind !== index)
+													setInputs(temp)	
+												}}>x</button>
+											</div>
+											<p className='register-form-label'>{val.name}</p>
+											<input
+												placeholder={val.name}
+												type={val.type}
+												className='register-form-input'
+											/>
+										</div>
 								}
 							</div>
 						))}
-						<div style={{padding: '10px'}}>
-							<input type="checkbox" onChange={(e) => {setChecked(e.target.checked)}} />
-							<p style={{margin: '0', display: 'inline'}}>mandatory</p>
+					{addNote ?
+						<div style={{width: '90%', margin: '10px auto'}}>
+							<textarea rows="10" style={{width: '95%', padding: '2.5%', fontFamily: 'Helvetica'}} onChange={(e) => {setNote(e.target.value)}} />
+							<button className='create-event-input' type="button" onClick={handleAddNote}>Add</button>
 						</div>
-						<button className='create-event-input' type="button" onClick={handleAddField}>Add</button>
+						:
+						null
+					}
+					{!render && !addNote ?
+						<div>
+							<button
+								type="button"
+								onClick={() => {
+									setRender(true)
+								}}
+								className='create-event-input'
+							>add a question</button>
+							<button
+								type="button"
+								onClick={() => {
+									setAddNote(true)
+								}}
+								className='create-event-input'
+							>add description / note</button>
+						</div>
+						:
+						null
+					}
+					{render ? 
+						<div>
+							<input
+								placeholder='question'
+								onChange={(e) => setName(e.target.value)}
+								className='create-event-input'
+								style={{width: '90%'}}
+							/>
+							<select 
+								style={{
+									padding: '10px',
+									border: 'none',
+									borderRadius: '20px',
+									outline: 'none'
+								}}
+								onChange={handleOptions}
+							>
+								<option>answer type</option>
+								<option>text</option>
+								<option value='options'>list of options</option>
+								<option>number</option>
+								<option value="file">document upload</option>
+							</select>
+							{options.map((val, ind) => (
+								<div className='deep-form' >
+									<input 
+										placeholder={`option${ind+1}`}
+										onChange={handleOptionChange}
+										style={{
+											fontSize: '15px',
+											width: '60%',
+											margin: '5%',
+											border: 'none',
+											padding: '10px',
+											borderRadius: '10px'
+										}}
+									/>
+									<button
+										type="button"
+										onClick={addOption}
+										style={{
+											width: '10%',
+											margin: '5% 2.5%',
+										}}
+									>+</button>
+									{
+										options.length > ind + 1 ?
+											<FontAwesomeIcon
+												style={{
+													margin: '5% 2.5%'
+												}}
+												icon={faCheck} />
+											:
+											null
+									}
+								</div>
+							))}
+							<div style={{padding: '10px'}}>
+								<input type="checkbox" onChange={(e) => {setChecked(e.target.checked)}} />
+								<p style={{margin: '0', display: 'inline'}}>mandatory</p>
+							</div>
+							<button className='create-event-input' type="button" onClick={handleAddField}>Add</button>
+						</div>
+						:
+						<div></div>
+					}
+					{inputs.length > 0 ?
+						<div>
+							<button className='create-event-input' type="button" onClick={handleCreateForm}>create form</button>
+							<button className='create-event-input' type="button" onClick={() => {history.goBack()}}>discard form</button>
+						</div>
+						:
+						<div></div>
+					}
 					</div>
-					:
-					<div></div>
-				}
-				{inputs.length > 0 ?
-					<div>
-						<button className='create-event-input' type="button" onClick={handleCreateForm}>create form</button>
-						<button className='create-event-input' type="button" onClick={() => {history.goBack()}}>discard form</button>
-					</div>
-					:
-					<div></div>
-				}
+					
 				</div>
-				
 			</div>
 		</div>
 	)

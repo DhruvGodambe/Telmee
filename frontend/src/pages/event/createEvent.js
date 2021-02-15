@@ -2,9 +2,13 @@ import React , {useState, useEffect, useContext} from 'react';
 import {globalContext} from '../../globalContext';
 import './createEvent.css';
 import Cookies from 'js-cookie';
+import Navbar from '../../components/navbar';
 
 import {PersonalEvent, OrganizationEvent} from './eventForm.js';
 import bg from '../../images/host_event_bg.png'
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faBars} from '@fortawesome/free-solid-svg-icons';
 
 export default function CreateEvent(props) {
 	const {currentUser} = useContext(globalContext);
@@ -13,6 +17,7 @@ export default function CreateEvent(props) {
 	const userID = Cookies.get('userID')
 
 	useEffect(() => {
+		window.scrollTo(0,0);
 		// if(!userID){
 		// 	props.history.push('/login')
 		// }
@@ -20,10 +25,13 @@ export default function CreateEvent(props) {
 
 	return(
 		<div className='create-event-box'>
-			<div className="create-event-title">
-				<img src={bg} />
-			</div>
-			<p className="create-event-sub-heading">Enter Event Details</p>
+			<Navbar/>
+			<div
+				className="hamburger"
+				onClick={() => {
+					document.getElementsByClassName("nav-icons")[0].classList.add("show-nav-icons")
+				}}><FontAwesomeIcon icon={faBars} /></div>
+			<div className="create-event-title"></div>
 			{eventType == 'organization_event' ?
 				<OrganizationEvent {...props}/>
 				:

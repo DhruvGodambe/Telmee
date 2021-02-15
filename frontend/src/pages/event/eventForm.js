@@ -198,6 +198,7 @@ export const OrganizationEvent = (props) => {
 
 	return (
 		<form className='create-event-form' onSubmit={handleSubmit}>
+			<p className="create-event-sub-heading">Enter Event Details</p>
 			<Popup popup={popup} setPopup={setPopup} {...props} />
 			<ErrorPopup error={error} setError={setError} />
 			{!loading ? 
@@ -472,7 +473,7 @@ export const OrganizationEvent = (props) => {
 					}}
 				/>	
 			</div> */}
-			<div style={{width: '90%', margin: '0 auto'}}>
+			<div className="event-form-description">
 				<Editors description={description} setDescription={setDescription} />
 			</div>
 			{/* <div style={{
@@ -497,7 +498,9 @@ export const OrganizationEvent = (props) => {
 				style={{
 					width: '50%', 
 					margin: '10px auto', 
-					padding: '5px'
+					padding: '5px',
+					background: "#55887C",
+					color: "white"
 				}}
 				onClick={handleSubmit}
 			>Next</button>

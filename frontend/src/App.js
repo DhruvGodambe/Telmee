@@ -73,8 +73,8 @@ function App() {
           <div className="main-container">
             <div className="page">
               <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route exact path="/home" component={LandingPage}/>
+                <Route exact path="/" component={LandingPage}/>
+                <Route exact path="/home" component={Home}/>
                 <Route exact path="/about" component={About} />
                 <Route exact path="/search" component={Search}/>
                 <Route exact path="/test" component={Test}/>

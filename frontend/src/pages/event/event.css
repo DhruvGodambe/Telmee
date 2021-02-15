@@ -62,6 +62,7 @@ pre a {
 	display: flex;
 	align-items: center;
 	margin: 0 auto 20px;
+	width: 60%;
 }
 
 .update-event-input {

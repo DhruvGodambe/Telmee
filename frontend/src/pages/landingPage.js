@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import HomeBG from '../images/home_event_bg_2.svg';
 import Logo from '../images/Logo.png';
+import imgnet from '../images/business_cover.png'
 import './landingPage.css';
 import firebase from "../firebase/index";
 import {EventCard2} from '../components/eventCards';
@@ -41,12 +42,17 @@ export default function LandingPage(props) {
                         <div className="nav-right-comps">
                             <button onClick={() => {props.history.push("/login")}}><FontAwesomeIcon icon={faUser}/> Login</button>
                         </div>
-                        <div className="nav-right-comps" onClick={() => {props.history.push("/home/#about")}}>About</div>
+                        <div
+                            style={{cursor: 'pointer'}}
+                            className="nav-right-comps"
+                            onClick={() => {props.history.push("/home#about")}}>About</div>
                     </div>
                 </div>
                 <div className="home-organisation">
                     <p>member of an organisation?</p>
-                    <p style={{textDecoration: 'underline'}}>hold an event <FontAwesomeIcon icon={faArrowRight} /></p>
+                    <p
+                        onClick={() => {props.history.push("/create/organization_event")}}
+                        style={{textDecoration: 'underline', cursor: 'pointer'}}>hold an event <FontAwesomeIcon icon={faArrowRight} /></p>
                 </div>
             </div>
             <div style={{width: '60%', margin: '20px auto'}}>
@@ -55,6 +61,18 @@ export default function LandingPage(props) {
             <div className="home-upcoming">
                 <h2>UPCOMING EVENTS</h2>
                 <div className="upcoming-list">
+                <div style={{cursor: 'pointer'}} className="event-card-2" onClick={() => {props.history.push(`/event/${props.id}`)}}>
+                    <div className="event-card-image">
+                        <img src={imgnet}/>
+                    </div>
+                    <div className="event-card-content">
+                        <h3>Small Business Series</h3>
+                        <p className="organized">Asia Society</p>
+                        {/* <p>{new Date(event.timeStamp.heldOn) < Date.now() ? null : 'will be'} held on {getStdDate(event.timeStamp.heldOn)}</p> */}
+                        {/* <hr />
+                        <p>{description !== "" ? description.substring(0, 200) + '...' : null}</p> */}
+                    </div>
+                </div>
                     {eventArr.map((val, ind) => (
                         <EventCard2
                             key={val.id}

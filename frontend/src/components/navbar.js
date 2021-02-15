@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
 import {globalContext} from '../globalContext';
 import {Link} from 'react-router-dom';
@@ -34,8 +34,16 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={faSearch}/>
               </Link>
             </div>
-            <div className='icons' onClick={() => {setSidebar(!sidebar)}}>
+            <div className='icons'>
               <FontAwesomeIcon icon={faBars}/>
+            </div>
+            <div
+              className='icons'
+              onClick={() => {
+                // setSidebar(!sidebar)
+                document.getElementsByClassName("nav-icons")[0].classList.remove("show-nav-icons")
+              }}>
+              <FontAwesomeIcon icon={faAngleLeft}/>
             </div>
         </div>
 	)

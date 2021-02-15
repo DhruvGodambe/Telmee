@@ -1,10 +1,14 @@
 .create-event-box {
 	color: #55887C;
+	display: flex;
 }
 
 .create-event-title {
-	width: 100%;
+	width: 40%;
 	margin: 0;
+	background-image: url('../../images/create_event_desktop.svg');
+	min-height: 100vh;
+	background-repeat: no-repeat;
 }
 
 .create-event-title img {
@@ -18,14 +22,11 @@
 	color: #55887C;
 }
 
-.create-event-box h1 {
-	font-size: 40px;
-}
-
 .create-event-form {
 	display: flex;
 	flex-direction: column;
 	font-size: 20px;
+	width: 60%;
 }
 
 .create-event-input {
@@ -52,6 +53,11 @@
 	margin: 5%;
 }
 
+.event-form-description {
+	width: 65%;
+	margin: 0 auto;
+}
+
 .instructor-box {
 	width: 60%;
 	margin: 0 auto;
@@ -76,17 +82,41 @@ select {
 	outline: none;
 }
 
-/* .create-event-title-label {
+.create-event-box .hamburger {
+	padding: 10px 15px;
+	border-radius: 50%;
+	background: #55887C;
+	color: #FAF2EF;
+	box-shadow: 0 0 5px black;
+	cursor: pointer
+}
 
-} */
+@media only screen and (max-width; 1024px) {
+	.create-event-title {
+		width: 50%;
+	}
+
+	.create-event-form {
+		margin-left: 50%;
+		width: 50%;
+	}
+}
 
 @media only screen and (max-width: 720px) {
 	.create-event-box {
-		/* color: white; */
+		flex-direction: column;
+	}
+	
+	.create-event-title {
+		background-image: url("../../images/host_event_bg.svg");
+		width: 100%;
+		background-size: contain;
+		min-height: 230px;
 	}
 
-	.create-event-box h1 {
-		font-size: 30px;
+	.create-event-form {
+		width: 95%;
+		margin: 0 auto;
 	}
 
 	.create-event-input {
@@ -99,11 +129,27 @@ select {
 		font-size: 14px;
 	}
 
+	.event-form-description {
+		width: 90%;
+	}
+
 	.create-event-sub-heading {
 		font-size: 18px;
 	}
 
 	.instructor-box {
 		width: 80%;
+	}
+
+	.create-event-box .hamburger {
+		padding: 5px 8px;
+		font-size: 20px;
+		box-shadow: 0 0 5px grey;
+	}
+}
+
+@media only screen and (max-width: 470px) {
+	.create-event-title {
+		min-height: 150px;
 	}
 }

@@ -54,12 +54,22 @@ a {
   text-decoration: none;
 }
 
+.hamburger {
+  position: fixed;
+  top: 1%;
+  left: 2%;
+  font-size: 2em;
+}
+
 @media only screen and (max-width: 720px) {
   .App {
     min-height: 800px;
     background: #FAF2EF;
   }
 
+  .hamburger {
+    font-size: 1.5em;
+  }
 
   .main-container{
     width: 100%;

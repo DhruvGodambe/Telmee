@@ -29,25 +29,32 @@
 
 .nav-icons {
 	display: flex;
-	flex-direction: row;
-	width: 100%;
+	flex-direction: column;
+	width: 0;
+	height: 100%;
 	margin: 0 auto;
-	position: sticky;
+	position: fixed;
 	top: 0;
 	background: #55887C;
 	color: aliceblue;
 	z-index: 5;
+	box-shadow: 0 0 10px black;
+	transition: .5s;
+	opacity: 0;
+}
+
+.show-nav-icons {
+	width: 100px;
+	transition: .5s;
+	opacity: 1;
 }
 
 .icons {
-	width: 33%;
+	width: 100%;
 	padding: 10px 0;
 	font-size: 20px;
 	color: #FAF2EF;
-}
-
-.icons:nth-child(4){
-	display: none;
+	margin: 20px auto;
 }
 
 @media only screen and (max-width: 720px){
@@ -55,14 +62,13 @@
 		font-size: 25px;
 		letter-spacing: 2px;
 	}
-
-	.nav-icons {
-		width: 100%;
-		/* border-radius: 0 0 20px 20px; */
+	
+	.show-nav-icons {
+		width: 80px;
 	}
 
 	.icons {
-		width: 25%;
+		/* width: 25%; */
 	}
 
 	.icons:nth-child(4) {

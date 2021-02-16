@@ -8,7 +8,6 @@
 	color: white;
 	position: relative;
 	top: 0;
-	z-index: 1;
 }
 
 .navbar h1 {
@@ -28,6 +27,7 @@
 }
 
 .nav-icons {
+	z-index: 10;
 	display: flex;
 	flex-direction: column;
 	width: 0;
@@ -47,6 +47,7 @@
 	width: 100px;
 	transition: .5s;
 	opacity: 1;
+	z-index: 10;
 }
 
 .icons {
@@ -57,6 +58,10 @@
 	margin: 20px auto;
 }
 
+.icons span {
+	font-size: 16px;
+}
+
 @media only screen and (max-width: 720px){
 	.navbar h1 {
 		font-size: 25px;
@@ -64,11 +69,16 @@
 	}
 	
 	.show-nav-icons {
-		width: 80px;
+		width: 60px;
 	}
 
 	.icons {
 		/* width: 25%; */
+		margin: 5px auto 0;
+	}
+
+	.icons span {
+		font-size: 12px;
 	}
 
 	.icons:nth-child(4) {

@@ -55,7 +55,7 @@ export default function ViewEventForm(props) {
 	}
 
 	return(
-		<div>
+		<div className="register-for-event-container">
 			<Popup
 				popup={popup}
 				setField={setField}
@@ -65,147 +65,168 @@ export default function ViewEventForm(props) {
 				setInputs={setInputs}
 				fieldIndex={fieldIndex}
 			/>
-			<h2 className='committee-title'>Event Form Preview</h2>
-			<div style={{textAlign: 'left'}}>
-			<button
-			onClick={() => {
-				setEdit(true)
-			}}
-			style={{
-				padding: '10px',
-				margin: '10px',
-				fontSize: '18px',
-			}}>Edit</button>
-			</div>
-			<div className='register-form-div'>
-			{inputs.map((val, ind) => {
-				if (val.type == 'options') {
-					return(
-						<div className='register-form-sub-div'>
-							<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
-								<FontAwesomeIcon onClick={() => {
-									setPopup(true)
-									setField(val)
-									setFieldIndex(ind)
-								}} icon={faEllipsisV} />
-								</div>
-							<p className='register-form-label'>{val.name}</p>
-							<select
-								name={val.name}
-								className='register-form-input'
-								key={ind}>
-								<option>select option</option>
-								{val.options.map((opt, index) => (
-									<option value={opt}>{opt}</option>
-								))}
-							</select>
-						</div>
-					)
-				} else {
-					if (val.type == 'note') {
-						var str = '';
-						val.name.split(" ").forEach(val => {
-							if(val.includes("https://")){
-								var temp = `<a href="${val}">${val}</a>`;
-								str = str.concat(temp)
-							} else { str = str.concat(val + " ")}
-						})
+			<div className="register-for-event-title"></div>
+			<div className="register-for-event-body">
+				<button
+				onClick={() => {
+					setEdit(true)
+				}}
+				style={{
+					padding: '10px 20px',
+					marginLeft: '80%',
+					marginTop: "50px",
+					fontSize: '18px',
+					background: "#ccc",
+					boxShadow: 'none',
+				}}>Edit</button>
+				<h2 className='committee-title'>Event Form Preview</h2>
+				<div style={{textAlign: 'left'}}>
+				</div>
+				<div className='register-form-div'>
+				{inputs.map((val, ind) => {
+					if (val.type == 'options') {
 						return(
-							<div 
-								onMouseEnter={() => {}}
-								className='register-form-sub-div'>
+							<div className='register-form-sub-div'>
 								<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
 									<FontAwesomeIcon onClick={() => {
 										setPopup(true)
 										setField(val)
 										setFieldIndex(ind)
 									}} icon={faEllipsisV} />
-								</div>
-								<div key={ind} className='register-form-sub-div'>
-									<p className="register-form-note" dangerouslySetInnerHTML={{__html: str}}></p>
-								</div>
+									</div>
+								<p className='register-form-label'>{val.name}</p>
+								<select
+									name={val.name}
+									className='register-form-input'
+									key={ind}>
+									<option>select option</option>
+									{val.options.map((opt, index) => (
+										<option value={opt}>{opt}</option>
+									))}
+								</select>
 							</div>
 						)
 					} else {
-						return(
-							<div 
-								onMouseEnter={() => {}}
-								className='register-form-sub-div'>
-								<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
-									<FontAwesomeIcon onClick={() => {
-										setPopup(true)
-										setField(val)
-										setFieldIndex(ind)
-									}} icon={faEllipsisV} />
+						if (val.type == 'note') {
+							var str = '';
+							val.name.split(" ").forEach(val => {
+								if(val.includes("https://")){
+									var temp = `<a href="${val}">${val}</a>`;
+									str = str.concat(temp)
+								} else { str = str.concat(val + " ")}
+							})
+							return(
+								<div 
+									onMouseEnter={() => {}}
+									className='register-form-sub-div'>
+									<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
+										<FontAwesomeIcon onClick={() => {
+											setPopup(true)
+											setField(val)
+											setFieldIndex(ind)
+										}} icon={faEllipsisV} />
+									</div>
+									<p className="register-form-note" dangerouslySetInnerHTML={{__html: str}}></p>
 								</div>
-								<p className='register-form-label'>{val.name}</p>
-								<input
-									name={val.name}
-									type={val.type}
-									placeholder='answer'
-									className='register-form-input'
-								/>
-							</div>
-						)
+							)
+						} else {
+							return(
+								<div 
+									onMouseEnter={() => {}}
+									className='register-form-sub-div'>
+									<div style={{visibility: edit ? 'visible' : 'hidden', textAlign: 'right'}}>
+										<FontAwesomeIcon onClick={() => {
+											setPopup(true)
+											setField(val)
+											setFieldIndex(ind)
+										}} icon={faEllipsisV} />
+									</div>
+									<p className='register-form-label'>{val.name}</p>
+									<input
+										name={val.name}
+										type={val.type}
+										placeholder='answer'
+										className='register-form-input'
+									/>
+								</div>
+							)
+						}
 					}
-				}
-			})}
-				<div style={{
-					margin: '20px auto'
-				}}>	
-					<button
-						onClick={() => {
-							setFieldIndex(inputs.length)
-							setPopup(true)
-							setField({name: 'add question', type: 'text'})
-							setInputs([
-								...inputs,
-								{name: 'add question', type: 'text'}
-							])
-						}}
-					>Add Question +</button>
+				})}
+					<div>
+						<div style={{
+							margin: '20px',
+							display: 'inline'
+						}}>	
+							<button
+								style={{
+									background: "#55887C",
+									color: "white",
+									padding: "10px"
+								}}
+								onClick={() => {
+									setFieldIndex(inputs.length)
+									setPopup(true)
+									setField({name: 'add question', type: 'text'})
+									setInputs([
+										...inputs,
+										{name: 'add question', type: 'text'}
+									])
+								}}
+							>Add Question +</button>
+						</div>
+						<div style={{
+							margin: '20px',
+							display: 'inline',
+						}}>	
+							<button
+								style={{
+									background: "#55887C",
+									color: "white",
+									padding: "10px"
+								}}
+								onClick={() => {
+									setFieldIndex(inputs.length)
+									setPopup(true)
+									setField({name: 'add description', type: 'note'})
+									setInputs([
+										...inputs,
+										{name: 'add description', type: 'note'}
+									])
+								}}
+							>Add Note / Description +</button>
+						</div>
+					</div>
 				</div>
 				<div style={{
 					margin: '20px auto'
 				}}>	
 					<button
-						onClick={() => {
-							setFieldIndex(inputs.length)
-							setPopup(true)
-							setField({name: 'add description', type: 'note'})
-							setInputs([
-								...inputs,
-								{name: 'add description', type: 'note'}
-							])
+						style={{
+							padding: '10px',
+							margin: '0 auto',
+							fontSize: '18px',
+							borderRadius: '15px'
 						}}
-					>Add Note / Description +</button>
+						onClick={handleSubmit}
+					>submit changes</button>
 				</div>
-			</div>
-			<div style={{
-				margin: '20px auto'
-			}}>	
-				<button
-					style={{
-						padding: '10px',
-						margin: '0 auto',
-						fontSize: '18px',
-						borderRadius: '15px'
-					}}
-					onClick={handleSubmit}
-				>submit changes</button>
-			</div>
-			<div style={{
-				margin: '20px auto'
-			}}>	
-				<button
-					style={{
-						padding: '10px',
-						margin: '40px auto 0',
-						fontSize: '18px',
-						borderRadius: '15px'
-					}}
-					onClick={handleDelete}
-				>delete form</button>
+				<div style={{
+					margin: '20px auto'
+				}}>	
+					<button
+						style={{
+							padding: '10px',
+							margin: '40px auto 0',
+							fontSize: '18px',
+							borderRadius: '15px',
+							width: '60%',
+							background: "#E79981",
+							color: 'white'
+						}}
+						onClick={handleDelete}
+					>delete form</button>
+				</div>
 			</div>
 		</div>
 	)

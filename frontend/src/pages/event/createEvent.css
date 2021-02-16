@@ -9,6 +9,8 @@
 	background-image: url('../../images/create_event_desktop.svg');
 	min-height: 100vh;
 	background-repeat: no-repeat;
+	position: fixed;
+	background-size: contain;
 }
 
 .create-event-title img {
@@ -27,6 +29,7 @@
 	flex-direction: column;
 	font-size: 20px;
 	width: 60%;
+	margin-left: 40%;
 }
 
 .create-event-input {
@@ -82,13 +85,14 @@ select {
 	outline: none;
 }
 
-.create-event-box .hamburger {
+.hamburger {
 	padding: 10px 15px;
 	border-radius: 50%;
 	background: #55887C;
 	color: #FAF2EF;
 	box-shadow: 0 0 5px black;
-	cursor: pointer
+	cursor: pointer;
+	z-index: 5;
 }
 
 @media only screen and (max-width; 1024px) {
@@ -112,11 +116,14 @@ select {
 		width: 100%;
 		background-size: contain;
 		min-height: 230px;
+		position: static;
 	}
 
 	.create-event-form {
-		width: 95%;
+		width: 100%;
 		margin: 0 auto;
+		/* margin-top: 230px; */
+		margin-left: 0;
 	}
 
 	.create-event-input {
@@ -141,7 +148,7 @@ select {
 		width: 80%;
 	}
 
-	.create-event-box .hamburger {
+	.hamburger {
 		padding: 5px 8px;
 		font-size: 20px;
 		box-shadow: 0 0 5px grey;
@@ -151,5 +158,9 @@ select {
 @media only screen and (max-width: 470px) {
 	.create-event-title {
 		min-height: 150px;
+	}
+
+	.create-event-form {
+		/* margin-top: 150px; */
 	}
 }

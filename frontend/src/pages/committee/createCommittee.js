@@ -22,9 +22,9 @@ export default function CreateCommittee(props){
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
-		if(!Cookies.get('userID')){
-			props.history.push('/login')
-		}
+		// if(!Cookies.get('userID')){
+		// 	props.history.push('/login')
+		// }
 	}, [])
 
 	const handleSubmit = () => {
@@ -124,15 +124,11 @@ export default function CreateCommittee(props){
 	}
 
 	return(
-		<div className='create-event-box'>
+		<div className='create-committee-box'>
 			<ErrorPopup error={error} setError={setError} />
 			{!loading ?
-				<div>
-					<div style={{width: '100%', margin: '0', backgroundImage: `url(${bg})`, height: '180px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}} >
-						<br/>
-						<br/>
-						<h2 style={{fontSize: '35px'}}>create a committee</h2>
-					</div>
+				<div className="create-committee-body">
+					<div className="create-committee-title"></div>
 					<form className='create-event-form'>
 						<input
 							name='name'
@@ -204,7 +200,9 @@ export default function CreateCommittee(props){
 								width: '30%', 
 								margin: '10px auto', 
 								padding: '5px',
-								fontSize: '20px'
+								fontSize: '20px',
+								background: '#55887C',
+								color: 'white'
 							}}
 							onClick={handleSubmit}
 						>create</button>

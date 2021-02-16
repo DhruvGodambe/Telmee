@@ -3,9 +3,10 @@ import {Link, useHistory} from 'react-router-dom';
 import './dynamicEventForm.css'
 import {globalContext} from '../../globalContext';
 import firebase from '../../firebase/index';
+import Navbar from '../../components/navbar';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faBars } from '@fortawesome/free-solid-svg-icons';
 
 export default function DynamicEventForm(props) {
 	const eventid = props.history.location.pathname.split('/eventForm/')[1]
@@ -101,6 +102,12 @@ export default function DynamicEventForm(props) {
 
 	return(
 		<div className="create-event-form-container">
+			<Navbar/>
+			<div
+				className="hamburger"
+				onClick={() => {
+					document.getElementsByClassName("nav-icons")[0].classList.add("show-nav-icons")
+				}}><FontAwesomeIcon icon={faBars} /></div>
 			<div className="create-event-form-title"></div>
 			<div className='create-form-root'>
 				<h1>Create A Registeration Form</h1>
